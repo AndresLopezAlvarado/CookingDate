@@ -95,6 +95,7 @@ const ProfileForm = ({ onSubmit, user }) => {
                   console.log(
                     "Estoy en onChange de la carga de archivo en Form"
                   );
+                  console.log(e.target.files);
                   console.log(e.target.files[0]);
                   setFieldValue("image", e.target.files[0]);
                 }}

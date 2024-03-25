@@ -11,7 +11,13 @@ const app = express();
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(fileUpload({ useTempFiles: true, tempFileDir: "./upload" }));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./upload",
+    createParentPath: true,
+  })
+);
 
 app.use("/api", authRoutes);
 app.use("/api", petsRoutes);

@@ -23,42 +23,44 @@ const People = () => {
   }, []);
 
   return (
-    <><div className="bg-lime-900 p-4 rounded-md w-full flex items-center justify-between">
-    <div className="flex justify-center items-center gap-x-2">
-      <h1 className="text-lime-500 text-sm font-bold">View:</h1>
+    <>
+      <div className="bg-lime-900 p-4 rounded-md w-full flex items-center justify-between">
+        <div className="flex justify-center items-center gap-x-2">
+          <h1 className="text-lime-500 text-sm font-bold">View:</h1>
 
-      <button
-        className="bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 text-sm px-3 py-1 rounded-md"
-        onClick={() => setShowType("card")}
-      >
-        Card
-      </button>
+          <button
+            className="bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 text-sm px-3 py-1 rounded-md"
+            onClick={() => setShowType("card")}
+          >
+            Card
+          </button>
 
-      <button
-        className="bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 text-sm px-3 py-1 rounded-md"
-        onClick={() => setShowType("table")}
-      >
-        Table
-      </button>
-    </div>
-  </div>
-
-  <div className="border-4 border-lime-900 w-full p-4 mt-4 rounded-md">
-    {users.length === 0 && (
-      <div className="flex flex-col justify-center items-center">
-        <VscEmptyWindow className="w-48 h-48" />
-        <h1>There are no users</h1>
+          <button
+            className="bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 text-sm px-3 py-1 rounded-md"
+            onClick={() => setShowType("table")}
+          >
+            Table
+          </button>
+        </div>
       </div>
-    )}
 
-    {loading ? (
-      <Spinner />
-    ) : showType === "table" ? (
-      <UsersTable data={users} columns={columns} />
-    ) : (
-      <UsersGrid />
-    )}
-  </div></>
+      <div className="border-4 border-lime-900 w-full p-4 mt-4 rounded-md">
+        {users.length === 0 && (
+          <div className="flex flex-col justify-center items-center">
+            <VscEmptyWindow className="w-48 h-48" />
+            <h1>There are no users</h1>
+          </div>
+        )}
+
+        {loading ? (
+          <Spinner />
+        ) : showType === "table" ? (
+          <UsersTable data={users} columns={columns} />
+        ) : (
+          <UsersGrid />
+        )}
+      </div>
+    </>
   );
 };
 

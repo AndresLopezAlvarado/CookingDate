@@ -24,7 +24,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-lime-900 mb-4 rounded-md fixed left-16 right-16">
+    <nav className="bg-lime-900 mb-4 rounded-md fixed left-16 right-16 z-50">
       <div className="mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <img

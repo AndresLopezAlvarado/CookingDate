@@ -7,10 +7,19 @@ cloudinary.config({
   api_secret: API_SECRET,
 });
 
-export const uploadImage = async (filePath) => {
-  return await cloudinary.uploader.upload(filePath, { folder: "petsImages" });
+export const uploadImage = async (filePath, fileName) => {
+  return await cloudinary.uploader.upload(filePath, {
+    public_id: fileName,
+    folder: "profile",
+  });
 };
 
 export const deleteImage = async (id) => {
   return await cloudinary.uploader.destroy(id);
+};
+
+export const findImage = async (fileName) => {
+  return await cloudinary.search
+    .expression(`folder:profile AND filename="${fileName}"`)
+    .execute();
 };

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
 import { useParams } from "react-router-dom";
-import GridPhotos from "../components/GridPhotos.jsx";
 import ImageUploader from "../components/ImageUploader.jsx";
+
+import PhotoGallery from "../components/PhotoGallery.jsx";
 
 const Profile = () => {
   const { getUser } = useAuth();
@@ -12,23 +13,15 @@ const Profile = () => {
   const params = useParams();
 
   const toggleModal = async (e) => {
-    console.log("Estoy en el toggleModal de Profile.jsx");
     setIsOpen(!isOpen);
-    console.log(params.id);
     const userFound = await getUser(params.id);
-    console.log(userFound);
     setUser(userFound);
-    console.log(user);
   };
 
   useEffect(() => {
-    console.log("Estoy en el useEffect de Profile.jsx");
     async function loadUser() {
-      console.log(params.id);
       const userFound = await getUser(params.id);
-      console.log(userFound);
       setUser(userFound);
-      console.log(user);
     }
     loadUser();
   }, []);
@@ -68,11 +61,7 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* <div className="w-full border-4 border-lime-900 p-4 rounded-md">
-        <GridPhotos />
-      </div> */}
-
-      <ImageUploader />
+      <PhotoGallery />
 
       <ProfileModal isOpen={isOpen} toggleModal={toggleModal} user={user} />
     </>

@@ -7,6 +7,8 @@ import {
   getUserRequest,
   getUsersRequest,
   updateUserResquest,
+  uploadPhotosRequest,
+  deleteImageRequest,
 } from "../api/auth.js";
 
 const AuthContext = createContext();
@@ -100,6 +102,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const uploadPhotos = async (id, photos) => {
+    console.log("Estoy en uploadPhotos de AuthContext.jsx");
+    console.log(photos);
+    try {
+      const res = await uploadPhotosRequest(id, photos);
+    } catch (error) {
+      console.log({
+        message: "Something went wrong on uploadPhotos",
+      });
+    }
+  };
+
+  const deleteImage = async (id, photoToDelete) => {
+    try {
+      const res = await deleteImageRequest(id, photoToDelete);
+    } catch (error) {
+      console.log({
+        message: "Something went wrong on deleteImage",
+      });
+    }
+  };
+
   useEffect(() => {
     async function checkLogin() {
       const cookies = jsCookie.get();
@@ -145,6 +169,8 @@ export const AuthProvider = ({ children }) => {
         getUser,
         getUsers,
         updateUser,
+        uploadPhotos,
+        deleteImage,
         user,
         users,
         isAuthenticated,
