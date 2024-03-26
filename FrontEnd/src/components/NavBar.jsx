@@ -24,8 +24,8 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-lime-900 mb-4 rounded-md fixed left-16 right-16 z-50">
-      <div className="mx-auto px-2 sm:px-6 lg:px-8">
+    <nav className="bg-lime-900 mb-4 rounded-md fixed left-8 right-8 sm:left-10 sm:right-10 md:left-12 md:right-12 lg:left-14 lg:right-14 xl:left-16 xl:right-16 z-50">
+      <div className="mx-auto px-4">
         <div className="relative flex h-16 items-center justify-between">
           <img
             className="h-10 w-auto rounded-md"
@@ -33,12 +33,12 @@ const NavBar = () => {
             alt="position"
           />
 
-          <div className="w-full flex justify-between">
+          <div className="w-full flex justify-end sm:justify-between">
             {isAuthenticated ? (
               <>
                 <Link
                   to="/people"
-                  className="text-3xl text-lime-500 font-bold mx-4"
+                  className="text-3xl text-lime-500 font-bold mx-4 hidden sm:block"
                 >
                   Cooking Date
                 </Link>
@@ -143,11 +143,13 @@ const NavBar = () => {
           </div>
         </div>
       </div>
+
       <LoginModal
         isOpen={isOpenLogin}
         toggleModalLogin={toggleModalLogin}
         toggleModalRegister={toggleModalRegister}
       />
+
       <RegisterModal
         isOpen={isOpenRegister}
         toggleModalLogin={toggleModalLogin}

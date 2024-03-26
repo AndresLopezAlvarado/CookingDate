@@ -18,7 +18,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-orange-400 rounded-md h-full flex flex-col items-center justify-center text-center">
+    <div className="rounded-md h-full flex flex-col items-center justify-center text-center">
       {isAuthenticated ? (
         <>
           <p className="bg-lime-900 text-orange-400 text-3xl font-bold p-4 my-4 rounded-md">
