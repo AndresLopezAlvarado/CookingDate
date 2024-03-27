@@ -135,13 +135,14 @@ const PhotoGallery = () => {
               <img
                 src={photo.url}
                 alt={`Photo ${index}`}
-                className="w-[200px] h-[200px] rounded-md"
+                className="w-full h-full rounded-md"
               />
+
               <button
                 onClick={() => {
                   handleDelete(index, photo);
                 }}
-                className="absolute top-1 right-1 bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 text-sm font-bold px-3 py-1 rounded-md"
+                className="absolute top-2 right-2 bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 text-sm font-bold px-3 py-1 rounded-md"
               >
                 X
               </button>

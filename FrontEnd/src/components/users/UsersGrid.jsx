@@ -11,7 +11,7 @@ const UsersGrid = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="rounded-md grid sm:grid-cols-2 md:grid-cols-3 gap-2">
+        <div className="rounded-md grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {users.map((user) => (
             <UserCard user={user} key={user._id} />
           ))}
