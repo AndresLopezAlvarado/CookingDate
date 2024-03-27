@@ -24,7 +24,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-lime-900 mb-4 rounded-md fixed left-8 right-8 sm:left-10 sm:right-10 md:left-12 md:right-12 lg:left-14 lg:right-14 xl:left-16 xl:right-16 z-50">
+    <nav className="bg-[#98FF98] mb-4 rounded-b-md fixed left-0 top-0 right-0 z-50">
       <div className="mx-auto px-4">
         <div className="relative p-2 md:p-3 lg:p-4 flex items-center justify-between">
           <img
@@ -121,7 +121,7 @@ const NavBar = () => {
               <>
                 <Link
                   to="/"
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-lime-500 font-bold mx-4 hidden sm:block"
+                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-[#556B2F] font-bold mx-4 hidden sm:block"
                 >
                   Cooking Date
                 </Link>
@@ -129,14 +129,14 @@ const NavBar = () => {
                 <div className="flex space-x-4">
                   <Link
                     onClick={toggleModalLogin}
-                    className="text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 font-bold rounded-md h-min px-3 py-2"
+                    className="text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl bg-[#FFDB58] hover:bg-[#556B2F] text-[#556B2F] hover:text-[#FFDB58] font-bold rounded-md h-min px-3 py-2"
                   >
                     Login
                   </Link>
 
                   <Link
                     onClick={toggleModalRegister}
-                    className="text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 font-bold rounded-md h-min px-3 py-2"
+                    className="text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl bg-[#FFDB58] hover:bg-[#556B2F] text-[#556B2F] hover:text-[#FFDB58] font-bold rounded-md h-min px-3 py-2"
                   >
                     Register
                   </Link>
