@@ -12,7 +12,6 @@ import LoginModal from "../components/login/LoginModal.jsx";
 import RegisterModal from "../components/register/RegisterModal.jsx";
 import CommentsCarousel from "../components/CommentsCarousel.jsx";
 import fetchData from "../constants/comments.js";
-import { VITE_FRONTEND_URL } from "../../config.js";
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth();
@@ -41,8 +40,6 @@ const Home = () => {
 
     loadComments();
   }, []);
-
-  console.log("El valor de VITE_FRONTEND_URL es: " + VITE_FRONTEND_URL);
 
   return (
     <>

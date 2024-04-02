@@ -62,7 +62,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    jsCookie.remove("access_token", { sameSite: "none", secure: true });
+    jsCookie.remove("access_token", {
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
+    });
     setIsAuthenticated(false);
     setUser(null);
   };
