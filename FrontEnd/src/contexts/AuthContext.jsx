@@ -65,7 +65,6 @@ export const AuthProvider = ({ children }) => {
     jsCookie.remove("access_token", {
       sameSite: "none",
       secure: true,
-      httpOnly: true,
       Partitioned: true,
     });
     setIsAuthenticated(false);

@@ -19,7 +19,6 @@ export const register = async (req, res) => {
     res.cookie("access_token", access_token, {
       sameSite: "none",
       secure: true,
-      httpOnly: true,
       Partitioned: true,
     });
 
@@ -77,7 +76,6 @@ export const login = async (req, res) => {
     res.cookie("access_token", access_token, {
       sameSite: "none",
       secure: true,
-      httpOnly: true,
       Partitioned: true,
     });
 

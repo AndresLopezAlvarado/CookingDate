@@ -43,7 +43,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="min-h-screen border-4 border-lime-900 mt-14 sm:mt-16 md:mt-20 lg:mt-28 mx-1 mb-1 rounded-md flex flex-col items-center justify-center text-center">
+      <div className="min-h-screen border-4 border-lime-900 mt-14 sm:mt-16 md:mt-20 lg:mt-28 mx-1 mb-1 p-4 rounded-md flex flex-col items-center justify-center text-center">
         <div className="flex flex-col items-center justify-center text-center">
           {isAuthenticated ? (
             <>
