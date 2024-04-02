@@ -12,6 +12,7 @@ import LoginModal from "../components/login/LoginModal.jsx";
 import RegisterModal from "../components/register/RegisterModal.jsx";
 import CommentsCarousel from "../components/CommentsCarousel.jsx";
 import fetchData from "../constants/comments.js";
+import { VITE_FRONTEND_URL } from "../../config.js";
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth();
@@ -41,6 +42,8 @@ const Home = () => {
     loadComments();
   }, []);
 
+  console.log("hola" + VITE_FRONTEND_URL + "Hola");
+
   return (
     <>
       <div className="min-h-screen border-4 border-[#98FF98] mt-14 sm:mt-16 md:mt-20 lg:mt-28 mx-1 mb-1 rounded-md flex flex-col items-center justify-center text-center">
@@ -67,7 +70,8 @@ const Home = () => {
               <img
                 style={{ height: "400px", width: "500px" }}
                 className="mb-4"
-                src="../src/assets/panOnStove.gif"
+                src={`${VITE_FRONTEND_URL === '' ? '../src/assets/panOnStove.gif' : VITE_FRONTEND_URL + '/src/assets/panOnStove.gif'}`}
+                // src="../src/assets/panOnStove.gif"
                 alt="position"
               />
 
@@ -157,7 +161,9 @@ const Home = () => {
         </div>
       </div>
 
-      <p className="text-center mb-2">© 2024 Andrés López, todos los derechos reservados.</p>
+      <p className="text-center mb-2">
+        © 2024 Andrés López, todos los derechos reservados.
+      </p>
     </>
   );
 };

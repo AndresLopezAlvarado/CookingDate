@@ -11,7 +11,6 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        {/* <div className="bg-[#000000] min-h-screen flex flex-col"> */}
         <div className="bg-[#f5f5f5] min-h-screen flex flex-col">
           <NavBar />
           <Routes>
