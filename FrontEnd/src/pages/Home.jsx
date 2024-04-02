@@ -84,7 +84,7 @@ const Home = () => {
                 className="mb-4"
                 src={`${
                   VITE_FRONTEND_URL === ""
-                    ? "/potHearts.png"
+                    ? "potHearts.png"
                     : "potHearts.png"
                 }`}
                 // src="../src/assets/panOnStove.gif"
