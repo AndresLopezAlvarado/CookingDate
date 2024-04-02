@@ -13,8 +13,8 @@ const CommentsCarousel = ({ comments }) => {
     <div className="w-full px-3">
       <Swiper
         breakpoints={{
-          320: { slidesPerView: 2, spaceBetween: 15 },
-          640: { slidesPerView: 3, spaceBetween: 15 },
+          640: { slidesPerView: 2, spaceBetween: 15 },
+          1280: { slidesPerView: 3, spaceBetween: 15 },
         }}
         freeMode={true}
         pagination={{ clickable: true }}
@@ -27,7 +27,7 @@ const CommentsCarousel = ({ comments }) => {
         {comments
           ? comments.map((comment) => (
               <SwiperSlide key={comment.id}>
-                <div className="mb-10 h-72 border-2 border-[#98FF98] px-2 rounded-md flex flex-col justify-center">
+                <div className="mb-10 h-72 border-2 border-lime-900 px-2 rounded-md flex flex-col justify-center">
                   <h1 className="font-bold">{comment.name}</h1>
                   <p className="my-2">{comment.body}</p>
                   <h1 className="font-bold">{comment.email}</h1>
