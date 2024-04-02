@@ -30,9 +30,8 @@ const NavBar = () => {
         <div className="relative p-2 md:p-3 lg:p-4 flex items-center justify-between">
           <img
             className="h-9 sm:h-10 lg:h-16 w-auto rounded-md"
-            src={`${VITE_FRONTEND_URL === '' ? '../src/assets/potHearts.png' : VITE_FRONTEND_URL + '/src/assets/potHearts.png'}`}
-            // src="../src/assets/potHearts.png"
-            alt="position"
+            src="potHearts.png"
+            alt="logoNavbar"
           />
 
           <div className="w-full flex justify-end sm:justify-between">

@@ -70,24 +70,8 @@ const Home = () => {
               <img
                 style={{ height: "400px", width: "500px" }}
                 className="mb-4"
-                src={`${
-                  VITE_FRONTEND_URL === ""
-                    ? "../src/assets/panOnStove.gif"
-                    : "potHearts.png"
-                    // : VITE_FRONTEND_URL + "/src/assets/panOnStove.gif"
-                }`}
+                src="panOnStove.gif"
                 alt="logoHome"
-              />
-
-              <img
-                style={{ height: "400px", width: "500px" }}
-                className="bg-black mb-4"
-                src={`${
-                  VITE_FRONTEND_URL === ""
-                    ? "potHearts.png"
-                    : "potHearts.png"
-                }`}
-                alt="pruebas"
               />
 
               <p className=" bg-lime-900 text-lime-500 font-bold inline-block mb-4 p-4 justify-center rounded-md">
