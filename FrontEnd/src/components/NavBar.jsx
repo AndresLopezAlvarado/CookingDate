@@ -5,6 +5,7 @@ import { BellIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../contexts/AuthContext";
 import LoginModal from "./login/LoginModal.jsx";
 import RegisterModal from "./register/RegisterModal.jsx";
+import { VITE_FRONTEND_URL } from "../../config.js";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,7 +30,8 @@ const NavBar = () => {
         <div className="relative p-2 md:p-3 lg:p-4 flex items-center justify-between">
           <img
             className="h-9 sm:h-10 lg:h-16 w-auto rounded-md"
-            src="../src/assets/potHearts.png"
+            src={`${VITE_FRONTEND_URL === '' ? '../src/assets/potHearts.png' : VITE_FRONTEND_URL + '/src/assets/potHearts.png'}`}
+            // src="../src/assets/potHearts.png"
             alt="position"
           />
 
