@@ -73,10 +73,11 @@ const Home = () => {
                 src={`${
                   VITE_FRONTEND_URL === ""
                     ? "../src/assets/panOnStove.gif"
-                    : VITE_FRONTEND_URL + "/src/assets/panOnStove.gif"
+                    : "potHearts.png"
+                    // : VITE_FRONTEND_URL + "/src/assets/panOnStove.gif"
                 }`}
                 // src="../src/assets/panOnStove.gif"
-                alt="position"
+                alt="position2"
               />
 
               <img
