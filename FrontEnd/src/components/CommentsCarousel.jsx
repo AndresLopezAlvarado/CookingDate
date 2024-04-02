@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Autoplay } from "swiper/modules";
-import { RxArrowTopRight } from "react-icons/rx";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
 
 const CommentsCarousel = ({ comments }) => {
-  console.log(comments);
 
   return (
     <div className="w-full px-3">

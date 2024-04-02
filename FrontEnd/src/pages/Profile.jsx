@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
-import { useParams } from "react-router-dom";
-import ImageUploader from "../components/ImageUploader.jsx";
-
 import PhotoGallery from "../components/PhotoGallery.jsx";
 
 const Profile = () => {

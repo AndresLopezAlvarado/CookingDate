@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Carousel from "../components/Carousel.jsx";
+import PhotoCarousel from "../components/PhotoCarousel.jsx";
 import { useAuth } from "../contexts/AuthContext";
 import { useParams } from "react-router-dom";
 import Spinner from "../components/Spinner.jsx";
@@ -18,7 +18,9 @@ function DateProfile() {
     loadDateUser();
   }, []);
 
-  return <>{dateUser ? <Carousel photos={dateUser.images} /> : <Spinner />}</>;
+  return (
+    <>{dateUser ? <PhotoCarousel photos={dateUser.images} /> : <Spinner />}</>
+  );
 }
 
 export default DateProfile;
