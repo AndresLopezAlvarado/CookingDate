@@ -81,13 +81,12 @@ const Home = () => {
 
               <img
                 style={{ height: "400px", width: "500px" }}
-                className="mb-4"
+                className="bg-black mb-4"
                 src={`${
                   VITE_FRONTEND_URL === ""
                     ? "potHearts.png"
                     : "potHearts.png"
                 }`}
-                // src="../src/assets/panOnStove.gif"
                 alt="position1"
               />
 
