@@ -76,8 +76,7 @@ const Home = () => {
                     : "potHearts.png"
                     // : VITE_FRONTEND_URL + "/src/assets/panOnStove.gif"
                 }`}
-                // src="../src/assets/panOnStove.gif"
-                alt="position2"
+                alt="logoHome"
               />
 
               <img
@@ -88,7 +87,7 @@ const Home = () => {
                     ? "potHearts.png"
                     : "potHearts.png"
                 }`}
-                alt="position1"
+                alt="pruebas"
               />
 
               <p className=" bg-lime-900 text-lime-500 font-bold inline-block mb-4 p-4 justify-center rounded-md">
