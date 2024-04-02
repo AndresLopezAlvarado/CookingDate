@@ -42,11 +42,11 @@ const Home = () => {
     loadComments();
   }, []);
 
-  console.log("hola" + VITE_FRONTEND_URL + "Hola");
+  console.log("El valor de VITE_FRONTEND_URL es: " + VITE_FRONTEND_URL);
 
   return (
     <>
-      <div className="min-h-screen border-4 border-[#98FF98] mt-14 sm:mt-16 md:mt-20 lg:mt-28 mx-1 mb-1 rounded-md flex flex-col items-center justify-center text-center">
+      <div className="min-h-screen border-4 border-lime-900 mt-14 sm:mt-16 md:mt-20 lg:mt-28 mx-1 mb-1 rounded-md flex flex-col items-center justify-center text-center">
         <div className="flex flex-col items-center justify-center text-center">
           {isAuthenticated ? (
             <>
@@ -58,9 +58,9 @@ const Home = () => {
                 <img src={user.image.url} className="mb-4 rounded-full" />
               )}
 
-              <p className=" bg-lime-900 text-orange-400 font-bold inline-block mb-4 p-4 justify-center rounded-md">
+              <p className=" bg-lime-900 text-lime-500 font-bold inline-block mb-4 p-4 justify-center rounded-md">
                 Come on,{" "}
-                <Link to="/people" className="text-lime-500">
+                <Link to="/people" className="text-orange-400">
                   find a date!
                 </Link>
               </p>
@@ -70,14 +70,18 @@ const Home = () => {
               <img
                 style={{ height: "400px", width: "500px" }}
                 className="mb-4"
-                src={`${VITE_FRONTEND_URL === '' ? '../src/assets/panOnStove.gif' : VITE_FRONTEND_URL + '/src/assets/panOnStove.gif'}`}
+                src={`${
+                  VITE_FRONTEND_URL === ""
+                    ? "../src/assets/panOnStove.gif"
+                    : VITE_FRONTEND_URL + "/src/assets/panOnStove.gif"
+                }`}
                 // src="../src/assets/panOnStove.gif"
                 alt="position"
               />
 
-              <p className=" bg-[#98FF98] text-[#556B2F] font-bold inline-block mb-4 p-4 justify-center rounded-md">
+              <p className=" bg-lime-900 text-lime-500 font-bold inline-block mb-4 p-4 justify-center rounded-md">
                 Do you want to find a cooking date?{" "}
-                <Link onClick={toggleModalLogin} className="text-[#FFDB58]">
+                <Link onClick={toggleModalLogin} className="text-orange-400">
                   Sign In!
                 </Link>
               </p>
@@ -99,14 +103,14 @@ const Home = () => {
       </div>
 
       {comments ? (
-        <div className="text-[#556B2F] border-4 border-[#98FF98] m-1 rounded-md flex flex-col items-center justify-center text-center">
+        <div className="text-lime-900 border-4 border-lime-900 m-1 rounded-md flex flex-col items-center justify-center text-center">
           <h1 className="text-2xl font-bold p-4">Comments</h1>
 
           <CommentsCarousel comments={comments} />
         </div>
       ) : null}
 
-      <div className="text-[#556B2F] p-3 border-4 border-[#98FF98] m-1 rounded-md text-justify">
+      <div className="text-lime-900 p-3 border-4 border-lime-900 m-1 rounded-md text-justify">
         <p>
           ¡Bienvenido a Cooking Date, la aplicación que une corazones a través
           de la cocina! ¿Estás cansado de las típicas citas aburridas? ¿Quieres
@@ -132,7 +136,7 @@ const Home = () => {
         </p>
       </div>
 
-      <div className="text-[#556B2F] p-3 border-4 border-[#98FF98] m-1 rounded-md flex flex-col items-center justify-center">
+      <div className="text-lime-900 p-3 border-4 border-lime-900 m-1 rounded-md flex flex-col items-center justify-center">
         <div className="w-full grid grid-cols-3">
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold mb-2">Legal</h1>

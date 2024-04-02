@@ -11,7 +11,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="bg-[#f5f5f5] min-h-screen flex flex-col">
+        <div className="bg-lime-400 min-h-screen flex flex-col">
           <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
