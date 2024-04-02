@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }) => {
       sameSite: "none",
       secure: true,
       httpOnly: true,
+      Partitioned: true,
     });
     setIsAuthenticated(false);
     setUser(null);

@@ -20,6 +20,7 @@ export const register = async (req, res) => {
       sameSite: "none",
       secure: true,
       httpOnly: true,
+      Partitioned: true,
     });
 
     res.json(userSaved);
@@ -77,6 +78,7 @@ export const login = async (req, res) => {
       sameSite: "none",
       secure: true,
       httpOnly: true,
+      Partitioned: true,
     });
 
     res.json(userFound);
