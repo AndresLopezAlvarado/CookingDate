@@ -84,11 +84,11 @@ const Home = () => {
                 className="mb-4"
                 src={`${
                   VITE_FRONTEND_URL === ""
-                    ? "potHearts.png"
-                    : VITE_FRONTEND_URL + "/potHearts.png"
+                    ? "/potHearts.png"
+                    : "potHearts.png"
                 }`}
                 // src="../src/assets/panOnStove.gif"
-                alt="position"
+                alt="position1"
               />
 
               <p className=" bg-lime-900 text-lime-500 font-bold inline-block mb-4 p-4 justify-center rounded-md">
