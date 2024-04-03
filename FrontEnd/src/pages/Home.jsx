@@ -94,39 +94,45 @@ const Home = () => {
         </div>
       </div>
 
-      {comments ? (
-        <div className="text-lime-900 border-4 border-lime-900 m-1 rounded-md flex flex-col items-center justify-center text-center">
-          <h1 className="text-2xl font-bold p-4">Comments</h1>
+      {isAuthenticated ? null : (
+        <>
+          {comments ? (
+            <div className="text-lime-900 border-4 border-lime-900 m-1 rounded-md flex flex-col items-center justify-center text-center">
+              <h1 className="text-2xl font-bold p-4">Comments</h1>
 
-          <CommentsCarousel comments={comments} />
-        </div>
-      ) : null}
+              <CommentsCarousel comments={comments} />
+            </div>
+          ) : null}
 
-      <div className="text-lime-900 p-3 border-4 border-lime-900 m-1 rounded-md text-justify">
-        <p>
-          ¡Bienvenido a Cooking Date, la aplicación que une corazones a través
-          de la cocina! ¿Estás cansado de las típicas citas aburridas? ¿Quieres
-          darle un toque de sabor y diversión a tus encuentros románticos?
-          Entonces Cooking Date es para ti. Imagina una experiencia única donde
-          cocinar se convierte en el ingrediente principal para conectar con esa
-          persona especial. Desde una cena íntima a una divertida competencia
-          culinaria, Cooking Date te ofrece la oportunidad de crear recuerdos
-          inolvidables mientras exploras el arte de cocinar juntos. Con nuestra
-          amplia selección de recetas deliciosas y fáciles de seguir, nunca más
-          tendrás que preocuparte por qué preparar en tu cita. Desde platos
-          gourmet hasta comidas reconfortantes, tenemos opciones para todos los
-          gustos y niveles de habilidad culinaria. Pero eso no es todo. Cooking
-          Date te permite descubrir nuevas culturas a través de la comida,
-          explorar sabores exóticos y compartir momentos de complicidad mientras
-          preparas tus platos favoritos. ¿Y qué hay de las sorpresas? Con
-          nuestra función de "Receta Aleatoria", podrás emocionarte con una
-          nueva creación culinaria cada vez que inicies sesión, manteniendo la
-          emoción y la espontaneidad en tus citas. ¿Listo para encontrar a tu
-          pareja perfecta mientras cocinan juntos? ¡Únete a Cooking Date y deja
-          que la magia de la cocina encienda la llama del amor! ¡Descarga
-          Cooking Date ahora y prepárate para un festín de amor y sabor!
-        </p>
-      </div>
+          <div className="text-lime-900 p-3 border-4 border-lime-900 m-1 rounded-md text-justify">
+            <p>
+              ¡Bienvenido a Cooking Date, la aplicación que une corazones a
+              través de la cocina! ¿Estás cansado de las típicas citas
+              aburridas? ¿Quieres darle un toque de sabor y diversión a tus
+              encuentros románticos? Entonces Cooking Date es para ti. Imagina
+              una experiencia única donde cocinar se convierte en el ingrediente
+              principal para conectar con esa persona especial. Desde una cena
+              íntima a una divertida competencia culinaria, Cooking Date te
+              ofrece la oportunidad de crear recuerdos inolvidables mientras
+              exploras el arte de cocinar juntos. Con nuestra amplia selección
+              de recetas deliciosas y fáciles de seguir, nunca más tendrás que
+              preocuparte por qué preparar en tu cita. Desde platos gourmet
+              hasta comidas reconfortantes, tenemos opciones para todos los
+              gustos y niveles de habilidad culinaria. Pero eso no es todo.
+              Cooking Date te permite descubrir nuevas culturas a través de la
+              comida, explorar sabores exóticos y compartir momentos de
+              complicidad mientras preparas tus platos favoritos. ¿Y qué hay de
+              las sorpresas? Con nuestra función de "Receta Aleatoria", podrás
+              emocionarte con una nueva creación culinaria cada vez que inicies
+              sesión, manteniendo la emoción y la espontaneidad en tus citas.
+              ¿Listo para encontrar a tu pareja perfecta mientras cocinan
+              juntos? ¡Únete a Cooking Date y deja que la magia de la cocina
+              encienda la llama del amor! ¡Descarga Cooking Date ahora y
+              prepárate para un festín de amor y sabor!
+            </p>
+          </div>
+        </>
+      )}
 
       <div className="text-lime-900 p-3 border-4 border-lime-900 m-1 rounded-md flex flex-col items-center justify-center">
         <div className="w-full grid grid-cols-3">
