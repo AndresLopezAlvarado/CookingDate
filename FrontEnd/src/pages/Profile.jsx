@@ -1,68 +1,87 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { MdAddAPhoto } from "react-icons/md";
+import { useProfile } from "../contexts/ProfileContext.jsx";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
-import PhotoGallery from "../components/PhotoGallery.jsx";
 
 const Profile = () => {
   const { getUser } = useAuth();
+  const { profilePicture } = useProfile();
+  const params = useParams();
+  const inputFileRef = useRef(null);
   const [user, setUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  const params = useParams();
 
   const toggleModal = async (e) => {
     setIsOpen(!isOpen);
-    const userFound = await getUser(params.id);
-    setUser(userFound);
+    loadUser();
   };
 
-  useEffect(() => {
-    async function loadUser() {
-      const userFound = await getUser(params.id);
-      setUser(userFound);
-    }
+  const photoProfile = () => {
+    inputFileRef.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    profilePicture(params.id, e.target.files[0]);
     loadUser();
-  }, []);
+  };
+
+  async function loadUser() {
+    const userFound = await getUser(params.id);
+    setUser(userFound);
+  }
+
+  useEffect(() => {
+    loadUser();
+  }, [user]);
 
   return (
-    <>
-      <p className="bg-lime-900 text-orange-400 text-3xl font-bold p-4 mb-4 rounded-md">
-        Profile
-      </p>
+    <div className="border-4 border-lime-900 h-screen mt-12 p-4 rounded-md flex flex-col items-center">
+      <div className="h-1/2 flex flex-col items-center justify-center">
+        {user.image && (
+          <>
+            <div className="relative w-1/2">
+              <img
+                src={user.image.url}
+                onClick={photoProfile}
+                className="rounded-full cursor-pointer"
+              />
 
-      <div className="border-4 border-lime-900 p-4 mb-4 md:flex rounded-md">
-        <div className="md:flex-shrink-0">
-          {user.image && (
-            <img
-              src={user.image.url}
-              className="h-48 w-full md:w-48 rounded-md"
+              <MdAddAPhoto
+                onClick={photoProfile}
+                className="absolute top-1/2 right-0 h-1/4 w-1/4 p-1 bg-lime-900 text-lime-400 rounded-full cursor-pointer"
+              />
+            </div>
+
+            <input
+              type="file"
+              name="image"
+              ref={inputFileRef}
+              className="hidden"
+              onChange={handleFileChange}
             />
-          )}
-        </div>
+          </>
+        )}
 
-        <div className="p-8">
-          <div className="text-lime-900 font-bold uppercase ">
-            {user.username}
-          </div>
+        <h1 className="text-3xl text-lime-950 m-4 font-bold">
+          {user.username}
+        </h1>
 
-          <p className="mt-2 text-lime-700">{user.age} years</p>
-          <p className="mt-2 text-lime-700">{user.email}</p>
-
-          <div className="mt-4">
-            <button
-              className="bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 text-sm font-bold px-3 py-1 rounded-md"
-              onClick={toggleModal}
-            >
-              Edit
-            </button>
-          </div>
-        </div>
+        <h2 className="text-xl text-lime-950">{user.age} years</h2>
       </div>
 
-      <PhotoGallery />
+      <div>
+        <button
+          className="bg-lime-900 hover:bg-lime-700 text-lime-400 hover:text-lime-950 font-bold p-3 rounded-md"
+          onClick={toggleModal}
+        >
+          Edit profile
+        </button>
+      </div>
 
       <ProfileModal isOpen={isOpen} toggleModal={toggleModal} user={user} />
-    </>
+    </div>
   );
 };
 

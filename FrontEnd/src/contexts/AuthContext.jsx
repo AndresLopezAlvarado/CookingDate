@@ -45,8 +45,6 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (dataEntered) => {
     try {
-      console.log("Estoy en signIn de AuthContext.jsx");
-      console.log(dataEntered);
       const authenticatedUser = await loginRequest(dataEntered);
       setUser(authenticatedUser.data);
       setIsAuthenticated(true);
@@ -73,7 +71,6 @@ export const AuthProvider = ({ children }) => {
 
   const updateUser = async (id, newData) => {
     try {
-      console.log("Estoy en updateUser de AuthContext.jsx");
       await updateUserResquest(id, newData);
     } catch (error) {
       console.log({
@@ -94,9 +91,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getUsers = async () => {
-    console.log("Estoy en getUsers de AuthContext.jsx");
     const res = await getUsersRequest();
-    console.log(res);
     setUsers(res.data);
     try {
     } catch (error) {
@@ -107,8 +102,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const uploadPhotos = async (id, photos) => {
-    console.log("Estoy en uploadPhotos de AuthContext.jsx");
-    console.log(photos);
     try {
       const res = await uploadPhotosRequest(id, photos);
     } catch (error) {

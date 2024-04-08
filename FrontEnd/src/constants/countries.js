@@ -1,6 +1,6 @@
-async function fetchData() {
+async function fetchCountries() {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/comments");
+    const response = await fetch("https://restcountries.com/v3.1/all");
     if (!response.ok) {
       throw new Error("Ocurrió un error al obtener los datos");
     }
@@ -12,4 +12,4 @@ async function fetchData() {
   }
 }
 
-export default fetchData;
+export default fetchCountries;

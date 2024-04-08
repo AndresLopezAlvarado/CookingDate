@@ -10,7 +10,6 @@ const LoginModal = ({ isOpen, toggleModalLogin, toggleModalRegister }) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (data) => {
-    console.log("Estoy en handleSubmit de LoginModal");
     setLoading(!loading);
     signIn(data);
     toggleModalLogin();

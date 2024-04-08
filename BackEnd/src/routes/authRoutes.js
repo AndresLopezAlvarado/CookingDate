@@ -23,7 +23,7 @@ router.get("/verify", verifyToken);
 router.get("/users", authRequired, getUsers);
 router.get("/users/:id", authRequired, getUser);
 router.put("/users/:id", authRequired, editUser);
-router.put("/profile/:id", authRequired, uploadPhotos);
-router.post("/profile/:id", authRequired, deletePhoto);
+// router.put("/profile/:id", authRequired, uploadPhotos);
+// router.post("/profile/:id", authRequired, deletePhoto);
 
 export default router;

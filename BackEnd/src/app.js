@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 import authRoutes from "./routes/authRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 import { FRONTEND_URL } from "./config.js";
 
 const app = express();
@@ -19,5 +20,6 @@ app.use(
 );
 
 app.use("/api", authRoutes);
+app.use("/api", profileRoutes);
 
 export default app;

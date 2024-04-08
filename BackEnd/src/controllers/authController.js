@@ -320,6 +320,7 @@ export const deletePhoto = async (req, res) => {
     const userUpdated = await User.findByIdAndUpdate(req.params.id, user, {
       new: true,
     });
+    
     console.log(userUpdated);
     res.json(userUpdated);
   } catch (error) {

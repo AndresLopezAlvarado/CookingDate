@@ -11,7 +11,7 @@ const ProfileModal = ({ isOpen, toggleModal, user }) => {
 
   const handleSubmit = async (data) => {
     setLoading(!loading);
-    await updateUser(user._id, data);
+    // await updateUser(user._id, data);
     toggleModal();
     navigate(`/profile/${user._id}`);
   };
