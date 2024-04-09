@@ -1,18 +1,18 @@
 import bcrypt from "bcryptjs";
-import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
-import { createAccessToken } from "../libs/jwt.js";
-import { TOKEN_SECRET } from "../config.js";
-import { uploadImage, findImage, deleteImage } from "../libs/cloudinary.js";
 import fs from "fs-extra";
+import User from "../models/UserModel.js";
+import { TOKEN_SECRET } from "../config.js";
+import { createAccessToken } from "../libs/jwt.js";
+import { uploadImage, findImage, deleteImage } from "../libs/cloudinary.js";
 
 export const register = async (req, res) => {
-  const { username, age, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const newUser = new User({ username, age, email, password: passwordHash });
+    const newUser = new User({ username, email, password: passwordHash });
     const userSaved = await newUser.save();
 
     const access_token = await createAccessToken({ id: userSaved._id });
@@ -203,40 +203,7 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const editUser = async (req, res) => {
-  try {
-    console.log("Estoy en editUser (BackEnd)");
-    console.log(req.body);
-    const { username, age, email } = req.body;
-    console.log(username, age, email);
-    let image = null;
-    console.log(req.files);
 
-    if (req.files.image) {
-      const result = await uploadImage(req.files.image.tempFilePath);
-      image = { url: result.secure_url, public_id: result.public_id };
-      await fs.remove(req.files.image.tempFilePath);
-    }
-
-    const userUpdated = await User.findByIdAndUpdate(
-      req.params.id,
-      { username, age, email, image },
-      { new: true }
-    );
-
-    console.log(userUpdated);
-    res.json(userUpdated);
-  } catch (error) {
-    console.log({
-      message: "Something went wrong on editUser (BackEnd)",
-      errorMessage: error.message,
-    });
-    res.status(500).json({
-      message: "Something went wrong on editUser (BackEnd)",
-      errorMessage: error.message,
-    });
-  }
-};
 
 export const uploadPhotos = async (req, res) => {
   try {

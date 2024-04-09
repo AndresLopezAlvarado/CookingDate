@@ -6,11 +6,7 @@ import SelectDate from "../SelectDate.jsx";
 import fetchCountries from "../../constants/countries.js";
 
 const ProfileForm = ({ onSubmit, user }) => {
-  const [gender, setGender] = useState(user.gender || "");
-  const [dietaryPreferences, setDietaryPreferences] = useState(
-    user.dietaryPreferences || ""
-  );
-  const [country, setCountry] = useState(user.country || "");
+  const [userData, setUserData] = useState(user || {});
   const [countries, setCountries] = useState([]);
 
   async function loadCountries() {
@@ -19,6 +15,13 @@ const ProfileForm = ({ onSubmit, user }) => {
     setCountries(fetchedCountries);
   }
 
+  const handleOnChange = (date) => {
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      birthdate: date,
+    }));
+  };
+
   useEffect(() => {
     loadCountries();
   }, []);
@@ -26,20 +29,14 @@ const ProfileForm = ({ onSubmit, user }) => {
   return (
     <Formik
       initialValues={{
-        username: user.username,
-        age: user.age,
-        email: user.email,
-        country: country,
-        gender: gender,
-        dietaryPreferences: dietaryPreferences,
-        date: new Date(),
+        username: userData.username,
+        birthdate: userData.birthdate,
+        gender: userData.gender,
+        country: userData.country,
+        dietaryPreferences: userData.dietaryPreferences,
       }}
       validationSchema={yup.object({
         username: yup.string().required("Name is required"),
-        age: yup.number().required("Age is required"),
-        email: yup.string().required("Email is required"),
-        gender: yup.string().required("Gender is required"),
-        country: yup.string().required("Country is required"),
       })}
       onSubmit={async (values, actions) => {
         onSubmit(values);
@@ -52,149 +49,175 @@ const ProfileForm = ({ onSubmit, user }) => {
           <div className="flex flex-col">
             <h1 className="text-lime-500 text-3xl font-bold">Edit Profile</h1>
 
-            <label
-              className="text-left text-lime-500 text-sm font-bold"
-              htmlFor="username"
-            >
-              Name:
-            </label>
-            <Field
-              className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-              name="username"
-              placeholder="Username"
-            />
-            <ErrorMessage
-              component="p"
-              className="text-red-400 text-sm"
-              name="username"
-            />
+            <>
+              <label
+                className="text-left text-lime-500 text-sm font-bold"
+                htmlFor="username"
+              >
+                Name:
+              </label>
 
-            <label
-              className="text-left text-lime-500 text-sm font-bold"
-              htmlFor="date"
-            >
-              Fecha:
-            </label>
-            <SelectDate />
+              <Field
+                className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
+                name="username"
+                placeholder="Username"
+                value={userData.username}
+                onChange={(e) => {
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    username: e.target.value,
+                  }));
+                }}
+              />
 
-            <label
-              className="text-left text-lime-500 text-sm font-bold"
-              htmlFor="age"
-            >
-              Age:
-            </label>
-            <Field
-              className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-              type="number"
-              name="age"
-              placeholder="Age"
-            />
-            <ErrorMessage
-              component="p"
-              className="text-red-400 text-sm"
-              name="age"
-            />
+              <ErrorMessage
+                className="text-red-400 text-sm"
+                name="username"
+                component="p"
+              />
+            </>
 
-            <label
-              className="text-left text-lime-500 text-sm font-bold"
-              htmlFor="email"
-            >
-              Email:
-            </label>
-            <Field
-              className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-              type="email"
-              name="email"
-              placeholder="Email"
-            />
-            <ErrorMessage
-              component="p"
-              className="text-red-400 text-sm"
-              name="email"
-            />
+            <>
+              <label
+                className="text-left text-lime-500 text-sm font-bold"
+                htmlFor="birthdate"
+              >
+                Birthdate:
+              </label>
 
-            <label
-              className="text-left text-lime-500 text-sm font-bold"
-              htmlFor="gender"
-            >
-              Gender:
-            </label>
-            <Field
-              as="select"
-              id="gender"
-              name="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-            >
-              <option value="">Select gender</option>
-              <option value="Female">Female</option>
-              <option value="Male">Male</option>
-              <option value="Others">Others</option>
-            </Field>
-            <ErrorMessage
-              name="gender"
-              component="p"
-              className="text-red-400 text-sm"
-            />
+              <SelectDate
+                name="birthdate"
+                handleOnChange={handleOnChange}
+                selected={
+                  userData.birthdate
+                    ? userData.birthdate
+                    : "Sat May 04 2024 00:00:00 GMT-0500 (hora estándar de Colombia)"
+                }
+              />
 
-            <label
-              className="text-left text-lime-500 text-sm font-bold"
-              htmlFor="dietaryPreferences"
-            >
-              Dietary Preferences:
-            </label>
-            <Field
-              as="select"
-              id="dietaryPreferences"
-              name="dietaryPreferences"
-              value={dietaryPreferences}
-              onChange={(e) => setDietaryPreferences(e.target.value)}
-              className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-            >
-              <option value="">Select dietary preferences</option>
-              <option value="Vegetarian">Vegetarian</option>
-              <option value="Vegan">Vegan</option>
-              <option value="Gluten-free">Gluten-free</option>
-              <option value="Lactose intolerant">Lactose intolerant</option>
-              <option value="Nut allergy">Nut allergy</option>
-              <option value="Seafood allergy">Seafood allergy</option>
-              <option value="Pescetarian">Pescetarian</option>
-              <option value="Kosher">Kosher</option>
-              <option value="Halal">Halal</option>
-            </Field>
-            <ErrorMessage
-              name="dietaryPreferences"
-              component="p"
-              className="text-red-400 text-sm"
-            />
+              <ErrorMessage
+                className="text-red-400 text-sm"
+                name="birthdate"
+                component="p"
+              />
+            </>
 
-            <label
-              className="text-left text-lime-500 text-sm font-bold"
-              htmlFor="country"
-            >
-              Country:
-            </label>
-            <Field
-              as="select"
-              id="country"
-              name="country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-            >
-              <option value="">Select country</option>
-              {countries.map((country, index) => (
-                <option key={index} value={country.name.common}>
-                  {country.name.common}
+            <>
+              <label
+                className="text-left text-lime-500 text-sm font-bold"
+                htmlFor="gender"
+              >
+                Gender:
+              </label>
+
+              <Field
+                className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
+                id="gender"
+                name="gender"
+                as="select"
+                value={userData.gender}
+                onChange={(e) => {
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    gender: e.target.value,
+                  }));
+                }}
+              >
+                <option value="">Select gender</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Transgender">Transgender</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Genderfluid">Genderfluid</option>
+                <option value="Gender-neutral / Agender">
+                  Gender-neutral / Agender
                 </option>
-              ))}
-            </Field>
-            <ErrorMessage
-              name="country"
-              component="p"
-              className="text-red-400 text-sm"
-            />
+                <option value="Intersex">Intersex</option>
+                <option value="Others">Others</option>
+              </Field>
+
+              <ErrorMessage
+                className="text-red-400 text-sm"
+                name="gender"
+                component="p"
+              />
+            </>
+
+            <>
+              <label
+                className="text-left text-lime-500 text-sm font-bold"
+                htmlFor="country"
+              >
+                Country:
+              </label>
+
+              <Field
+                className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
+                id="country"
+                name="country"
+                as="select"
+                value={userData.country}
+                onChange={(e) => {
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    country: e.target.value,
+                  }));
+                }}
+              >
+                <option value="">Select country</option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country.name.common}>
+                    {country.name.common}
+                  </option>
+                ))}
+              </Field>
+
+              <ErrorMessage
+                className="text-red-400 text-sm"
+                name="country"
+                component="p"
+              />
+            </>
+
+            <>
+              <label
+                className="text-left text-lime-500 text-sm font-bold"
+                htmlFor="dietaryPreferences"
+              >
+                Dietary Preferences:
+              </label>
+
+              <Field
+                className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
+                id="dietaryPreferences"
+                name="dietaryPreferences"
+                as="select"
+                value={userData.dietaryPreferences}
+                onChange={(e) => {
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    dietaryPreferences: e.target.value,
+                  }));
+                }}
+              >
+                <option value="">Select dietary preferences</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Gluten-free">Gluten-free</option>
+                <option value="Lactose intolerant">Lactose intolerant</option>
+                <option value="Nut allergy">Nut allergy</option>
+                <option value="Seafood allergy">Seafood allergy</option>
+                <option value="Pescetarian">Pescetarian</option>
+                <option value="Kosher">Kosher</option>
+                <option value="Halal">Halal</option>
+              </Field>
+
+              <ErrorMessage
+                className="text-red-400 text-sm"
+                name="dietaryPreferences"
+                component="p"
+              />
+            </>
 
             <div>
               <button

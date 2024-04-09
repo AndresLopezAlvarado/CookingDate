@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { profilePictureRequest } from "../api/profile.js";
+import { profilePictureRequest, updateProfileRequest } from "../api/profile.js";
 
 const ProfileContext = createContext();
 
@@ -22,10 +22,21 @@ export const ProfileProvider = ({ children }) => {
     }
   };
 
+  const updateProfile = async (id, newData) => {
+    try {
+      await updateProfileRequest(id, newData);
+    } catch (error) {
+      console.log({
+        message: "Something went wrong on updateProfile",
+      });
+    }
+  };
+
   return (
     <ProfileContext.Provider
       value={{
         profilePicture,
+        updateProfile,
       }}
     >
       {children}

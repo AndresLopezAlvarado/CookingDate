@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const imagenSchema = new mongoose.Schema(
+const photoSchema = new mongoose.Schema(
   {
     url: String,
     public_id: String,
@@ -14,11 +14,14 @@ const imagenSchema = new mongoose.Schema(
 const userSchema = new mongoose.Schema(
   {
     username: { type: String, required: true, trim: true },
-    age: { type: Number, required: true, trim: true },
     email: { type: String, required: true, trim: true, unique: true },
-    image: { url: String, public_id: String },
-    images: { type: Map, of: imagenSchema },
     password: { type: String, required: true },
+    birthdate: { type: Date, trim: true },
+    gender: { type: String },
+    country: { type: String },
+    dietaryPreferences: { type: String },
+    profilePicture: { url: String, public_id: String },
+    photos: { type: Map, of: photoSchema },
   },
   { timestamps: true }
 );

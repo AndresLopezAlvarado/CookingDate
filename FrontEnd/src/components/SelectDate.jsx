@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useField } from "formik";
 import DatePicker from "react-datepicker";
 import { getYear, getMonth } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,9 +11,10 @@ const range = (start, end, step = 1) => {
   return result;
 };
 
-const SelectDate = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const years = range(1950, getYear(new Date()), 1);
+const SelectDate = ({ name = "", handleOnChange, selected }) => {
+  const [field, meta, helpers] = useField(name); // Para usar setValue no se puede eliminar field y meta
+  const { setValue } = helpers;
+  const years = range(1924, getYear(new Date()), 1);
   const months = [
     "January",
     "February",
@@ -41,9 +42,14 @@ const SelectDate = () => {
     <DatePicker
       className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
       calendarClassName="bg-transparent"
+      popperClassName="bg-lime-900"
       dayClassName={dayStyles}
       weekDayClassName={weekDayStyles}
-      popperClassName="bg-lime-900"
+      selected={selected}
+      onChange={(date) => {
+        setValue(date);
+        handleOnChange(date);
+      }}
       renderCustomHeader={({
         date,
         changeYear,
@@ -103,8 +109,6 @@ const SelectDate = () => {
           </button>
         </div>
       )}
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
     />
   );
 };

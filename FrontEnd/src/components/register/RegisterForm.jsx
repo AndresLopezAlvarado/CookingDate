@@ -7,10 +7,9 @@ const RegisterForm = ({ onSubmit, toggleModalLogin, toggleModalRegister }) => {
   return (
     <div>
       <Formik
-        initialValues={{ username: "", age: "", email: "", password: "" }}
+        initialValues={{ username: "", email: "", password: "" }}
         validationSchema={yup.object({
           username: yup.string().required("Name is required"),
-          age: yup.number().required("Age is required"),
           email: yup.string().required("Email is required"),
           password: yup.string().required("Password is required"),
         })}
@@ -42,24 +41,6 @@ const RegisterForm = ({ onSubmit, toggleModalLogin, toggleModalRegister }) => {
                 component="p"
                 className="text-red-400 text-sm"
                 name="username"
-              />
-
-              <label
-                className="text-left text-lime-500 text-sm font-bold"
-                htmlFor="age"
-              >
-                Age:
-              </label>
-              <Field
-                className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-                type="number"
-                name="age"
-                placeholder="Age"
-              />
-              <ErrorMessage
-                component="p"
-                className="text-red-400 text-sm"
-                name="age"
               />
 
               <label

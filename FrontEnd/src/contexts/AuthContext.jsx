@@ -6,7 +6,6 @@ import {
   verifyTokenRequest,
   getUserRequest,
   getUsersRequest,
-  updateUserResquest,
   uploadPhotosRequest,
   deleteImageRequest,
 } from "../api/auth.js";
@@ -67,16 +66,6 @@ export const AuthProvider = ({ children }) => {
     });
     setIsAuthenticated(false);
     setUser(null);
-  };
-
-  const updateUser = async (id, newData) => {
-    try {
-      await updateUserResquest(id, newData);
-    } catch (error) {
-      console.log({
-        message: "Something went wrong on updateUser",
-      });
-    }
   };
 
   const getUser = async (id) => {
@@ -165,7 +154,6 @@ export const AuthProvider = ({ children }) => {
         logout,
         getUser,
         getUsers,
-        updateUser,
         uploadPhotos,
         deleteImage,
         user,

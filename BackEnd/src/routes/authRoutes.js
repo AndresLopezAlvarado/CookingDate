@@ -6,7 +6,6 @@ import {
   verifyToken,
   getUser,
   getUsers,
-  editUser,
   uploadPhotos,
   deletePhoto,
 } from "../controllers/authController.js";
@@ -22,7 +21,6 @@ router.get("/profile", authRequired, profile);
 router.get("/verify", verifyToken);
 router.get("/users", authRequired, getUsers);
 router.get("/users/:id", authRequired, getUser);
-router.put("/users/:id", authRequired, editUser);
 // router.put("/profile/:id", authRequired, uploadPhotos);
 // router.post("/profile/:id", authRequired, deletePhoto);
 

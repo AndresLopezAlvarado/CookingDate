@@ -1,9 +1,13 @@
 import { Router } from "express";
 import { authRequired } from "../middlewares/validateToken.js";
-import { profilePicture } from "../controllers/profileController.js";
+import {
+  profilePicture,
+  updateProfile,
+} from "../controllers/profileController.js";
 
 const router = Router();
 
-router.put("/profile/:id", authRequired, profilePicture);
+router.put("/profile/profilePicture/:id", authRequired, profilePicture);
+router.put("/profile/:id", authRequired, updateProfile);
 
 export default router;

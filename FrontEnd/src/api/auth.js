@@ -10,15 +10,6 @@ export const getUserRequest = async (id) => axios.get(`/users/${id}`);
 
 export const getUsersRequest = async () => axios.get("/users");
 
-export const updateUserResquest = async (id, newData) => {
-  const form = new FormData();
-  for (let key in newData) form.append(key, newData[key]);
-
-  return await axios.put(`/users/${id}`, form, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-};
-
 export const uploadPhotosRequest = async (id, photos) => {
   const formPhotos = new FormData();
   for (let key in photos) formPhotos.append(key, photos[key]);

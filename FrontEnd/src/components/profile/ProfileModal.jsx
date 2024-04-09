@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import Modal from "../Modal";
 import ProfileForm from "./ProfileForm";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { useProfile } from "../../contexts/ProfileContext";
 
 const ProfileModal = ({ isOpen, toggleModal, user }) => {
   const [loading, setLoading] = useState(false);
-  const { updateUser } = useAuth();
+  const { updateProfile } = useProfile();
   const navigate = useNavigate();
 
   const handleSubmit = async (data) => {
     setLoading(!loading);
-    // await updateUser(user._id, data);
+    await updateProfile(user._id, data);
     toggleModal();
     navigate(`/profile/${user._id}`);
   };
