@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import {
   updateProfileRequest,
   profilePictureRequest,
@@ -17,11 +17,14 @@ export const useProfile = () => {
 };
 
 export const ProfileProvider = ({ children }) => {
-  const updateProfile = async (id, newData) => {
+  const [user, setUser] = useState();
+
+  const updateProfile = async (userId, newData) => {
     try {
-      await updateProfileRequest(id, newData);
+      const updatedUser = await updateProfileRequest(userId, newData);
+      setUser(updatedUser);
     } catch (error) {
-      console.log({
+      console.error({
         message: "Something went wrong on updateProfile",
       });
     }
@@ -29,7 +32,8 @@ export const ProfileProvider = ({ children }) => {
 
   const profilePicture = async (userId, photo) => {
     try {
-      const res = await profilePictureRequest(userId, photo);
+      const updatedUser = await profilePictureRequest(userId, photo);
+      setUser(updatedUser);
     } catch (error) {
       console.error({
         message: "Something went wrong on profilePicture",
@@ -37,22 +41,24 @@ export const ProfileProvider = ({ children }) => {
     }
   };
 
-  const uploadPhotos = async (id, photos) => {
+  const uploadPhotos = async (userId, photos) => {
     try {
-      const res = await uploadPhotosRequest(id, photos);
+      const updatedUser = await uploadPhotosRequest(userId, photos);
+      setUser(updatedUser);
     } catch (error) {
-      console.log({
+      console.error({
         message: "Something went wrong on uploadPhotos",
       });
     }
   };
 
-  const deletePhoto = async (id, photoToDelete) => {
+  const deletePhoto = async (userId, photoToDelete) => {
     try {
-      const res = await deletePhotoRequest(id, photoToDelete);
+      const updatedUser = await deletePhotoRequest(userId, photoToDelete);
+      setUser(updatedUser);
     } catch (error) {
-      console.log({
-        message: "Something went wrong on deleteImage",
+      console.error({
+        message: "Something went wrong on deletePhoto",
       });
     }
   };
@@ -60,6 +66,8 @@ export const ProfileProvider = ({ children }) => {
   return (
     <ProfileContext.Provider
       value={{
+        user,
+        setUser,
         updateProfile,
         profilePicture,
         uploadPhotos,

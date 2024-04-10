@@ -13,15 +13,14 @@ export const updateProfile = async (req, res) => {
       { new: true }
     );
 
-    console.log(userUpdated);
     res.json(userUpdated);
   } catch (error) {
-    console.log({
-      message: "Something went wrong on editUser (BackEnd)",
+    console.error({
+      message: "Something went wrong on updateProfile (BackEnd)",
       errorMessage: error.message,
     });
     res.status(500).json({
-      message: "Something went wrong on editUser (BackEnd)",
+      message: "Something went wrong on updateProfile (BackEnd)",
       errorMessage: error.message,
     });
   }
@@ -47,7 +46,6 @@ export const profilePicture = async (req, res) => {
       { new: true }
     );
 
-    console.log(userUpdated);
     res.json(userUpdated);
   } catch (error) {
     console.error({
@@ -63,7 +61,6 @@ export const profilePicture = async (req, res) => {
 
 export const uploadPhotos = async (req, res) => {
   try {
-    console.log("Estoy en uploadPhotos de profileController.js");
     const photos = {};
 
     const user = await User.findById(req.params.id);
@@ -71,8 +68,6 @@ export const uploadPhotos = async (req, res) => {
     if (req.files) {
       for (const key in req.files) {
         const file = req.files[key];
-        console.log(req.files[key].name);
-        console.log(req.files[key].name.split("."));
         const nameFile = req.files[key].name.split(".");
 
         const findFile = await findImage(file.name);
@@ -82,9 +77,7 @@ export const uploadPhotos = async (req, res) => {
             req.files[key].tempFilePath,
             req.files[key].name
           );
-          console.log(nameFile);
-          console.log(nameFile[0]);
-          console.log(result);
+
           photos[nameFile[0]] = {
             url: result.secure_url,
             public_id: result.public_id,
@@ -93,7 +86,6 @@ export const uploadPhotos = async (req, res) => {
             type: req.files[key].mimetype,
           };
         } else {
-          console.log(user.photos);
           if (user.photos) {
             user.photos.forEach((value, key) => {
               if (value.name === findFile.resources[0].filename) {
@@ -119,10 +111,9 @@ export const uploadPhotos = async (req, res) => {
       { new: true }
     );
 
-    console.log(userUpdated.photos);
     res.json(userUpdated);
   } catch (error) {
-    console.log({
+    console.error({
       message: "Something went wrong on uploadPhotos (BackEnd)",
       errorMessage: error.message,
     });

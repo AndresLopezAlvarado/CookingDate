@@ -3,16 +3,17 @@ import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../contexts/AuthContext";
+import { useProfile } from "../contexts/ProfileContext.jsx";
 import LoginModal from "./login/LoginModal.jsx";
 import RegisterModal from "./register/RegisterModal.jsx";
-import { VITE_FRONTEND_URL } from "../../config.js";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const NavBar = () => {
-  const { logout, isAuthenticated, user } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
+  const { user } = useProfile();
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
 
@@ -30,7 +31,7 @@ const NavBar = () => {
         <div className="relative p-2 md:p-3 lg:p-4 flex items-center justify-between">
           <img
             className="h-9 sm:h-10 lg:h-16 w-auto rounded-md"
-            src="potHearts.png"
+            src="/potHearts.png"
             alt="logoNavbar"
           />
 
@@ -52,70 +53,72 @@ const NavBar = () => {
                     <BellIcon aria-hidden="true" />
                   </button>
 
-                  <Menu as="div" className="flex items-center justify-center">
-                    <Menu.Button className="rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      {user.image ? (
-                        <img
-                          className="h-8 w-8 md:h-9 md:w-9 lg:h-11 lg:w-11 rounded-full"
-                          src={user.image.url}
-                          alt="userPhoto"
-                        />
-                      ) : (
-                        <img
-                          className="h-8 w-8 md:h-9 md:w-9 lg:h-11 lg:w-11 rounded-full"
-                          src="../src/assets/noProfilePhoto.png"
-                          alt="noProfilePhoto"
-                        />
-                      )}
-                    </Menu.Button>
+                  {user ? (
+                    <Menu as="div" className="flex items-center justify-center">
+                      <Menu.Button className="rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        {user.profilePicture ? (
+                          <img
+                            className="h-8 w-8 md:h-9 md:w-9 lg:h-11 lg:w-11 rounded-full"
+                            src={user.profilePicture.url}
+                            alt="userPhoto"
+                          />
+                        ) : (
+                          <img
+                            className="h-8 w-8 md:h-9 md:w-9 lg:h-11 lg:w-11 rounded-full"
+                            src="../src/assets/noProfilePhoto.png"
+                            alt="noProfilePhoto"
+                          />
+                        )}
+                      </Menu.Button>
 
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute -right-4 top-11 sm:top-12 md:top-14 lg:top-20 z-10 mt-2 w-48 rounded-md bg-lime-800 p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              to={`/profile/${user._id}`}
-                              className={classNames(
-                                active
-                                  ? "bg-lime-400 text-lime-900 rounded-md"
-                                  : "",
-                                "block px-4 py-2 text-sm bg-lime-700 text-lime-500 rounded-md"
-                              )}
-                            >
-                              Profile
-                            </Link>
-                          )}
-                        </Menu.Item>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute -right-4 top-11 sm:top-12 md:top-14 lg:top-20 z-10 mt-2 w-48 rounded-md bg-lime-800 p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to={`/profile/${user._id}`}
+                                className={classNames(
+                                  active
+                                    ? "bg-lime-400 text-lime-900 rounded-md"
+                                    : "",
+                                  "block px-4 py-2 text-sm bg-lime-700 text-lime-500 rounded-md"
+                                )}
+                              >
+                                Profile
+                              </Link>
+                            )}
+                          </Menu.Item>
 
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/"
-                              onClick={() => {
-                                logout();
-                              }}
-                              className={classNames(
-                                active
-                                  ? "bg-lime-400 text-lime-900 rounded-md"
-                                  : "",
-                                "block px-4 py-2 mt-1 text-sm bg-lime-700 text-lime-500 rounded-md"
-                              )}
-                            >
-                              Sign out
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="/"
+                                onClick={() => {
+                                  logout();
+                                }}
+                                className={classNames(
+                                  active
+                                    ? "bg-lime-400 text-lime-900 rounded-md"
+                                    : "",
+                                  "block px-4 py-2 mt-1 text-sm bg-lime-700 text-lime-500 rounded-md"
+                                )}
+                              >
+                                Sign out
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                  ) : null}
                 </div>
               </>
             ) : (
