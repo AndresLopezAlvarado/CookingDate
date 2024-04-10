@@ -5,6 +5,7 @@ import { differenceInYears, parseISO } from "date-fns";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { useProfile } from "../contexts/ProfileContext.jsx";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
+import UploadPhotosModal from "../components/UploadPhotosModal.jsx";
 
 const Profile = () => {
   const { getUser } = useAuth();
@@ -13,10 +14,16 @@ const Profile = () => {
   const inputFileRef = useRef(null);
   const [user, setUser] = useState({});
   const [age, setAge] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenProfileModal, setIsOpenProfileModal] = useState(false);
+  const [isOpenUploadPhotosModal, setIsOpenUploadPhotosModal] = useState(false);
 
-  const toggleModal = async (e) => {
-    setIsOpen(!isOpen);
+  const toggleProfileModal = async (e) => {
+    setIsOpenProfileModal(!isOpenProfileModal);
+    loadUser();
+  };
+
+  const toggleUploadPhotosModal = async (e) => {
+    setIsOpenUploadPhotosModal(!isOpenUploadPhotosModal);
     loadUser();
   };
 
@@ -32,8 +39,14 @@ const Profile = () => {
   async function loadUser() {
     const userFound = await getUser(params.id);
     setUser(userFound);
-    const ageUserFound = differenceInYears(new Date(), parseISO(userFound.birthdate));
-    setAge(ageUserFound);
+
+    if (userFound.birthdate) {
+      const ageUserFound = differenceInYears(
+        new Date(),
+        parseISO(userFound.birthdate)
+      );
+      setAge(ageUserFound);
+    }
   }
 
   useEffect(() => {
@@ -41,9 +54,13 @@ const Profile = () => {
   }, [user]);
 
   return (
-    <div className="border-4 border-lime-900 h-screen mt-12 p-4 rounded-md flex flex-col items-center">
-      <div className="h-1/2 flex flex-col items-center justify-center">
-        <div className="relative h-1/2">
+    <div className="border-4 border-lime-900 h-screen mt-12 p-4 rounded-md flex flex-col justify-center items-center">
+      <div className="bg-lime-900 rounded-md p-4 w-5/6 flex flex-col items-center justify-center gap-y-4">
+        <h1 className="text-lime-400 text-3xl font-bold text-center">
+          {user.username}
+        </h1>
+
+        <div className="w-5/6 relative flex flex-col items-center justify-center">
           <img
             src={
               user.profilePicture
@@ -51,40 +68,77 @@ const Profile = () => {
                 : "/noProfilePhoto.png"
             }
             onClick={photoProfile}
-            className="h-full rounded-full cursor-pointer"
+            className="w-full rounded-full cursor-pointer"
           />
 
           <MdAddAPhoto
             onClick={photoProfile}
-            className="absolute top-1/2 right-0 h-1/4 w-1/4 p-1 bg-lime-900 text-lime-400 rounded-full cursor-pointer"
+            className="absolute top-1/2 right-0 h-1/4 w-1/4 p-2 bg-lime-700 text-lime-300 rounded-full cursor-pointer hover:bg-lime-500 hover:text-lime-900"
+          />
+
+          <input
+            type="file"
+            name="image"
+            ref={inputFileRef}
+            className="hidden"
+            onChange={handleFileChange}
           />
         </div>
 
-        <input
-          type="file"
-          name="image"
-          ref={inputFileRef}
-          className="hidden"
-          onChange={handleFileChange}
-        />
+        <div className="text-center">
+          {age ? (
+            <h2 className="text-xl text-lime-400">
+              <span className="font-bold">{age}</span> years
+            </h2>
+          ) : null}
 
-        <h1 className="text-3xl text-lime-950 m-4 font-bold">{user.username}</h1>
-        <h2 className="text-xl text-lime-950">{age} years</h2>
-        <h3 className="text-xl text-lime-950">From: {user.country}</h3>
-        <h4 className="text-xl text-lime-950">Gender: {user.gender}</h4>
-        <h5 className="text-xl text-lime-950">Dietary preferences: {user.dietaryPreferences}</h5>
+          {user.country ? (
+            <h3 className="text-xl text-lime-400">
+              <span className="font-bold">From:</span> {user.country}
+            </h3>
+          ) : null}
+
+          {user.gender ? (
+            <h4 className="text-xl text-lime-400">
+              <span className="font-bold">Gender:</span> {user.gender}
+            </h4>
+          ) : null}
+
+          {user.dietaryPreferences ? (
+            <h5 className="text-xl text-lime-400">
+              <span className="font-bold">Dietary preferences:</span>{" "}
+              {user.dietaryPreferences}
+            </h5>
+          ) : null}
+        </div>
+
+        <div className="flex gap-x-4">
+          <button
+            className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
+            onClick={toggleProfileModal}
+          >
+            Edit profile
+          </button>
+
+          <button
+            className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
+            onClick={toggleUploadPhotosModal}
+          >
+            Upload photos
+          </button>
+        </div>
       </div>
 
-      <div>
-        <button
-          className="bg-lime-900 hover:bg-lime-700 text-lime-400 hover:text-lime-950 font-bold p-3 rounded-md"
-          onClick={toggleModal}
-        >
-          Edit profile
-        </button>
-      </div>
+      <ProfileModal
+        isOpen={isOpenProfileModal}
+        toggleModal={toggleProfileModal}
+        user={user}
+      />
 
-      <ProfileModal isOpen={isOpen} toggleModal={toggleModal} user={user} />
+      <UploadPhotosModal
+        isOpen={isOpenUploadPhotosModal}
+        toggleModal={toggleUploadPhotosModal}
+      />
     </div>
   );
 };

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "../Modal";
 import RegisterForm from "./RegisterForm";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const RegisterModal = ({ isOpen, toggleModalLogin, toggleModalRegister }) => {
   const { signUp } = useAuth();
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (data) => {
     setLoading(!loading);
-    signUp(data);
+    await signUp(data);
     toggleModalRegister();
     navigate("/people");
   };

@@ -40,7 +40,7 @@ const SelectDate = ({ name = "", handleOnChange, selected }) => {
 
   return (
     <DatePicker
-      className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
+      className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
       calendarClassName="bg-transparent"
       popperClassName="bg-lime-900"
       dayClassName={dayStyles}

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "../Modal";
 import ProfileForm from "./ProfileForm";
-import { useNavigate } from "react-router-dom";
 import { useProfile } from "../../contexts/ProfileContext";
 
 const ProfileModal = ({ isOpen, toggleModal, user }) => {
-  const [loading, setLoading] = useState(false);
   const { updateProfile } = useProfile();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (data) => {
     setLoading(!loading);

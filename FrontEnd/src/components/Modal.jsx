@@ -1,5 +1,3 @@
-import React from "react";
-
 const Modal = ({ isOpen, onClose, children }) => {
   return (
     <>
@@ -9,8 +7,8 @@ const Modal = ({ isOpen, onClose, children }) => {
             <div className="fixed inset-0 transition-opacity" onClick={onClose}>
               <div className="absolute inset-0 bg-lime-700 opacity-75"></div>
             </div>
-            
-            <div className="relative bg-lime-900 rounded-md p-4">
+
+            <div className="relative bg-lime-900 rounded-md w-5/6 p-4">
               {children}
             </div>
           </div>

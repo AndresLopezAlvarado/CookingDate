@@ -43,25 +43,30 @@ const Home = () => {
 
   return (
     <>
-      <div className="min-h-screen border-4 border-lime-900 mt-14 sm:mt-16 md:mt-20 lg:mt-28 mx-1 mb-1 p-4 rounded-md flex flex-col items-center justify-center text-center">
-        <div className="flex flex-col items-center justify-center text-center">
+      <div className="border-4 border-lime-900 h-screen mt-12 p-4 rounded-md flex flex-col justify-center items-center">
+        <div className="w-5/6 flex flex-col items-center justify-center text-center">
           {isAuthenticated ? (
-            <>
-              <p className="bg-lime-900 text-orange-400 text-3xl font-bold p-4 my-4 rounded-md">
+            <div className="bg-lime-900 w-full p-4 rounded-md flex flex-col items-center gap-y-4">
+              <h1 className="text-lime-400 text-3xl font-bold text-center">
                 Bienvenido {user.username}
-              </p>
+              </h1>
 
-              {user.image && (
-                <img src={user.image.url} className="mb-4 rounded-full" />
-              )}
+              <img
+                src={
+                  user.profilePicture
+                    ? user.profilePicture.url
+                    : "/noProfilePhoto.png"
+                }
+                className="w-5/6 rounded-full"
+              />
 
-              <p className=" bg-lime-900 text-lime-500 font-bold inline-block mb-4 p-4 justify-center rounded-md">
+              <h2 className="text-lime-400 font-bold">
                 Come on,{" "}
-                <Link to="/people" className="text-orange-400">
+                <Link to="/people" className="text-orange-400 font-bold">
                   find a date!
                 </Link>
-              </p>
-            </>
+              </h2>
+            </div>
           ) : (
             <>
               <img
@@ -134,7 +139,7 @@ const Home = () => {
         </>
       )}
 
-      <div className="text-lime-900 p-3 border-4 border-lime-900 m-1 rounded-md flex flex-col items-center justify-center">
+      <div className="text-lime-950 border-4 border-lime-900 mt-1 p-4 rounded-md flex flex-col items-center justify-center">
         <div className="w-full grid grid-cols-3">
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold mb-2">Legal</h1>
@@ -163,7 +168,7 @@ const Home = () => {
         </div>
       </div>
 
-      <p className="text-center mb-2">
+      <p className="text-center text-lime-950 mb-2">
         © 2024 Andrés López, todos los derechos reservados.
       </p>
     </>

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "../Modal";
 import LoginForm from "./LoginForm";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ isOpen, toggleModalLogin, toggleModalRegister }) => {
   const { signIn } = useAuth();
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (data) => {
     setLoading(!loading);
-    signIn(data);
+    await signIn(data);
     toggleModalLogin();
     navigate("/people");
   };

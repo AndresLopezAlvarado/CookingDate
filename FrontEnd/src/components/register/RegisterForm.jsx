@@ -1,86 +1,90 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import * as yup from "yup";
 import { Link } from "react-router-dom";
+import * as yup from "yup";
 
 const RegisterForm = ({ onSubmit, toggleModalLogin, toggleModalRegister }) => {
   return (
-    <div>
-      <Formik
-        initialValues={{ username: "", email: "", password: "" }}
-        validationSchema={yup.object({
-          username: yup.string().required("Name is required"),
-          email: yup.string().required("Email is required"),
-          password: yup.string().required("Password is required"),
-        })}
-        onSubmit={async (values, actions) => {
-          onSubmit(values);
-          actions.setSubmitting(false);
-        }}
-        enableReinitialize
-      >
-        {({ handleSubmit, isSubmitting }) => (
-          <Form onSubmit={handleSubmit}>
-            <div className="flex flex-col p-4">
-              <h1 className="text-lime-500 text-3xl font-bold mb-4 text-center">
+    <Formik
+      enableReinitialize
+      initialValues={{ username: "", email: "", password: "" }}
+      validationSchema={yup.object({
+        username: yup.string().required("Username is required"),
+        email: yup.string().required("Email is required"),
+        password: yup.string().required("Password is required"),
+      })}
+      onSubmit={async (values, actions) => {
+        onSubmit(values);
+        actions.setSubmitting(false);
+      }}
+    >
+      {({ handleSubmit, isSubmitting }) => (
+        <Form onSubmit={handleSubmit}>
+          <div className="flex justify-center items-center">
+            <div className="w-5/6 flex flex-col gap-y-4">
+              <h1 className="text-lime-400 text-3xl font-bold text-center">
                 Register
               </h1>
 
-              <label
-                className="text-left text-lime-500 text-sm font-bold"
-                htmlFor="username"
-              >
-                Username:
-              </label>
-              <Field
-                className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-                name="username"
-                placeholder="Username"
-              />
-              <ErrorMessage
-                component="p"
-                className="text-red-400 text-sm"
-                name="username"
-              />
+              <div>
+                <label className="text-lime-400 font-bold" htmlFor="username">
+                  Username:
+                </label>
 
-              <label
-                className="text-left text-lime-500 text-sm font-bold"
-                htmlFor="email"
-              >
-                Email:
-              </label>
-              <Field
-                className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-                type="email"
-                name="email"
-                placeholder="Email"
-              />
-              <ErrorMessage
-                component="p"
-                className="text-red-400 text-sm"
-                name="email"
-              />
-              
-              <label
-                className="text-left text-lime-500 text-sm font-bold"
-                htmlFor="password"
-              >
-                Password:
-              </label>
-              <Field
-                className="bg-lime-300 text-orange-400 placeholder-orange-400 w-full px-4 py-2 mb-4 rounded-md"
-                type="password"
-                name="password"
-                placeholder="********"
-              />
-              <ErrorMessage
-                component="p"
-                className="text-red-400 text-sm"
-                name="password"
-              />
+                <Field
+                  className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
+                  name="username"
+                  placeholder="Username"
+                />
+
+                <ErrorMessage
+                  className="text-red-400"
+                  name="username"
+                  component="h2"
+                />
+              </div>
+
+              <div>
+                <label className="text-lime-400 font-bold" htmlFor="email">
+                  Email:
+                </label>
+
+                <Field
+                  className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                />
+
+                <ErrorMessage
+                  className="text-red-400"
+                  name="email"
+                  component="h2"
+                />
+              </div>
+
+              <div>
+                <label className="text-lime-400 font-bold" htmlFor="password">
+                  Password:
+                </label>
+
+                <Field
+                  className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
+                  type="password"
+                  name="password"
+                  placeholder="********"
+                />
+
+                <ErrorMessage
+                  className="text-red-400"
+                  name="password"
+                  component="h2"
+                />
+              </div>
+
               <div className="text-center">
                 <button
-                  className="bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 font-bold px-3 py-1 rounded-md focus:outline-none focus:shadow-outline"
+                  className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
                   type="submit"
                   disabled={isSubmitting}
                 >
@@ -92,25 +96,25 @@ const RegisterForm = ({ onSubmit, toggleModalLogin, toggleModalRegister }) => {
                 </button>
               </div>
 
-              <div className="mt-4">
-                <h1 className="text-orange-400 font-bold">
+              <div className="text-center">
+                <h3 className="text-lime-400 font-bold">
                   Already have an account?{" "}
                   <Link
                     onClick={() => {
                       toggleModalRegister();
                       toggleModalLogin();
                     }}
-                    className="text-lime-500 font-bold"
+                    className="text-orange-400 font-bold"
                   >
                     Sign In!
                   </Link>
-                </h1>
+                </h3>
               </div>
             </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
