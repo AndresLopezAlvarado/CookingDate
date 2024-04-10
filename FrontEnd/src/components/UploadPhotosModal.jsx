@@ -18,7 +18,7 @@ const UploadPhotosModal = ({ isOpen, toggleModal }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={toggleModal}>
-      <PhotoGallery />
+      <PhotoGallery toggleModal={toggleModal} />
     </Modal>
   );
 };

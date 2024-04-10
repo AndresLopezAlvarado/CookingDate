@@ -1,5 +1,10 @@
 import { createContext, useContext } from "react";
-import { profilePictureRequest, updateProfileRequest } from "../api/profile.js";
+import {
+  updateProfileRequest,
+  profilePictureRequest,
+  uploadPhotosRequest,
+  deletePhotoRequest,
+} from "../api/profile.js";
 
 const ProfileContext = createContext();
 
@@ -12,16 +17,6 @@ export const useProfile = () => {
 };
 
 export const ProfileProvider = ({ children }) => {
-  const profilePicture = async (userId, photo) => {
-    try {
-      const res = await profilePictureRequest(userId, photo);
-    } catch (error) {
-      console.error({
-        message: "Something went wrong on profilePicture",
-      });
-    }
-  };
-
   const updateProfile = async (id, newData) => {
     try {
       await updateProfileRequest(id, newData);
@@ -32,11 +27,43 @@ export const ProfileProvider = ({ children }) => {
     }
   };
 
+  const profilePicture = async (userId, photo) => {
+    try {
+      const res = await profilePictureRequest(userId, photo);
+    } catch (error) {
+      console.error({
+        message: "Something went wrong on profilePicture",
+      });
+    }
+  };
+
+  const uploadPhotos = async (id, photos) => {
+    try {
+      const res = await uploadPhotosRequest(id, photos);
+    } catch (error) {
+      console.log({
+        message: "Something went wrong on uploadPhotos",
+      });
+    }
+  };
+
+  const deletePhoto = async (id, photoToDelete) => {
+    try {
+      const res = await deletePhotoRequest(id, photoToDelete);
+    } catch (error) {
+      console.log({
+        message: "Something went wrong on deleteImage",
+      });
+    }
+  };
+
   return (
     <ProfileContext.Provider
       value={{
-        profilePicture,
         updateProfile,
+        profilePicture,
+        uploadPhotos,
+        deletePhoto,
       }}
     >
       {children}

@@ -8,7 +8,7 @@ const Modal = ({ isOpen, onClose, children }) => {
               <div className="absolute inset-0 bg-lime-700 opacity-75"></div>
             </div>
 
-            <div className="relative bg-lime-900 rounded-md w-5/6 p-4">
+            <div className="relative mt-20 mb-8 bg-lime-900 rounded-md w-5/6 p-4">
               {children}
             </div>
           </div>

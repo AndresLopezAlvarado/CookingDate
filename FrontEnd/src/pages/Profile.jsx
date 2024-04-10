@@ -54,7 +54,7 @@ const Profile = () => {
   }, [user]);
 
   return (
-    <div className="border-4 border-lime-900 h-screen mt-12 p-4 rounded-md flex flex-col justify-center items-center">
+    <div className="border-4 border-lime-900 min-h-screen mt-12 p-4 rounded-md flex flex-col justify-center items-center gap-y-4">
       <div className="bg-lime-900 rounded-md p-4 w-5/6 flex flex-col items-center justify-center gap-y-4">
         <h1 className="text-lime-400 text-3xl font-bold text-center">
           {user.username}
@@ -112,14 +112,33 @@ const Profile = () => {
           ) : null}
         </div>
 
-        <div className="flex gap-x-4">
+        <div className="text-center">
           <button
             className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
             onClick={toggleProfileModal}
           >
             Edit profile
           </button>
+        </div>
+      </div>
 
+      <div className="border-lime-900 border-4 rounded-md w-full flex flex-col items-center justify-center">
+        <div className="p-4">
+          <div className="grid grid-cols-3 gap-4">
+            {user.photos
+              ? Object.values(user.photos).map((photo, index) => (
+                  <img
+                    src={photo.url}
+                    alt={`Photo ${index}`}
+                    className="w-full h-full rounded-md"
+                    key={index}
+                  />
+                ))
+              : null}
+          </div>
+        </div>
+
+        <div className="bg-lime-900 p-4 w-full text-center">
           <button
             className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
             onClick={toggleUploadPhotosModal}
