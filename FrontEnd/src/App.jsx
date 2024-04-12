@@ -9,7 +9,7 @@ import NavBarPrueba from "./components/NavBarPrueba.jsx";
 import Home from "./pages/Home.jsx";
 import Profile from "./pages/Profile.jsx";
 import People from "./pages/People.jsx";
-import DateProfile from "./pages/DateProfile.jsx";
+import PeopleProfile from "./pages/PeopleProfile.jsx";
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
                     <Route element={<ProtectedRoutes />}>
                       <Route path="/profile/:id" element={<Profile />} />
                       <Route path="/people" element={<People />} />
-                      <Route path="/people/:id" element={<DateProfile />} />
+                      <Route path="/people/:id" element={<PeopleProfile />} />
                     </Route>
                   </Routes>
                 </ToggleProvider>

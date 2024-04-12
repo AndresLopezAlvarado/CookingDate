@@ -45,11 +45,11 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
     } catch (error) {
       // setErrors(error.response.data);
-      setErrors(error.response.data.arrayErrors);
+      // setErrors(error.response.data.arrayErrors);
       console.log({
         message: "Something went wrong on signIn",
-        errorMessage: error.response.data.message,
-        arrayErrors: error.response.data.arrayErrors,
+        // errorMessage: error.response.data.message,
+        // arrayErrors: error.response.data.arrayErrors,
       });
     }
   };

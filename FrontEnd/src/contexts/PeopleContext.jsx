@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getPeopleRequest, getUserRequest } from "../api/people.js";
+import { getPeopleRequest, getPersonRequest } from "../api/people.js";
 
 const PeopleContext = createContext();
 
@@ -26,13 +26,13 @@ export const PeopleProvider = ({ children }) => {
     }
   };
 
-  const getUser = async (userId) => {
+  const getPerson = async (userId) => {
     try {
-      const res = await getUserRequest(userId);
+      const res = await getPersonRequest(userId);
       return res.data;
     } catch (error) {
       console.error({
-        message: "Something went wrong on getUser",
+        message: "Something went wrong on getPerson",
       });
     }
   };
@@ -43,7 +43,7 @@ export const PeopleProvider = ({ children }) => {
         people,
         setPeople,
         getPeople,
-        getUser,
+        getPerson,
       }}
     >
       {children}

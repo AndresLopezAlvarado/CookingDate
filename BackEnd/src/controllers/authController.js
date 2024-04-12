@@ -49,8 +49,6 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  console.log("Estoy en login de authController.js (BackEnd)");
-  console.log(req.body);
   const { email, password } = req.body;
 
   try {
@@ -79,7 +77,7 @@ export const login = async (req, res) => {
 
     res.json(userFound);
   } catch (error) {
-    console.log({
+    console.error({
       message: "Something went wrong on login",
       errorMessage: error.message,
       arrayErrors: error.errors.map((error) => error.message),
@@ -154,7 +152,7 @@ export const verifyToken = async (req, res) => {
       console.log({
         message: "Something went wrong on profile",
         // errorMessage: error.response.data.message,
-        arrayErrors: error.response.data.arrayErrors,
+        // arrayErrors: error.response.data.arrayErrors,
       });
       res.status(500).json({
         message: "Something went wrong on profile",
@@ -163,22 +161,4 @@ export const verifyToken = async (req, res) => {
       });
     }
   });
-};
-
-export const getUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: "User no found" });
-
-    res.json(user);
-  } catch (error) {
-    console.log({
-      message: "Something went wrong on editUser (BackEnd)",
-      errorMessage: error.message,
-    });
-    res.status(500).json({
-      message: "Something went wrong on editUser (BackEnd)",
-      errorMessage: error.message,
-    });
-  }
 };

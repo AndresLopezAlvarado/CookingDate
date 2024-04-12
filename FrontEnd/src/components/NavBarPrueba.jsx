@@ -306,8 +306,9 @@ const NavBarPrueba = () => {
                           "block rounded-md px-3 p-2 text-base font-bold"
                         )}
                         aria-current={item.current ? "page" : undefined}
-                        onClick={() => {
+                        onClick={(t) => {
                           changeCurrent(item.name);
+                          toggleModal(t);
                         }}
                       >
                         {item.name}

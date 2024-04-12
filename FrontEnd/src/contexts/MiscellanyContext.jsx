@@ -14,10 +14,10 @@ export const useMiscellany = () => {
 };
 
 export const MiscellanyProvider = ({ children }) => {
-  const { getUser } = usePeople();
+  const { getPerson } = usePeople();
 
   const calculateAge = async (userId) => {
-    const userFound = await getUser(userId);
+    const userFound = await getPerson(userId);
     var ageUserFound = null;
 
     if (userFound) {
