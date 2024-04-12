@@ -2,13 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
 import { differenceInYears, parseISO } from "date-fns";
-import { useAuth } from "../contexts/AuthContext.jsx";
 import { useProfile } from "../contexts/ProfileContext.jsx";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
 import UploadPhotosModal from "../components/UploadPhotosModal.jsx";
+import { usePeople } from "../contexts/PeopleContext.jsx";
 
 const Profile = () => {
-  const { getUser } = useAuth();
+  const { getUser } = usePeople();
   const { user, setUser, profilePicture } = useProfile();
   const params = useParams();
   const inputFileRef = useRef(null);

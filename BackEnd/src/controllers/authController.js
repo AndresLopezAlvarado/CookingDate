@@ -165,24 +165,6 @@ export const verifyToken = async (req, res) => {
   });
 };
 
-export const getUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    if (!users) return res.status(404).json({ message: "Users no found" });
-    console.log(users);
-    res.json(users);
-  } catch (error) {
-    console.log({
-      message: "Something went wrong on editUser (BackEnd)",
-      errorMessage: error.message,
-    });
-    res.status(500).json({
-      message: "Something went wrong on editUser (BackEnd)",
-      errorMessage: error.message,
-    });
-  }
-};
-
 export const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -200,5 +182,3 @@ export const getUser = async (req, res) => {
     });
   }
 };
-
-

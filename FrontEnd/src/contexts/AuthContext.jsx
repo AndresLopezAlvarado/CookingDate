@@ -4,14 +4,13 @@ import {
   loginRequest,
   registerRequest,
   verifyTokenRequest,
-  getUserRequest,
-  getUsersRequest,
 } from "../api/auth.js";
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
+
   if (!context) throw new Error("useAuth must be used within an AuthProvider");
 
   return context;
@@ -19,7 +18,6 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [users, setUsers] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       // setErrors(error.response.data);
       setErrors(error.response.data.arrayErrors);
-      console.log({
+      console.error({
         message: "Something went wrong on signUp",
         errorMessage: error.response.data.message,
         arrayErrors: error.response.data.arrayErrors,
@@ -64,28 +62,6 @@ export const AuthProvider = ({ children }) => {
     });
     setIsAuthenticated(false);
     setUser(null);
-  };
-
-  const getUser = async (id) => {
-    try {
-      const res = await getUserRequest(id);
-      return res.data;
-    } catch (error) {
-      console.log({
-        message: "Something went wrong on getUser",
-      });
-    }
-  };
-
-  const getUsers = async () => {
-    const res = await getUsersRequest();
-    setUsers(res.data);
-    try {
-    } catch (error) {
-      console.log({
-        message: "Something went wrong on getUsers",
-      });
-    }
   };
 
   useEffect(() => {
@@ -127,13 +103,11 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        user,
+        setUser,
         signUp,
         signIn,
         logout,
-        getUser,
-        getUsers,
-        user,
-        users,
         isAuthenticated,
         loading,
         errors,

@@ -3,7 +3,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 
-const RegisterForm = ({ onSubmit, toggleModalLogin, toggleModalRegister }) => {
+const RegisterForm = ({ onSubmit, toggleModal }) => {
   return (
     <Formik
       enableReinitialize
@@ -100,10 +100,7 @@ const RegisterForm = ({ onSubmit, toggleModalLogin, toggleModalRegister }) => {
                 <h3 className="text-lime-400 font-bold">
                   Already have an account?{" "}
                   <Link
-                    onClick={() => {
-                      toggleModalRegister();
-                      toggleModalLogin();
-                    }}
+                    onClick={toggleModal}
                     className="text-orange-400 font-bold"
                   >
                     Sign In!

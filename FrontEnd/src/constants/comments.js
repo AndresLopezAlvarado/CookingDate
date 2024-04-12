@@ -1,9 +1,13 @@
 async function fetchData() {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/comments");
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/comments"
+    );
+
     if (!response.ok) {
       throw new Error("Ocurrió un error al obtener los datos");
     }
+
     const data = await response.json();
     return data;
   } catch (error) {

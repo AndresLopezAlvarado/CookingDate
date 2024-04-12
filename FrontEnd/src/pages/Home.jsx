@@ -8,6 +8,7 @@ import {
   BsYoutube,
 } from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext";
+import { useToggle } from "../contexts/ToggleContext";
 import LoginModal from "../components/login/LoginModal.jsx";
 import RegisterModal from "../components/register/RegisterModal.jsx";
 import CommentsCarousel from "../components/CommentsCarousel.jsx";
@@ -15,17 +16,8 @@ import fetchData from "../constants/comments.js";
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth();
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
-  const [isOpenRegister, setIsOpenRegister] = useState(false);
-  const [comments, setComments] = useState([]);
-
-  const toggleModalLogin = () => {
-    setIsOpenLogin(!isOpenLogin);
-  };
-
-  const toggleModalRegister = () => {
-    setIsOpenRegister(!isOpenRegister);
-  };
+  const { isOpen, toggleModal } = useToggle();
+  const [comments, setComments] = useState(null);
 
   useEffect(() => {
     async function loadComments() {
@@ -43,73 +35,54 @@ const Home = () => {
 
   return (
     <>
-      <div className="border-4 border-lime-900 h-screen mt-12 p-4 rounded-md flex flex-col justify-center items-center">
-        <div className="w-5/6 flex flex-col items-center justify-center text-center">
-          {isAuthenticated ? (
-            <div className="bg-lime-900 w-full p-4 rounded-md flex flex-col items-center gap-y-4">
-              <h1 className="text-lime-400 text-3xl font-bold text-center">
-                Bienvenido {user.username}
-              </h1>
+      {isAuthenticated ? (
+        <div className="bg-lime-900 w-full p-4 rounded-md flex flex-col items-center gap-y-4">
+          <h1 className="text-lime-400 text-3xl font-bold text-center">
+            Bienvenido {user.username}
+          </h1>
 
-              <img
-                src={
-                  user.profilePicture
-                    ? user.profilePicture.url
-                    : "/noProfilePhoto.png"
-                }
-                className="w-5/6 rounded-full"
-              />
+          <img
+            src={
+              user.profilePicture
+                ? user.profilePicture.url
+                : "/noProfilePhoto.png"
+            }
+            className="w-5/6 rounded-full"
+          />
 
-              <h2 className="text-lime-400 font-bold">
-                Come on,{" "}
-                <Link to="/people" className="text-orange-400 font-bold">
-                  find a date!
-                </Link>
-              </h2>
-            </div>
-          ) : (
-            <>
-              <img
-                style={{ height: "400px", width: "500px" }}
-                className="mb-4"
-                src="panOnStove.gif"
-                alt="logoHome"
-              />
+          <h2 className="text-lime-400 font-bold">
+            Come on,{" "}
+            <Link to="/people" className="text-orange-400 font-bold">
+              find a date!
+            </Link>
+          </h2>
+        </div>
+      ) : (
+        <>
+          <div className="border-4 border-lime-900 h-screen mt-16 p-4 rounded-md flex flex-col justify-center items-center">
+            <div className="w-5/6 flex flex-col items-center justify-center text-center">
+              <img className="mb-4 w-5/6" src="panOnStove.gif" alt="logoHome" />
 
               <p className=" bg-lime-900 text-lime-500 font-bold inline-block mb-4 p-4 justify-center rounded-md">
                 Do you want to find a cooking date?{" "}
-                <Link onClick={toggleModalLogin} className="text-orange-400">
+                <Link onClick={toggleModal} className="text-orange-400">
                   Sign In!
                 </Link>
               </p>
-            </>
-          )}
-
-          <LoginModal
-            isOpen={isOpenLogin}
-            toggleModalLogin={toggleModalLogin}
-            toggleModalRegister={toggleModalRegister}
-          />
-
-          <RegisterModal
-            isOpen={isOpenRegister}
-            toggleModalLogin={toggleModalLogin}
-            toggleModalRegister={toggleModalRegister}
-          />
-        </div>
-      </div>
-
-      {isAuthenticated ? null : (
-        <>
-          {comments ? (
-            <div className="text-lime-900 border-4 border-lime-900 m-1 rounded-md flex flex-col items-center justify-center text-center">
-              <h1 className="text-2xl font-bold p-4">Comments</h1>
-
-              <CommentsCarousel comments={comments} />
             </div>
-          ) : null}
 
-          <div className="text-lime-900 p-3 border-4 border-lime-900 m-1 rounded-md text-justify">
+            {comments ? (
+              <>
+                <h1 className="text-2xl font-bold p-4">Comments</h1>
+
+                <div className="w-full">
+                  <CommentsCarousel comments={comments} />
+                </div>
+              </>
+            ) : null}
+          </div>
+
+          <div className="border-4 border-lime-900 text-lime-950 mt-1 p-4 rounded-md text-justify">
             <p>
               ¡Bienvenido a Cooking Date, la aplicación que une corazones a
               través de la cocina! ¿Estás cansado de las típicas citas
@@ -136,6 +109,10 @@ const Home = () => {
               prepárate para un festín de amor y sabor!
             </p>
           </div>
+
+          <LoginModal isOpen={isOpen.login} toggleModal={toggleModal} />
+
+          <RegisterModal isOpen={isOpen.register} toggleModal={toggleModal} />
         </>
       )}
 

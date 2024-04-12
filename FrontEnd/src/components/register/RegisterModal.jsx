@@ -4,7 +4,7 @@ import Modal from "../Modal";
 import RegisterForm from "./RegisterForm";
 import { useAuth } from "../../contexts/AuthContext";
 
-const RegisterModal = ({ isOpen, toggleModalLogin, toggleModalRegister }) => {
+const RegisterModal = ({ isOpen, toggleModal }) => {
   const { signUp } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -12,13 +12,13 @@ const RegisterModal = ({ isOpen, toggleModalLogin, toggleModalRegister }) => {
   const handleSubmit = async (data) => {
     setLoading(!loading);
     await signUp(data);
-    toggleModalRegister();
+    toggleModal();
     navigate("/people");
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={toggleModalRegister}>
-      <RegisterForm onSubmit={handleSubmit} toggleModalLogin={toggleModalLogin} toggleModalRegister={toggleModalRegister} />
+    <Modal isOpen={isOpen} onClose={toggleModal}>
+      <RegisterForm onSubmit={handleSubmit} toggleModal={toggleModal} />
     </Modal>
   );
 };

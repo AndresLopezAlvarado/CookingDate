@@ -1,15 +1,17 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import {
   updateProfileRequest,
   profilePictureRequest,
   uploadPhotosRequest,
   deletePhotoRequest,
 } from "../api/profile.js";
+import { useAuth } from "./AuthContext.jsx";
 
 const ProfileContext = createContext();
 
 export const useProfile = () => {
   const context = useContext(ProfileContext);
+  
   if (!context)
     throw new Error("useProfile must be used within an ProfileProvider");
 
@@ -17,7 +19,7 @@ export const useProfile = () => {
 };
 
 export const ProfileProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const { user, setUser } = useAuth();
 
   const updateProfile = async (userId, newData) => {
     try {
@@ -66,8 +68,6 @@ export const ProfileProvider = ({ children }) => {
   return (
     <ProfileContext.Provider
       value={{
-        user,
-        setUser,
         updateProfile,
         profilePicture,
         uploadPhotos,

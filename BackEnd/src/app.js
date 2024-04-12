@@ -4,6 +4,7 @@ import cors from "cors";
 import fileUpload from "express-fileupload";
 import authRoutes from "./routes/authRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import peopleRoutes from "./routes/peopleRoutes.js";
 import { FRONTEND_URL } from "./config.js";
 
 const app = express();
@@ -21,5 +22,6 @@ app.use(
 
 app.use("/api", authRoutes);
 app.use("/api", profileRoutes);
+app.use("/api", peopleRoutes);
 
 export default app;
