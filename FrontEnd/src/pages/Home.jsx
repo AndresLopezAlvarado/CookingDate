@@ -36,7 +36,7 @@ const Home = () => {
   return (
     <>
       {isAuthenticated ? (
-        <div className="bg-lime-900 w-full p-4 rounded-md flex flex-col items-center gap-y-4">
+        <div className="bg-lime-900 mt-16 min-h-screen w-full p-4 rounded-md flex flex-col justify-center items-center gap-y-4">
           <h1 className="text-lime-400 text-3xl font-bold text-center">
             Bienvenido {user.username}
           </h1>

@@ -11,7 +11,7 @@ const ProfileContext = createContext();
 
 export const useProfile = () => {
   const context = useContext(ProfileContext);
-  
+
   if (!context)
     throw new Error("useProfile must be used within an ProfileProvider");
 
@@ -24,7 +24,7 @@ export const ProfileProvider = ({ children }) => {
   const updateProfile = async (userId, newData) => {
     try {
       const updatedUser = await updateProfileRequest(userId, newData);
-      setUser(updatedUser);
+      setUser(updatedUser.data);
     } catch (error) {
       console.error({
         message: "Something went wrong on updateProfile",
@@ -35,7 +35,7 @@ export const ProfileProvider = ({ children }) => {
   const profilePicture = async (userId, photo) => {
     try {
       const updatedUser = await profilePictureRequest(userId, photo);
-      setUser(updatedUser);
+      setUser(updatedUser.data);
     } catch (error) {
       console.error({
         message: "Something went wrong on profilePicture",
@@ -46,7 +46,7 @@ export const ProfileProvider = ({ children }) => {
   const uploadPhotos = async (userId, photos) => {
     try {
       const updatedUser = await uploadPhotosRequest(userId, photos);
-      setUser(updatedUser);
+      setUser(updatedUser.data);
     } catch (error) {
       console.error({
         message: "Something went wrong on uploadPhotos",
@@ -57,7 +57,7 @@ export const ProfileProvider = ({ children }) => {
   const deletePhoto = async (userId, photoToDelete) => {
     try {
       const updatedUser = await deletePhotoRequest(userId, photoToDelete);
-      setUser(updatedUser);
+      setUser(updatedUser.data);
     } catch (error) {
       console.error({
         message: "Something went wrong on deletePhoto",

@@ -1,29 +1,28 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
-import { differenceInYears, parseISO } from "date-fns";
+import { useAuth } from "../contexts/AuthContext.jsx";
 import { useProfile } from "../contexts/ProfileContext.jsx";
+import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
 import UploadPhotosModal from "../components/UploadPhotosModal.jsx";
-import { usePeople } from "../contexts/PeopleContext.jsx";
 
 const Profile = () => {
-  const { getUser } = usePeople();
-  const { user, setUser, profilePicture } = useProfile();
+  const { user } = useAuth();
+  const { calculateAge } = useMiscellany();
+  const { profilePicture } = useProfile();
   const params = useParams();
   const inputFileRef = useRef(null);
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState(null);
   const [isOpenProfileModal, setIsOpenProfileModal] = useState(false);
   const [isOpenUploadPhotosModal, setIsOpenUploadPhotosModal] = useState(false);
 
   const toggleProfileModal = async (e) => {
     setIsOpenProfileModal(!isOpenProfileModal);
-    loadUser();
   };
 
   const toggleUploadPhotosModal = async (e) => {
     setIsOpenUploadPhotosModal(!isOpenUploadPhotosModal);
-    loadUser();
   };
 
   const photoProfile = () => {
@@ -32,32 +31,36 @@ const Profile = () => {
 
   const handleFileChange = async (e) => {
     profilePicture(params.id, e.target.files[0]);
-    loadUser();
   };
 
-  async function loadUser() {
-    const userFound = await getUser(params.id);
-    setUser(userFound);
-
-    if (userFound) {
-      if (userFound.birthdate) {
-        const ageUserFound = differenceInYears(
-          new Date(),
-          parseISO(userFound.birthdate)
-        );
-        setAge(ageUserFound);
+  async function loadAge() {
+    try {
+      if (user) {
+        if (user._id) {
+          const agePerson = await calculateAge(user._id);
+          setAge(agePerson);
+        }
       }
+    } catch (error) {
+      console.error(error);
     }
   }
 
   useEffect(() => {
-    loadUser();
+    loadAge();
   }, [user]);
 
   return (
     <>
       {user ? (
-        <div className="border-4 border-lime-900 min-h-screen mt-12 p-4 rounded-md flex flex-col justify-center items-center gap-y-4">
+        <div className="border-4 border-lime-900 min-h-screen mt-16 p-4 rounded-md flex flex-col justify-center items-center gap-y-4">
+          <Link
+            to="/people"
+            className="bg-lime-900 text-lime-500 font-bold p-3 mb-4 rounded-md"
+          >
+            Back
+          </Link>
+
           <div className="bg-lime-900 rounded-md p-4 w-5/6 flex flex-col items-center justify-center gap-y-4">
             <h1 className="text-lime-400 text-3xl font-bold text-center">
               {user.username}

@@ -27,7 +27,7 @@ const PhotoCarousel = ({ photos }) => {
         disableOnInteraction: false,
       }}
       modules={[FreeMode, Pagination, Autoplay]}
-      className="w-[90%] h-svh rounded-md"
+      className="h-svh rounded-md"
     >
       {arrPhotos ? (
         arrPhotos.map((item) => (

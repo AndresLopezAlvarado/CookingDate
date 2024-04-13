@@ -11,7 +11,7 @@ const range = (start, end, step = 1) => {
   return result;
 };
 
-const SelectDate = ({ name = "", handleOnChange, selected }) => {
+const SelectDate = ({ name = "", handleOnChange, birthdate, selected }) => {
   const [field, meta, helpers] = useField(name); // Para usar setValue no se puede eliminar field y meta
   const { setValue } = helpers;
   const years = range(1924, getYear(new Date()), 1);
@@ -38,6 +38,19 @@ const SelectDate = ({ name = "", handleOnChange, selected }) => {
     return "bg-lime-900 text-lime-400 rounded-md";
   };
 
+  const parseBirthdate = () => {
+    const date = new Date(birthdate);
+
+    const formattedDate = `${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}/${date
+      .getDate()
+      .toString()
+      .padStart(2, "0")}/${date.getFullYear()}`;
+
+    return formattedDate;
+  };
+
   return (
     <DatePicker
       className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
@@ -45,6 +58,7 @@ const SelectDate = ({ name = "", handleOnChange, selected }) => {
       popperClassName="bg-lime-900"
       dayClassName={dayStyles}
       weekDayClassName={weekDayStyles}
+      value={parseBirthdate}
       selected={selected}
       onChange={(date) => {
         setValue(date);

@@ -6,7 +6,7 @@ import SelectDate from "../SelectDate.jsx";
 import fetchCountries from "../../constants/countries.js";
 
 const ProfileForm = ({ onSubmit, user }) => {
-  const [userData, setUserData] = useState(user || {});
+  const [userData, setUserData] = useState(user);
   const [countries, setCountries] = useState([]);
 
   async function loadCountries() {
@@ -31,7 +31,7 @@ const ProfileForm = ({ onSubmit, user }) => {
       enableReinitialize
       initialValues={{
         username: userData.username,
-        birthdate: userData.birthdate,
+        birthdate: userData.birthdate, // realmente no inicializa con este valor porque no estoy usando un Field sino DatePicker
         gender: userData.gender,
         country: userData.country,
         dietaryPreferences: userData.dietaryPreferences,
@@ -40,6 +40,12 @@ const ProfileForm = ({ onSubmit, user }) => {
         username: yup.string().required("Username is required"),
       })}
       onSubmit={async (values, actions) => {
+        for (let key in values) {
+          if (values[key] === undefined) {
+            values[key] = null;
+          }
+        }
+
         onSubmit(values);
         actions.setSubmitting(false);
       }}
@@ -61,7 +67,6 @@ const ProfileForm = ({ onSubmit, user }) => {
                   className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
                   name="username"
                   placeholder="Username"
-                  value={userData.username}
                   onChange={(e) => {
                     setUserData((prevUserData) => ({
                       ...prevUserData,
@@ -85,6 +90,9 @@ const ProfileForm = ({ onSubmit, user }) => {
                 <SelectDate
                   name="birthdate"
                   handleOnChange={handleOnChange}
+                  birthdate={
+                    userData.birthdate ? userData.birthdate : new Date()
+                  }
                   selected={
                     userData.birthdate ? userData.birthdate : new Date()
                   }

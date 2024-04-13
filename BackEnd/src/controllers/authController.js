@@ -90,6 +90,16 @@ export const login = async (req, res) => {
   }
 };
 
+// export const logout = (req, res) => {
+//   res.cookie("access_token", "", {
+//     maxAge: 1,
+//     sameSite: "none",
+//     secure: true,
+//     Partitioned: true,
+//   });
+//   res.redirect("/");
+// };
+
 export const profile = async (req, res) => {
   try {
     const userFound = await User.findById(req.body.id);
@@ -156,7 +166,7 @@ export const verifyToken = async (req, res) => {
       });
       res.status(500).json({
         message: "Something went wrong on profile",
-        errorMessage: error.response.data.message,
+        // errorMessage: error.response.data.message,
         arrayErrors: error.response.data.arrayErrors,
       });
     }

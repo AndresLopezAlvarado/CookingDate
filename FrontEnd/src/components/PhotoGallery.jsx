@@ -4,10 +4,10 @@ import { useAuth } from "../contexts/AuthContext";
 import { useProfile } from "../contexts/ProfileContext";
 
 const PhotoGallery = ({ toggleModal }) => {
-  const { getUser } = useAuth();
+  const { user } = useAuth();
   const { uploadPhotos, deletePhoto } = useProfile();
   const params = useParams();
-  const [user, setUser] = useState({});
+  const [dataUser, setDataUser] = useState(null);
   const [savedPhotos, setSavedPhotos] = useState([]);
   const [photoFiles, setPhotoFiles] = useState([]);
   const [draggedIndex, setDraggedIndex] = useState(null);
@@ -44,10 +44,9 @@ const PhotoGallery = ({ toggleModal }) => {
     );
     setPhotoFiles(updatedPhotoFiles);
 
-    await deletePhoto(user._id, photoToDelete);
+    await deletePhoto(dataUser._id, photoToDelete);
 
-    const loggedInUser = await getUser(params.id);
-    setUser(loggedInUser);
+    setDataUser(user);
   };
 
   const handleFileInputChange = (event) => {
@@ -70,7 +69,7 @@ const PhotoGallery = ({ toggleModal }) => {
 
   const uploadPhotoFiles = async () => {
     var photosUser = {};
-    if (user.photos) photosUser = user.photos;
+    if (dataUser.photos) photosUser = dataUser.photos;
     const filePhotosUser = Object.values(photosUser).map(imageToBlob);
     const allPhotoFiles = photoFiles.concat(filePhotosUser);
 
@@ -83,12 +82,11 @@ const PhotoGallery = ({ toggleModal }) => {
 
     await uploadPhotos(params.id, sortedFiles);
 
-    const loggedInUser = await getUser(params.id);
-    setUser(loggedInUser);
+    setDataUser(user);
 
-    if (loggedInUser.photos) {
+    if (user.photos) {
       setSavedPhotos(
-        Object.values(loggedInUser.photos).map((image) => ({
+        Object.values(user.photos).map((image) => ({
           url: image.url,
           public_id: image.public_id,
         }))
@@ -103,11 +101,10 @@ const PhotoGallery = ({ toggleModal }) => {
 
   useEffect(() => {
     async function loadUser() {
-      const loggedInUser = await getUser(params.id);
-      setUser(loggedInUser);
-      if (loggedInUser.photos) {
+      setDataUser(user);
+      if (user.photos) {
         setSavedPhotos(
-          Object.values(loggedInUser.photos).map((photo) => ({
+          Object.values(user.photos).map((photo) => ({
             url: photo.url,
             public_id: photo.public_id,
           }))
@@ -155,7 +152,7 @@ const PhotoGallery = ({ toggleModal }) => {
           </div>
 
           <input
-            className="file:bg-lime-700 file:hover:bg-lime-600 file:text-lime-500 file:hover:text-lime-900 file:border-0 file:p-1 file:rounded-md bg-lime-300 text-orange-400 placeholder-orange-400 px-4 py-2 rounded-md cursor-pointer"
+            className="w-full file:bg-lime-700 file:hover:bg-lime-600 file:text-lime-500 file:hover:text-lime-900 file:border-0 file:p-1 file:rounded-md bg-lime-300 text-orange-400 placeholder-orange-400 px-4 py-2 rounded-md cursor-pointer"
             type="file"
             multiple
             onChange={handleFileInputChange}

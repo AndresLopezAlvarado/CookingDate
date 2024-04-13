@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import jsCookie from "js-cookie";
 import {
   loginRequest,
+  logoutRequest,
   registerRequest,
   verifyTokenRequest,
 } from "../api/auth.js";
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       // setErrors(error.response.data);
       // setErrors(error.response.data.arrayErrors);
-      console.log({
+      console.error({
         message: "Something went wrong on signIn",
         // errorMessage: error.response.data.message,
         // arrayErrors: error.response.data.arrayErrors,
@@ -63,6 +64,10 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     setUser(null);
   };
+
+  // const logout = () => {
+  //   logoutRequest();
+  // };
 
   useEffect(() => {
     async function checkLogin() {
@@ -82,7 +87,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         setIsAuthenticated(false);
         setLoading(false);
-        console.log({
+        console.error({
           message: "Something went wrong on checkLogin",
           // errorMessage: error.message,
           // errorCode: error.code,
@@ -110,6 +115,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         isAuthenticated,
         loading,
+        // setLoading,
         errors,
       }}
     >
