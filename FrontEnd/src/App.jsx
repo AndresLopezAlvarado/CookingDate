@@ -5,11 +5,12 @@ import { ProfileProvider } from "./contexts/ProfileContext.jsx";
 import { PeopleProvider } from "./contexts/PeopleContext.jsx";
 import { ToggleProvider } from "./contexts/ToggleContext.jsx";
 import { ProtectedRoutes } from "./ProtectedRoutes.jsx";
-import NavBarPrueba from "./components/NavBarPrueba.jsx";
+import NavBar from "./components/NavBar.jsx";
 import Home from "./pages/Home.jsx";
 import Profile from "./pages/Profile.jsx";
 import People from "./pages/People.jsx";
 import PeopleProfile from "./pages/PeopleProfile.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   return (
@@ -18,9 +19,9 @@ function App() {
         <PeopleProvider>
           <MiscellanyProvider>
             <BrowserRouter>
-              <div className="bg-lime-400 min-h-screen p-4 flex flex-col">
+              <div className="bg-white text-black min-h-screen w-screen p-4 flex flex-col">
                 <ToggleProvider>
-                  <NavBarPrueba />
+                  <NavBar />
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route element={<ProtectedRoutes />}>
@@ -29,6 +30,7 @@ function App() {
                       <Route path="/people/:id" element={<PeopleProfile />} />
                     </Route>
                   </Routes>
+                  <Footer />
                 </ToggleProvider>
               </div>
             </BrowserRouter>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PersonCard = ({ person }) => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const PersonCard = ({ person }) => {
 
   return (
     <div
-      className="text-lime-950 hover:text-lime-700 flex flex-col items-center justify-end font-bold h-64 bg-cover bg-center rounded-md cursor-pointer hover:ring-4 ring-lime-900"
+      className="ring-[#FF3B30] hover:ring-4 text-black hover:text-opacity-70 flex flex-col items-center justify-end font-bold h-64 bg-cover bg-center rounded-md cursor-pointer"
       style={
         person.profilePicture
           ? { backgroundImage: `url(${person.profilePicture.url})` }
@@ -27,7 +27,7 @@ const PersonCard = ({ person }) => {
         navigate(`/people/${person._id}`);
       }}
     >
-      <h1 className="bg-lime-500 text-center text-2xl p-1 m-1 rounded-md">
+      <h1 className="bg-[#FF3B30] text-center text-xl px-2 m-1 rounded-md">
         {firstName}
       </h1>
     </div>

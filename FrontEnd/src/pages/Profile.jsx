@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext.jsx";
 import { useProfile } from "../contexts/ProfileContext.jsx";
 import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
-import UploadPhotosModal from "../components/UploadPhotosModal.jsx";
+import UploadPhotosModal from "../components/uploader/UploadPhotosModal.jsx";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -53,16 +53,9 @@ const Profile = () => {
   return (
     <>
       {user ? (
-        <div className="border-4 border-lime-900 min-h-screen mt-16 p-4 rounded-md flex flex-col justify-center items-center gap-y-4">
-          <Link
-            to="/people"
-            className="bg-lime-900 text-lime-500 font-bold p-3 mb-4 rounded-md"
-          >
-            Back
-          </Link>
-
-          <div className="bg-lime-900 rounded-md p-4 w-5/6 flex flex-col items-center justify-center gap-y-4">
-            <h1 className="text-lime-400 text-3xl font-bold text-center">
+        <div className="min-h-screen mt-16 flex flex-col justify-center items-center gap-y-4">
+          <div className="flex flex-col items-center justify-center gap-y-4">
+            <h1 className="bg-[#FF3B30] text-[#FFCC00] text-3xl font-bold p-2 rounded-md">
               {user.username}
             </h1>
 
@@ -79,7 +72,7 @@ const Profile = () => {
 
               <MdAddAPhoto
                 onClick={photoProfile}
-                className="absolute top-1/2 right-0 h-1/4 w-1/4 p-2 bg-lime-700 text-lime-300 rounded-full cursor-pointer hover:bg-lime-500 hover:text-lime-900"
+                className="absolute top-1/2 right-0 h-1/4 w-1/4 p-2 bg-[#FF9500] hover:bg-[#FFCC00] rounded-full cursor-pointer"
               />
 
               <input
@@ -91,27 +84,27 @@ const Profile = () => {
               />
             </div>
 
-            <div className="text-center">
+            <div className="text-center text-xl">
               {age ? (
-                <h2 className="text-xl text-lime-400">
+                <h2>
                   <span className="font-bold">{age}</span> years
                 </h2>
               ) : null}
 
               {user.country ? (
-                <h3 className="text-xl text-lime-400">
+                <h3>
                   <span className="font-bold">From:</span> {user.country}
                 </h3>
               ) : null}
 
               {user.gender ? (
-                <h4 className="text-xl text-lime-400">
+                <h4>
                   <span className="font-bold">Gender:</span> {user.gender}
                 </h4>
               ) : null}
 
               {user.dietaryPreferences ? (
-                <h5 className="text-xl text-lime-400">
+                <h5>
                   <span className="font-bold">Dietary preferences:</span>{" "}
                   {user.dietaryPreferences}
                 </h5>
@@ -120,7 +113,7 @@ const Profile = () => {
 
             <div className="text-center">
               <button
-                className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
+                className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
                 onClick={toggleProfileModal}
               >
                 Edit profile
@@ -128,30 +121,26 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="border-lime-900 border-4 rounded-md w-full flex flex-col items-center justify-center">
-            <div className="p-4">
-              <div className="grid grid-cols-3 gap-4">
-                {user.photos
-                  ? Object.values(user.photos).map((photo, index) => (
-                      <img
-                        src={photo.url}
-                        alt={`Photo ${index}`}
-                        className="w-full h-full rounded-md"
-                        key={index}
-                      />
-                    ))
-                  : null}
-              </div>
+          <div className="w-full flex flex-col items-center justify-center space-y-2">
+            <div className="grid grid-cols-3 gap-2">
+              {user.photos
+                ? Object.values(user.photos).map((photo, index) => (
+                    <img
+                      src={photo.url}
+                      alt={`Photo ${index}`}
+                      className="w-full h-full rounded-md"
+                      key={index}
+                    />
+                  ))
+                : null}
             </div>
 
-            <div className="bg-lime-900 p-4 w-full text-center">
-              <button
-                className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
-                onClick={toggleUploadPhotosModal}
-              >
-                Upload photos
-              </button>
-            </div>
+            <button
+              className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
+              onClick={toggleUploadPhotosModal}
+            >
+              Upload photos
+            </button>
           </div>
 
           <ProfileModal

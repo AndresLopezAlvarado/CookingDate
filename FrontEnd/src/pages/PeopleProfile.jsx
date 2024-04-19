@@ -33,44 +33,39 @@ function PeopleProfile() {
 
   useEffect(() => {
     loadPerson();
-    
     loadAge();
   }, [person]);
 
   return (
     <>
-      <div className="border-4 min-h-screen border-lime-900 mt-16 p-4 space-y-4 rounded-md flex flex-col items-center justify-center text-center">
+      <div className="h-screen mt-16 space-y-4 rounded-md flex flex-col items-center justify-center text-center">
         {person ? (
           <>
-            <div className="w-full h-2/3">
+            <div className="h-1/2 w-full">
               <PhotoCarousel photos={person.photos} />
             </div>
 
-            <div className="bg-lime-900 p-4 rounded-md">
-              <h1 className=" text-lime-500 font-bold text-3xl">
+            <div className="h-1/2 space-y-2">
+              <h1 className="bg-[#FF3B30] text-[#FFCC00] text-3xl font-bold p-2 rounded-md">
                 {person.username}
+                {age ? <span className="text-2xl font-bold">, {age} years</span> : null}
               </h1>
-              <div className="text-center">
-                {age ? (
-                  <h2 className="text-xl text-lime-400">
-                    <span className="font-bold">{age}</span> years
-                  </h2>
-                ) : null}
 
+              <div className="text-center">
                 {person.country ? (
-                  <h3 className="text-xl text-lime-400">
+                  <h3 className="text-xl">
                     <span className="font-bold">From:</span> {person.country}
                   </h3>
                 ) : null}
 
                 {person.gender ? (
-                  <h4 className="text-xl text-lime-400">
+                  <h4 className="text-xl">
                     <span className="font-bold">Gender:</span> {person.gender}
                   </h4>
                 ) : null}
 
                 {person.dietaryPreferences ? (
-                  <h5 className="text-xl text-lime-400">
+                  <h5 className="text-xl">
                     <span className="font-bold">Dietary preferences:</span>{" "}
                     {person.dietaryPreferences}
                   </h5>

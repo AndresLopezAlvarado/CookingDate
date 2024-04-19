@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import { useProfile } from "../contexts/ProfileContext";
+import { FaFileImage } from "react-icons/fa";
+import { useAuth } from "../../contexts/AuthContext";
+import { useProfile } from "../../contexts/ProfileContext";
 
 const PhotoGallery = ({ toggleModal }) => {
   const { user } = useAuth();
@@ -117,42 +118,47 @@ const PhotoGallery = ({ toggleModal }) => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="w-5/6 flex flex-col gap-y-4">
-        <h1 className="text-lime-400 text-3xl font-bold text-center">
-          Photo Gallery
-        </h1>
+      <div className="w-full flex flex-col gap-y-4">
+        <h1 className="text-3xl font-bold text-center">Photo Gallery</h1>
 
-        <div className="text-center">
-          <div className="mb-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {savedPhotos.map((photo, index) => (
-              <div
-                key={index}
-                draggable
-                onDragStart={(event) => handleDragStart(event, index)}
-                onDragOver={handleDragOver}
-                onDrop={(event) => handleDrop(event, index)}
-                className="relative"
-              >
-                <img
-                  src={photo.url}
-                  alt={`Photo ${index}`}
-                  className="w-full h-full rounded-md"
-                />
-
-                <button
-                  onClick={() => {
-                    handleDelete(index, photo);
-                  }}
-                  className="absolute top-2 right-2 bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 text-sm font-bold px-3 py-1 rounded-md"
+        <div className="flex flex-col space-y-2">
+          {savedPhotos.length === 0 ? (
+            <div className="flex flex-col justify-center items-center space-y-2">
+              <FaFileImage className="w-48 h-48" />
+              <h1>There are no photos</h1>
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
+              {savedPhotos.map((photo, index) => (
+                <div
+                  key={index}
+                  draggable
+                  onDragStart={(event) => handleDragStart(event, index)}
+                  onDragOver={handleDragOver}
+                  onDrop={(event) => handleDrop(event, index)}
+                  className="relative"
                 >
-                  X
-                </button>
-              </div>
-            ))}
-          </div>
+                  <img
+                    src={photo.url}
+                    alt={`Photo ${index}`}
+                    className="w-full h-full rounded-md"
+                  />
+
+                  <button
+                    onClick={() => {
+                      handleDelete(index, photo);
+                    }}
+                    className="absolute top-2 right-2 bg-[#FF9500] hover:bg-[#FFCC00] text-sm font-bold px-2 py-1 rounded-md"
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           <input
-            className="w-full file:bg-lime-700 file:hover:bg-lime-600 file:text-lime-500 file:hover:text-lime-900 file:border-0 file:p-1 file:rounded-md bg-lime-300 text-orange-400 placeholder-orange-400 px-4 py-2 rounded-md cursor-pointer"
+            className="w-full bg-[#FFCC00] text-[#FF3B30] placeholder-orange-400 file:bg-[#FF9500] file:hover:bg-[#FFCC00] file:hover:border-[#FF3B30] file:border-0 file:hover:border file:font-bold file:p-2 file:rounded-md p-2 rounded-md cursor-pointer"
             type="file"
             multiple
             onChange={handleFileInputChange}
@@ -161,7 +167,7 @@ const PhotoGallery = ({ toggleModal }) => {
 
         <div className="text-center">
           <button
-            className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
+            className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
             onClick={() => {
               toggleModal();
               uploadPhotoFiles();

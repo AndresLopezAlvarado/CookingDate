@@ -31,11 +31,11 @@ const SelectDate = ({ name = "", handleOnChange, birthdate, selected }) => {
   ];
 
   const dayStyles = (date) => {
-    return "text-lime-400";
+    return "bg-[#FF3B30]";
   };
 
   const weekDayStyles = (date) => {
-    return "bg-lime-900 text-lime-400 rounded-md";
+    return "bg-[#FF3B30] rounded-md";
   };
 
   const parseBirthdate = () => {
@@ -53,11 +53,11 @@ const SelectDate = ({ name = "", handleOnChange, birthdate, selected }) => {
 
   return (
     <DatePicker
-      className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
-      calendarClassName="bg-transparent"
-      popperClassName="bg-lime-900"
+      className="bg-[#FFCC00] text-[#FF3B30] placeholder-orange-400 w-full p-2 rounded-md"
+      calendarClassName="bg-[#FF3B30] p-2"
       dayClassName={dayStyles}
       weekDayClassName={weekDayStyles}
+      popperClassName="bg-[#FF3B30]"
       value={parseBirthdate}
       selected={selected}
       onChange={(date) => {
@@ -78,10 +78,10 @@ const SelectDate = ({ name = "", handleOnChange, birthdate, selected }) => {
             display: "flex",
             justifyContent: "center",
           }}
-          className="gap-x-1"
+          className="bg-[#FF3B30] p-2 gap-x-1"
         >
           <button
-            className="bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 px-1 rounded-md"
+            className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
             onClick={decreaseMonth}
             disabled={prevMonthButtonDisabled}
           >
@@ -91,7 +91,7 @@ const SelectDate = ({ name = "", handleOnChange, birthdate, selected }) => {
           <select
             value={getYear(date)}
             onChange={({ target: { value } }) => changeYear(value)}
-            className="bg-lime-300 text-orange-400 p-1 rounded-md"
+            className="bg-[#FFCC00] text-[#FF3B30] placeholder-orange-400 w-full p-2 rounded-md"
           >
             {years.map((option) => (
               <option key={option} value={option}>
@@ -105,7 +105,7 @@ const SelectDate = ({ name = "", handleOnChange, birthdate, selected }) => {
             onChange={({ target: { value } }) =>
               changeMonth(months.indexOf(value))
             }
-            className="bg-lime-300 text-orange-400 p-1 rounded-md"
+            className="bg-[#FFCC00] text-[#FF3B30] placeholder-orange-400 w-full p-2 rounded-md"
           >
             {months.map((option) => (
               <option key={option} value={option}>
@@ -115,7 +115,7 @@ const SelectDate = ({ name = "", handleOnChange, birthdate, selected }) => {
           </select>
 
           <button
-            className="bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 px-1 rounded-md"
+            className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
             onClick={increaseMonth}
             disabled={nextMonthButtonDisabled}
           >

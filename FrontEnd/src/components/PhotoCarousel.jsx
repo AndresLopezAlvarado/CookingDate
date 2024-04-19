@@ -27,13 +27,13 @@ const PhotoCarousel = ({ photos }) => {
         disableOnInteraction: false,
       }}
       modules={[FreeMode, Pagination, Autoplay]}
-      className="h-svh rounded-md"
+      className="w-full h-full"
     >
       {arrPhotos ? (
         arrPhotos.map((item) => (
           <SwiperSlide key={item.name}>
             <div
-              className="bg-cover bg-center h-full"
+              className="bg-cover bg-center h-full rounded-md"
               style={{ backgroundImage: `url(${item.url})` }}
             ></div>
           </SwiperSlide>

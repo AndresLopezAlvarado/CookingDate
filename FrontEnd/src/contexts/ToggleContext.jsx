@@ -25,7 +25,6 @@ export const ToggleProvider = ({ children }) => {
           break;
 
         case "Sign In":
-          console.log("Entré al segundo case");
           setIsOpen({
             login: false,
             register: false,

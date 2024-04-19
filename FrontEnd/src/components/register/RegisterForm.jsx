@@ -22,61 +22,61 @@ const RegisterForm = ({ onSubmit, toggleModal }) => {
         <Form onSubmit={handleSubmit}>
           <div className="flex justify-center items-center">
             <div className="w-5/6 flex flex-col gap-y-4">
-              <h1 className="text-lime-400 text-3xl font-bold text-center">
+              <h1 className="text-3xl font-bold text-center">
                 Register
               </h1>
 
               <div>
-                <label className="text-lime-400 font-bold" htmlFor="username">
+                <label className="font-bold" htmlFor="username">
                   Username:
                 </label>
 
                 <Field
-                  className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
+                  className="bg-[#FFCC00] text-[#FF3B30] placeholder-orange-400 w-full p-2 rounded-md"
                   name="username"
                   placeholder="Username"
                 />
 
                 <ErrorMessage
-                  className="text-red-400"
+                  className="text-[#FFCC00] font-bold"
                   name="username"
                   component="h2"
                 />
               </div>
 
               <div>
-                <label className="text-lime-400 font-bold" htmlFor="email">
+                <label className="font-bold" htmlFor="email">
                   Email:
                 </label>
 
                 <Field
-                  className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
+                  className="bg-[#FFCC00] text-[#FF3B30] placeholder-orange-400 w-full p-2 rounded-md"
                   type="email"
                   name="email"
                   placeholder="Email"
                 />
 
                 <ErrorMessage
-                  className="text-red-400"
+                  className="text-[#FFCC00] font-bold"
                   name="email"
                   component="h2"
                 />
               </div>
 
               <div>
-                <label className="text-lime-400 font-bold" htmlFor="password">
+                <label className="font-bold" htmlFor="password">
                   Password:
                 </label>
 
                 <Field
-                  className="bg-lime-300 text-orange-500 placeholder-orange-400 w-full p-2 rounded-md"
+                  className="bg-[#FFCC00] text-[#FF3B30] placeholder-orange-400 w-full p-2 rounded-md"
                   type="password"
                   name="password"
                   placeholder="********"
                 />
 
                 <ErrorMessage
-                  className="text-red-400"
+                  className="text-[#FFCC00] font-bold"
                   name="password"
                   component="h2"
                 />
@@ -84,7 +84,7 @@ const RegisterForm = ({ onSubmit, toggleModal }) => {
 
               <div className="text-center">
                 <button
-                  className="bg-lime-700 hover:bg-lime-500 text-lime-300 hover:text-lime-900 font-bold p-2 rounded-md"
+                  className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
                   type="submit"
                   disabled={isSubmitting}
                 >
@@ -97,11 +97,11 @@ const RegisterForm = ({ onSubmit, toggleModal }) => {
               </div>
 
               <div className="text-center">
-                <h3 className="text-lime-400 font-bold">
+                <h3 className="font-bold">
                   Already have an account?{" "}
                   <Link
                     onClick={toggleModal}
-                    className="text-orange-400 font-bold"
+                    className="text-[#FFCC00] font-bold"
                   >
                     Sign In!
                   </Link>

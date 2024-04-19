@@ -1,168 +1,334 @@
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Transition } from "@headlessui/react";
-import { BellIcon } from "@heroicons/react/24/outline";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../contexts/AuthContext";
-import { useProfile } from "../contexts/ProfileContext.jsx";
-import LoginModal from "./login/LoginModal.jsx";
-import RegisterModal from "./register/RegisterModal.jsx";
+import { useToggle } from "../contexts/ToggleContext";
+import LoginModal from "./login/LoginModal";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const NavBar = () => {
-  const { logout, isAuthenticated } = useAuth();
-  const { user } = useProfile();
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
-  const [isOpenRegister, setIsOpenRegister] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
+  const { isOpen, toggleModal } = useToggle();
 
-  const toggleModalLogin = () => {
-    setIsOpenLogin(!isOpenLogin);
-  };
+  const [navigation, setNavigation] = useState([
+    { name: "Products", href: "#", current: false },
+    { name: "Information", href: "#", current: false },
+    { name: "Security", href: "#", current: false },
+    { name: "Help", href: "#", current: false },
+    { name: "Download", href: "#", current: false },
+    { name: "Language", href: "#", current: false },
+    { name: "Sign in", href: "#", current: false },
+  ]);
 
-  const toggleModalRegister = () => {
-    setIsOpenRegister(!isOpenRegister);
+  const [navIsAuthenticated, setNavIsAuthenticated] = useState([
+    { name: "People", href: "/people", current: false },
+    { name: "Profile", href: "/profile", current: false },
+    { name: "Configuration", href: "#", current: false },
+    { name: "Sign out", href: "/", current: false },
+  ]);
+
+  const changeCurrent = (itemName) => {
+    const updatedNavigation = navigation.map((item) => {
+      if (item.name === itemName) return { ...item, current: true };
+      else return { ...item, current: false };
+    });
+
+    const updatedNavIsAuthenticated = navIsAuthenticated.map((item) => {
+      if (item.name === itemName) return { ...item, current: true };
+      else return { ...item, current: false };
+    });
+
+    setNavigation(updatedNavigation);
+    setNavIsAuthenticated(updatedNavIsAuthenticated);
   };
 
   return (
-    <nav className="bg-lime-900 mb-4 rounded-b-md fixed left-0 top-0 right-0 z-50">
-      <div className="mx-auto px-4">
-        <div className="relative p-2 md:p-3 lg:p-4 flex items-center justify-between">
-          <img
-            className="h-9 sm:h-10 lg:h-16 w-auto rounded-md"
-            src="/potHearts.png"
-            alt="logoNavbar"
-          />
-
-          <div className="w-full flex justify-end sm:justify-between">
+    <>
+      <Disclosure
+        as="nav"
+        className="bg-[#FF3B30] fixed left-0 top-0 right-0 z-50 w-full rounded-bl-md rounded-br-md"
+      >
+        {({ open }) => (
+          <>
             {isAuthenticated ? (
               <>
-                <Link
-                  to="/people"
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-lime-500 font-bold mx-4 hidden sm:block"
-                >
-                  Cooking Date
-                </Link>
-
-                <div className="flex items-center justify-center space-x-2">
-                  <button
-                    type="button"
-                    className="h-8 w-8 md:h-9 md:w-9 lg:h-11 lg:w-11 p-1 rounded-full bg-lime-700 text-lime-500 hover:text-lime-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <BellIcon aria-hidden="true" />
-                  </button>
-
-                  {user ? (
-                    <Menu as="div" className="flex items-center justify-center">
-                      <Menu.Button className="rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        {user.profilePicture ? (
-                          <img
-                            className="h-8 w-8 md:h-9 md:w-9 lg:h-11 lg:w-11 rounded-full"
-                            src={user.profilePicture.url}
-                            alt="userPhoto"
+                <div className="mx-auto max-w-7xl px-6">
+                  <div className="relative flex h-16 items-center justify-between">
+                    {/* Dropdown button*/}
+                    <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
+                      <Disclosure.Button className="relative bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset inline-flex items-center justify-center font-bold p-2 rounded-md">
+                        {open ? (
+                          <XMarkIcon
+                            className="block h-6 w-6"
+                            aria-hidden="true"
                           />
                         ) : (
-                          <img
-                            className="h-8 w-8 md:h-9 md:w-9 lg:h-11 lg:w-11 rounded-full"
-                            src="../src/assets/noProfilePhoto.png"
-                            alt="noProfilePhoto"
+                          <Bars3Icon
+                            className="block h-6 w-6"
+                            aria-hidden="true"
                           />
                         )}
-                      </Menu.Button>
+                      </Disclosure.Button>
+                    </div>
 
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
+                    <div className="flex flex-1 items-center justify-center gap-x-8">
+                      <div className="flex flex-shrink-0 items-center gap-2">
+                        {/* Logo */}
+                        <Link to="/people" onClick={changeCurrent}>
+                          <img
+                            className="h-8 w-auto"
+                            src="/potHearts.png"
+                            alt="logoApp"
+                          />
+                        </Link>
+
+                        {/* Title */}
+                        <h1 className="hidden sm:block md:hidden text-[#FFCC00] text-3xl font-bold">
+                          Cooking Date
+                        </h1>
+                      </div>
+
+                      {/* Links */}
+                      <div className="hidden md:block">
+                        <div className="flex space-x-2">
+                          {navIsAuthenticated.map((item) => (
+                            <Link
+                              key={item.name}
+                              to={item.href}
+                              className={classNames(
+                                item.current
+                                  ? "bg-[#FFCC00] hover:bg-[#FF9500]"
+                                  : "bg-[#FF9500] hover:bg-[#FFCC00]",
+                                "font-bold p-2 rounded-md"
+                              )}
+                              aria-current={item.current ? "page" : undefined}
+                              onClick={(t) => {
+                                changeCurrent(item.name);
+                              }}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="absolute inset-y-0 right-0 flex items-center">
+                      {/* Notifications button */}
+                      <button
+                        type="button"
+                        className="relative bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-offset-2 p-2 rounded-full"
                       >
-                        <Menu.Items className="absolute -right-4 top-11 sm:top-12 md:top-14 lg:top-20 z-10 mt-2 w-48 rounded-md bg-lime-800 p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <Menu.Item>
-                            {({ active }) => (
-                              <Link
-                                to={`/profile/${user._id}`}
-                                className={classNames(
-                                  active
-                                    ? "bg-lime-400 text-lime-900 rounded-md"
-                                    : "",
-                                  "block px-4 py-2 text-sm bg-lime-700 text-lime-500 rounded-md"
-                                )}
-                              >
-                                Profile
-                              </Link>
-                            )}
-                          </Menu.Item>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
 
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="/"
-                                onClick={() => {
-                                  logout();
-                                }}
-                                className={classNames(
-                                  active
-                                    ? "bg-lime-400 text-lime-900 rounded-md"
-                                    : "",
-                                  "block px-4 py-2 mt-1 text-sm bg-lime-700 text-lime-500 rounded-md"
+                      {/* Profile dropdown */}
+                      {user ? (
+                        <Menu as="div" className="relative ml-3">
+                          <div>
+                            <Menu.Button className="relative focus:ring-white focus:outline-none focus:ring-2 flex rounded-full">
+                              <img
+                                className="h-10 w-10 rounded-full"
+                                src={
+                                  user.profilePicture
+                                    ? user.profilePicture.url
+                                    : "/noProfilePhoto.png"
+                                }
+                                alt="profilePicture"
+                              />
+                            </Menu.Button>
+                          </div>
+
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items className="absolute bg-[#FF3B30] right-0 z-10 w-48 space-y-2 p-2 mt-4 rounded-md">
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <Link
+                                    to={`/profile/${user._id}`}
+                                    className={classNames(
+                                      active ? "bg-[#FFCC00]" : "",
+                                      "block font-bold p-2 rounded-md bg-[#FF9500]"
+                                    )}
+                                  >
+                                    Profile
+                                  </Link>
                                 )}
-                              >
-                                Sign out
-                              </a>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  ) : null}
+                              </Menu.Item>
+
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a
+                                    href="#"
+                                    className={classNames(
+                                      active ? "bg-[#FFCC00]" : "",
+                                      "block font-bold p-2 rounded-md bg-[#FF9500]"
+                                    )}
+                                  >
+                                    Settings
+                                  </a>
+                                )}
+                              </Menu.Item>
+
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a
+                                    href="/"
+                                    onClick={logout}
+                                    className={classNames(
+                                      active ? "bg-[#FFCC00]" : "",
+                                      "block font-bold p-2 rounded-md bg-[#FF9500]"
+                                    )}
+                                  >
+                                    Sign out
+                                  </a>
+                                )}
+                              </Menu.Item>
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
+                      ) : null}
+                    </div>
+                  </div>
                 </div>
+
+                <Disclosure.Panel className="md:hidden">
+                  <div className="space-y-2 p-2">
+                    {navIsAuthenticated.map((item) => (
+                      <Disclosure.Button
+                        key={item.name}
+                        as="a"
+                        href={item.href}
+                        className={classNames(
+                          item.current
+                            ? "bg-[#FFCC00] hover:bg-[#FF9500]"
+                            : "bg-[#FF9500] hover:bg-[#FFCC00]",
+                          "block font-bold p-2 rounded-md"
+                        )}
+                        aria-current={item.current ? "page" : undefined}
+                        onClick={(t) => {
+                          console.log(item.name);
+                          changeCurrent(item.name);
+                          if (item.name === "Logout") logout();
+                          toggleModal(t);
+                        }}
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+                    ))}
+                  </div>
+                </Disclosure.Panel>
               </>
             ) : (
               <>
-                <Link
-                  to="/"
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-lime-500 font-bold mx-4 hidden sm:block"
-                >
-                  Cooking Date
-                </Link>
+                <div className="mx-auto max-w-7xl px-6">
+                  <div className="relative flex h-16 items-center justify-between">
+                    {/* Dropdown button*/}
+                    <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
+                      <Disclosure.Button className="relative bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset inline-flex items-center justify-center font-bold p-2 rounded-md">
+                        {open ? (
+                          <XMarkIcon
+                            className="block h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <Bars3Icon
+                            className="block h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </Disclosure.Button>
+                    </div>
 
-                <div className="flex space-x-4">
-                  <Link
-                    onClick={toggleModalLogin}
-                    className="text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 font-bold rounded-md h-min px-3 py-2"
-                  >
-                    Login
-                  </Link>
+                    <div className="flex flex-1 items-center justify-center gap-x-8">
+                      <div className="flex flex-shrink-0 items-center gap-2">
+                        {/* Logo */}
+                        <Link to="/" onClick={changeCurrent}>
+                          <img
+                            className="h-8 w-auto"
+                            src="/potHearts.png"
+                            alt="logoApp"
+                          />
+                        </Link>
 
-                  <Link
-                    onClick={toggleModalRegister}
-                    className="text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl bg-lime-700 hover:bg-lime-600 text-lime-500 hover:text-lime-900 font-bold rounded-md h-min px-3 py-2"
-                  >
-                    Register
-                  </Link>
+                        {/* Title */}
+                        <h1 className="hidden sm:block md:hidden text-[#FFCC00] text-3xl font-bold">
+                          Cooking Date
+                        </h1>
+                      </div>
+
+                      {/* Links */}
+                      <div className="hidden md:block">
+                        <div className="flex space-x-2">
+                          {navigation.map((item) => (
+                            <Link
+                              key={item.name}
+                              to={item.href}
+                              className={classNames(
+                                item.current
+                                  ? "bg-[#FFCC00] hover:bg-[#FF9500]"
+                                  : "bg-[#FF9500] hover:bg-[#FFCC00]",
+                                "font-bold p-2 rounded-md"
+                              )}
+                              aria-current={item.current ? "page" : undefined}
+                              onClick={(t) => {
+                                changeCurrent(item.name);
+                                toggleModal(t);
+                              }}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                <Disclosure.Panel className="md:hidden">
+                  <div className="space-y-1 px-2 pb-3 pt-2">
+                    {navigation.map((item) => (
+                      <Disclosure.Button
+                        key={item.name}
+                        as="a"
+                        href={item.href}
+                        className={classNames(
+                          item.current
+                            ? "bg-[#FFCC00] hover:bg-[#FF9500]"
+                            : "bg-[#FF9500] hover:bg-[#FFCC00]",
+                          "block font-bold p-2 rounded-md"
+                        )}
+                        aria-current={item.current ? "page" : undefined}
+                        onClick={(t) => {
+                          console.log(t.target.textContent);
+                          // changeCurrent(item.name);
+                          // toggleModal(t);
+                        }}
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+                    ))}
+                  </div>
+                </Disclosure.Panel>
               </>
             )}
-          </div>
-        </div>
-      </div>
+          </>
+        )}
+      </Disclosure>
 
-      <LoginModal
-        isOpen={isOpenLogin}
-        toggleModalLogin={toggleModalLogin}
-        toggleModalRegister={toggleModalRegister}
-      />
-
-      <RegisterModal
-        isOpen={isOpenRegister}
-        toggleModalLogin={toggleModalLogin}
-        toggleModalRegister={toggleModalRegister}
-      />
-    </nav>
+      <LoginModal isOpen={isOpen.login} toggleModal={toggleModal} />
+    </>
   );
 };
 
