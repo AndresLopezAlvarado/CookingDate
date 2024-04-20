@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -26,7 +26,7 @@ const NavBar = () => {
 
   const [navIsAuthenticated, setNavIsAuthenticated] = useState([
     { name: "People", href: "/people", current: false },
-    { name: "Profile", href: "/profile", current: false },
+    { name: "Profile", href: "#", current: false },
     { name: "Configuration", href: "#", current: false },
     { name: "Sign out", href: "/", current: false },
   ]);
@@ -45,6 +45,19 @@ const NavBar = () => {
     setNavigation(updatedNavigation);
     setNavIsAuthenticated(updatedNavIsAuthenticated);
   };
+
+  useEffect(() => {
+    setNavIsAuthenticated([
+      { name: "People", href: "/people", current: false },
+      {
+        name: "Profile",
+        href: user ? `/profile/${user._id}` : "#",
+        current: false,
+      },
+      { name: "Configuration", href: "#", current: false },
+      { name: "Sign out", href: "/", current: false },
+    ]);
+  }, [user]);
 
   return (
     <>
@@ -108,6 +121,8 @@ const NavBar = () => {
                               aria-current={item.current ? "page" : undefined}
                               onClick={(t) => {
                                 changeCurrent(item.name);
+                                if (item.name === "Logout") logout();
+                                toggleModal(t);
                               }}
                             >
                               {item.name}
@@ -208,8 +223,7 @@ const NavBar = () => {
                     {navIsAuthenticated.map((item) => (
                       <Disclosure.Button
                         key={item.name}
-                        as="a"
-                        href={item.href}
+                        as="p"
                         className={classNames(
                           item.current
                             ? "bg-[#FFCC00] hover:bg-[#FF9500]"
@@ -218,13 +232,12 @@ const NavBar = () => {
                         )}
                         aria-current={item.current ? "page" : undefined}
                         onClick={(t) => {
-                          console.log(item.name);
                           changeCurrent(item.name);
                           if (item.name === "Logout") logout();
                           toggleModal(t);
                         }}
                       >
-                        {item.name}
+                        <Link to={item.href}>{item.name}</Link>
                       </Disclosure.Button>
                     ))}
                   </div>
@@ -311,9 +324,8 @@ const NavBar = () => {
                         )}
                         aria-current={item.current ? "page" : undefined}
                         onClick={(t) => {
-                          console.log(t.target.textContent);
-                          // changeCurrent(item.name);
-                          // toggleModal(t);
+                          changeCurrent(item.name);
+                          toggleModal(t);
                         }}
                       >
                         {item.name}

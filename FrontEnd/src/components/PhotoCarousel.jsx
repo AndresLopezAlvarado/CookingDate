@@ -33,7 +33,7 @@ const PhotoCarousel = ({ photos }) => {
         arrPhotos.map((item) => (
           <SwiperSlide key={item.name}>
             <div
-              className="bg-cover bg-center h-full rounded-md"
+              className="h-full bg-no-repeat bg-center bg-contain"
               style={{ backgroundImage: `url(${item.url})` }}
             ></div>
           </SwiperSlide>

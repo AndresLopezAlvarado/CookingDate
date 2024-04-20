@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { ImSpoonKnife } from "react-icons/im";
+import { PiKnifeFill } from "react-icons/pi";
+import { IoFastFoodOutline } from "react-icons/io5";
 import { usePeople } from "../contexts/PeopleContext.jsx";
 import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
 import PhotoCarousel from "../components/PhotoCarousel.jsx";
@@ -41,17 +44,23 @@ function PeopleProfile() {
       <div className="h-screen mt-16 space-y-4 rounded-md flex flex-col items-center justify-center text-center">
         {person ? (
           <>
-            <div className="h-1/2 w-full">
-              <PhotoCarousel photos={person.photos} />
+            <div className="h-1/2 w-full border-[#FF3B30] border p-1 rounded-md">
+              {person.photos ? (
+                <PhotoCarousel photos={person.photos} />
+              ) : (
+                <div className="h-full flex">
+                  <img className="rounded-full" src="/noProfilePhoto.png" />
+                </div>
+              )}
             </div>
 
-            <div className="h-1/2 space-y-2">
-              <h1 className="bg-[#FF3B30] text-[#FFCC00] text-3xl font-bold p-2 rounded-md">
-                {person.username}
-                {age ? <span className="text-2xl font-bold">, {age} years</span> : null}
-              </h1>
-
+            <div className="h-1/2 space-y-4">
               <div className="text-center">
+                <h1 className="text-2xl font-bold">
+                  {person.username}
+                  {age ? <span>, {age} years</span> : null}
+                </h1>
+
                 {person.country ? (
                   <h3 className="text-xl">
                     <span className="font-bold">From:</span> {person.country}
@@ -70,6 +79,18 @@ function PeopleProfile() {
                     {person.dietaryPreferences}
                   </h5>
                 ) : null}
+              </div>
+
+              <div className="bg-[#FF3B30] font-bold p-2 rounded-md flex text-4xl space-x-8 justify-center items-center text-center">
+                <Link className="bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset font-bold p-2 rounded-md">
+                  <ImSpoonKnife />
+                </Link>
+                <Link className="bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset font-bold p-2 rounded-md">
+                  <IoFastFoodOutline />
+                </Link>
+                <Link className="bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset font-bold p-2 rounded-md">
+                  <PiKnifeFill />
+                </Link>
               </div>
             </div>
           </>

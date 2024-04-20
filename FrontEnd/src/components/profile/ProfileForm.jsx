@@ -5,7 +5,7 @@ import * as yup from "yup";
 import SelectDate from "../SelectDate.jsx";
 import fetchCountries from "../../constants/countries.js";
 
-const ProfileForm = ({ onSubmit, user }) => {
+const ProfileForm = ({ onSubmit, toggleModal, user }) => {
   const [userData, setUserData] = useState(user);
   const [countries, setCountries] = useState([]);
 
@@ -192,7 +192,8 @@ const ProfileForm = ({ onSubmit, user }) => {
                   className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
                   type="submit"
                   disabled={isSubmitting}
-                >
+                  onClick={toggleModal}
+                  >
                   {isSubmitting ? (
                     <AiOutlineLoading3Quarters className="animate-spin h-5 w-5" />
                   ) : (

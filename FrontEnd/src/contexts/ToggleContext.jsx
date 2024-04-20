@@ -12,7 +12,12 @@ export const useToggle = () => {
 };
 
 export const ToggleProvider = ({ children }) => {
-  const [isOpen, setIsOpen] = useState({ login: false, register: false });
+  const [isOpen, setIsOpen] = useState({
+    login: false,
+    register: false,
+    profile: false,
+    uploadPhotos: false,
+  });
 
   const toggleModal = (t) => {
     if (t) {
@@ -21,6 +26,8 @@ export const ToggleProvider = ({ children }) => {
           setIsOpen({
             login: true,
             register: false,
+            profile: false,
+            uploadPhotos: false,
           });
           break;
 
@@ -28,6 +35,8 @@ export const ToggleProvider = ({ children }) => {
           setIsOpen({
             login: false,
             register: false,
+            profile: false,
+            uploadPhotos: false,
           });
           break;
 
@@ -35,6 +44,8 @@ export const ToggleProvider = ({ children }) => {
           setIsOpen({
             login: true,
             register: false,
+            profile: false,
+            uploadPhotos: false,
           });
           break;
 
@@ -42,6 +53,26 @@ export const ToggleProvider = ({ children }) => {
           setIsOpen({
             login: false,
             register: true,
+            profile: false,
+            uploadPhotos: false,
+          });
+          break;
+
+        case "Edit profile":
+          setIsOpen({
+            login: false,
+            register: false,
+            profile: true,
+            uploadPhotos: false,
+          });
+          break;
+
+        case "Upload photos":
+          setIsOpen({
+            login: false,
+            register: false,
+            profile: false,
+            uploadPhotos: true,
           });
           break;
 
@@ -49,6 +80,8 @@ export const ToggleProvider = ({ children }) => {
           setIsOpen({
             login: false,
             register: false,
+            profile: false,
+            uploadPhotos: false,
           });
           break;
 
@@ -59,6 +92,8 @@ export const ToggleProvider = ({ children }) => {
       setIsOpen({
         login: false,
         register: false,
+        profile: false,
+        uploadPhotos: false,
       });
     }
   };

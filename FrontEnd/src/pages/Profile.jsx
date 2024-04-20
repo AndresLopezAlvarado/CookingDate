@@ -1,29 +1,33 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { useProfile } from "../contexts/ProfileContext.jsx";
 import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
+import { useToggle } from "../contexts/ToggleContext.jsx";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
 import UploadPhotosModal from "../components/uploader/UploadPhotosModal.jsx";
 
 const Profile = () => {
   const { user } = useAuth();
-  const { calculateAge } = useMiscellany();
   const { profilePicture } = useProfile();
+  const { calculateAge } = useMiscellany();
+  const { isOpen, toggleModal } = useToggle();
   const params = useParams();
   const inputFileRef = useRef(null);
   const [age, setAge] = useState(null);
-  const [isOpenProfileModal, setIsOpenProfileModal] = useState(false);
-  const [isOpenUploadPhotosModal, setIsOpenUploadPhotosModal] = useState(false);
+  // const [isOpenProfileModal, setIsOpenProfileModal] = useState(false);
+  // const [isOpenUploadPhotosModal, setIsOpenUploadPhotosModal] = useState(false);
 
-  const toggleProfileModal = async (e) => {
-    setIsOpenProfileModal(!isOpenProfileModal);
-  };
+  // const toggleProfileModal = async (e) => {
+  //   console.log(e.target.textContent);
+  //   setIsOpenProfileModal(!isOpenProfileModal);
+  // };
 
-  const toggleUploadPhotosModal = async (e) => {
-    setIsOpenUploadPhotosModal(!isOpenUploadPhotosModal);
-  };
+  // const toggleUploadPhotosModal = async (e) => {
+  //   console.log(e.target.textContent);
+  //   setIsOpenUploadPhotosModal(!isOpenUploadPhotosModal);
+  // };
 
   const photoProfile = () => {
     inputFileRef.current.click();
@@ -114,7 +118,7 @@ const Profile = () => {
             <div className="text-center">
               <button
                 className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
-                onClick={toggleProfileModal}
+                onClick={toggleModal}
               >
                 Edit profile
               </button>
@@ -137,21 +141,21 @@ const Profile = () => {
 
             <button
               className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
-              onClick={toggleUploadPhotosModal}
+              onClick={toggleModal}
             >
               Upload photos
             </button>
           </div>
 
           <ProfileModal
-            isOpen={isOpenProfileModal}
-            toggleModal={toggleProfileModal}
+            isOpen={isOpen.profile}
+            toggleModal={toggleModal}
             user={user}
           />
 
           <UploadPhotosModal
-            isOpen={isOpenUploadPhotosModal}
-            toggleModal={toggleUploadPhotosModal}
+            isOpen={isOpen.uploadPhotos}
+            toggleModal={toggleModal}
           />
         </div>
       ) : null}
