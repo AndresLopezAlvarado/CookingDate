@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
+import { FaFileImage } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { useProfile } from "../contexts/ProfileContext.jsx";
 import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
 import { useToggle } from "../contexts/ToggleContext.jsx";
 import ProfileModal from "../components/profile/ProfileModal.jsx";
 import UploadPhotosModal from "../components/uploader/UploadPhotosModal.jsx";
+import Spinner from "../components/Spinner.jsx";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -16,18 +18,6 @@ const Profile = () => {
   const params = useParams();
   const inputFileRef = useRef(null);
   const [age, setAge] = useState(null);
-  // const [isOpenProfileModal, setIsOpenProfileModal] = useState(false);
-  // const [isOpenUploadPhotosModal, setIsOpenUploadPhotosModal] = useState(false);
-
-  // const toggleProfileModal = async (e) => {
-  //   console.log(e.target.textContent);
-  //   setIsOpenProfileModal(!isOpenProfileModal);
-  // };
-
-  // const toggleUploadPhotosModal = async (e) => {
-  //   console.log(e.target.textContent);
-  //   setIsOpenUploadPhotosModal(!isOpenUploadPhotosModal);
-  // };
 
   const photoProfile = () => {
     inputFileRef.current.click();
@@ -57,13 +47,13 @@ const Profile = () => {
   return (
     <>
       {user ? (
-        <div className="min-h-screen mt-16 flex flex-col justify-center items-center gap-y-4">
-          <div className="flex flex-col items-center justify-center gap-y-4">
-            <h1 className="bg-[#FF3B30] text-[#FFCC00] text-3xl font-bold p-2 rounded-md">
-              {user.username}
-            </h1>
+        <div className="min-h-screen w-full mt-16 flex flex-col justify-center items-center text-center gap-y-4">
+          {/* Profile */}
+          <div className="w-full flex flex-col items-center justify-center space-y-4">
+            <h1 className="text-3xl font-bold">{user.username}</h1>
 
-            <div className="w-5/6 relative flex flex-col items-center justify-center">
+            {/* Photo profile */}
+            <div className="relative w-5/6 flex flex-col items-center justify-center">
               <img
                 src={
                   user.profilePicture
@@ -88,6 +78,7 @@ const Profile = () => {
               />
             </div>
 
+            {/* Info */}
             <div className="text-center text-xl">
               {age ? (
                 <h2>
@@ -115,6 +106,7 @@ const Profile = () => {
               ) : null}
             </div>
 
+            {/* Edit profile button */}
             <div className="text-center">
               <button
                 id="openEditProfile"
@@ -126,19 +118,25 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col items-center justify-center space-y-2">
-            <div className="grid grid-cols-3 gap-2">
-              {user.photos
-                ? Object.values(user.photos).map((photo, index) => (
-                    <img
-                      src={photo.url}
-                      alt={`Photo ${index}`}
-                      className="w-full h-full rounded-md"
-                      key={index}
-                    />
-                  ))
-                : null}
-            </div>
+          {/* Upload photos */}
+          <div className="w-full flex flex-col items-center justify-center space-y-4">
+            {user.photos ? (
+              <div className="grid grid-cols-3 gap-2">
+                {Object.values(user.photos).map((photo, index) => (
+                  <img
+                    src={photo.url}
+                    alt={`Photo ${index}`}
+                    className="w-full h-full rounded-md"
+                    key={index}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col justify-center items-center space-y-2">
+                <FaFileImage className="w-48 h-48" />
+                <h1>There are no photos</h1>
+              </div>
+            )}
 
             <button
               id="openUploadPhotos"
@@ -160,7 +158,9 @@ const Profile = () => {
             toggleModal={toggleModal}
           />
         </div>
-      ) : null}
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };

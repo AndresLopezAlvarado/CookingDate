@@ -12,7 +12,7 @@ const Chat = ({ toggleModal }) => {
     const newMessage = { body: message, from: "Me" };
     setMessages([...messages, newMessage]);
     socket.emit("message", message);
-    setMessage(""); // Clear the input after sending the message
+    setMessage("");
   };
 
   const receiveMessage = (message) => {

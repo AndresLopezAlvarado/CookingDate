@@ -18,10 +18,12 @@ export const ToggleProvider = ({ children }) => {
     profile: false,
     uploadPhotos: false,
     chat: false,
+    notifications: false,
   });
 
   const toggleModal = (t) => {
     if (t) {
+      // console.log(t.target.id);
       switch (t.target.id) {
         case "openSignIn":
           setIsOpen({
@@ -30,6 +32,7 @@ export const ToggleProvider = ({ children }) => {
             profile: false,
             uploadPhotos: false,
             chat: false,
+            notifications: false,
           });
           break;
 
@@ -40,26 +43,29 @@ export const ToggleProvider = ({ children }) => {
             profile: false,
             uploadPhotos: false,
             chat: false,
+            notifications: false,
           });
           break;
 
-        case "editProfile":
+        case "openEditProfile":
           setIsOpen({
             login: false,
             register: false,
             profile: true,
             uploadPhotos: false,
             chat: false,
+            notifications: false,
           });
           break;
 
-        case "uploadPhotos":
+        case "openUploadPhotos":
           setIsOpen({
             login: false,
             register: false,
             profile: false,
             uploadPhotos: true,
             chat: false,
+            notifications: false,
           });
           break;
 
@@ -70,6 +76,18 @@ export const ToggleProvider = ({ children }) => {
             profile: false,
             uploadPhotos: false,
             chat: true,
+            notifications: false,
+          });
+          break;
+
+        case "openNotifications":
+          setIsOpen({
+            login: false,
+            register: false,
+            profile: false,
+            uploadPhotos: false,
+            chat: false,
+            notifications: true,
           });
           break;
 
@@ -80,6 +98,7 @@ export const ToggleProvider = ({ children }) => {
             profile: false,
             uploadPhotos: false,
             chat: false,
+            notifications: false,
           });
           break;
 
@@ -95,6 +114,7 @@ export const ToggleProvider = ({ children }) => {
             profile: false,
             uploadPhotos: false,
             chat: false,
+            notifications: false,
           });
           break;
 
@@ -107,6 +127,7 @@ export const ToggleProvider = ({ children }) => {
         register: false,
         profile: false,
         uploadPhotos: false,
+        notifications: false,
         chat: false,
       });
     }

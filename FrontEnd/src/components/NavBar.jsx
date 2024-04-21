@@ -5,6 +5,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../contexts/AuthContext";
 import { useToggle } from "../contexts/ToggleContext";
 import LoginModal from "./login/LoginModal";
+import NotificationsModal from "./notifications/NotificationsModal";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -110,7 +111,6 @@ const NavBar = () => {
                         <div className="flex space-x-2">
                           {navIsAuthenticated.map((item) => (
                             <Link
-                              id="desde los links del navbar"
                               key={item.name}
                               to={item.href}
                               className={classNames(
@@ -122,7 +122,7 @@ const NavBar = () => {
                               aria-current={item.current ? "page" : undefined}
                               onClick={(t) => {
                                 changeCurrent(item.name);
-                                if (item.name === "Logout") logout();
+                                if (item.name === "Sign out") logout();
                                 toggleModal(t);
                               }}
                             >
@@ -136,10 +136,16 @@ const NavBar = () => {
                     <div className="absolute inset-y-0 right-0 flex items-center">
                       {/* Notifications button */}
                       <button
+                        id="openNotifications"
                         type="button"
                         className="relative bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-offset-2 p-2 rounded-full"
+                        onClick={toggleModal}
                       >
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        <BellIcon
+                          id="openNotifications"
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                        />
                       </button>
 
                       {/* Profile dropdown */}
@@ -223,7 +229,6 @@ const NavBar = () => {
                   <div className="space-y-2 p-2">
                     {navIsAuthenticated.map((item) => (
                       <Disclosure.Button
-                        id="desde el menu desplegable"
                         key={item.name}
                         as="p"
                         className={classNames(
@@ -235,7 +240,7 @@ const NavBar = () => {
                         aria-current={item.current ? "page" : undefined}
                         onClick={(t) => {
                           changeCurrent(item.name);
-                          if (item.name === "Logout") logout();
+                          if (item.name === "Sign out") logout();
                           toggleModal(t);
                         }}
                       >
@@ -327,6 +332,7 @@ const NavBar = () => {
                         )}
                         aria-current={item.current ? "page" : undefined}
                         onClick={(t) => {
+                          console.log("disclosure");
                           changeCurrent(item.name);
                           toggleModal(t);
                         }}
@@ -343,6 +349,14 @@ const NavBar = () => {
       </Disclosure>
 
       <LoginModal isOpen={isOpen.login} toggleModal={toggleModal} />
+
+      {user ? (
+        <NotificationsModal
+          isOpen={isOpen.notifications}
+          toggleModal={toggleModal}
+          user={user}
+        />
+      ) : null}
     </>
   );
 };

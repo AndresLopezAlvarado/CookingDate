@@ -4,6 +4,7 @@ import { MiscellanyProvider } from "./contexts/MiscellanyContext.jsx";
 import { ProfileProvider } from "./contexts/ProfileContext.jsx";
 import { PeopleProvider } from "./contexts/PeopleContext.jsx";
 import { ToggleProvider } from "./contexts/ToggleContext.jsx";
+import { NotificationsProvider } from "./contexts/NotificationsContext.jsx";
 import { ProtectedRoutes } from "./ProtectedRoutes.jsx";
 import NavBar from "./components/NavBar.jsx";
 import Home from "./pages/Home.jsx";
@@ -21,16 +22,18 @@ function App() {
             <BrowserRouter>
               <div className="bg-white text-black min-h-screen w-screen p-4 flex flex-col">
                 <ToggleProvider>
-                  <NavBar />
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route element={<ProtectedRoutes />}>
-                      <Route path="/profile/:id" element={<Profile />} />
-                      <Route path="/people" element={<People />} />
-                      <Route path="/people/:id" element={<PeopleProfile />} />
-                    </Route>
-                  </Routes>
-                  <Footer />
+                  <NotificationsProvider>
+                    <NavBar />
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route element={<ProtectedRoutes />}>
+                        <Route path="/profile/:id" element={<Profile />} />
+                        <Route path="/people" element={<People />} />
+                        <Route path="/people/:id" element={<PeopleProfile />} />
+                      </Route>
+                    </Routes>
+                    <Footer />
+                  </NotificationsProvider>
                 </ToggleProvider>
               </div>
             </BrowserRouter>
