@@ -22,9 +22,7 @@ const RegisterForm = ({ onSubmit, toggleModal }) => {
         <Form onSubmit={handleSubmit}>
           <div className="flex justify-center items-center">
             <div className="w-5/6 flex flex-col gap-y-4">
-              <h1 className="text-3xl font-bold text-center">
-                Register
-              </h1>
+              <h1 className="text-3xl font-bold text-center">Register</h1>
 
               <div>
                 <label className="font-bold" htmlFor="username">
@@ -100,6 +98,7 @@ const RegisterForm = ({ onSubmit, toggleModal }) => {
                 <h3 className="font-bold">
                   Already have an account?{" "}
                   <Link
+                    id="openSignIn"
                     onClick={toggleModal}
                     className="text-[#FFCC00] font-bold"
                   >

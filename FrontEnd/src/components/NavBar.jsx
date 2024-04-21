@@ -110,6 +110,7 @@ const NavBar = () => {
                         <div className="flex space-x-2">
                           {navIsAuthenticated.map((item) => (
                             <Link
+                              id="desde los links del navbar"
                               key={item.name}
                               to={item.href}
                               className={classNames(
@@ -222,6 +223,7 @@ const NavBar = () => {
                   <div className="space-y-2 p-2">
                     {navIsAuthenticated.map((item) => (
                       <Disclosure.Button
+                        id="desde el menu desplegable"
                         key={item.name}
                         as="p"
                         className={classNames(
@@ -286,6 +288,7 @@ const NavBar = () => {
                         <div className="flex space-x-2">
                           {navigation.map((item) => (
                             <Link
+                              id="desde los links del navbar"
                               key={item.name}
                               to={item.href}
                               className={classNames(

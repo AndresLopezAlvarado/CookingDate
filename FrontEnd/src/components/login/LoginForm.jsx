@@ -21,9 +21,7 @@ const LoginForm = ({ onSubmit, toggleModal }) => {
         <Form onSubmit={handleSubmit}>
           <div className="flex justify-center items-center">
             <div className="w-5/6 flex flex-col gap-y-4">
-              <h1 className="text-3xl font-bold text-center">
-                Login
-              </h1>
+              <h1 className="text-3xl font-bold text-center">Login</h1>
 
               <div>
                 <label className="font-bold" htmlFor="email">
@@ -81,6 +79,7 @@ const LoginForm = ({ onSubmit, toggleModal }) => {
                 <h3 className="font-bold">
                   Don't have an account?{" "}
                   <Link
+                    id="openSignUp"
                     onClick={toggleModal}
                     className="text-[#FFCC00] font-bold"
                   >

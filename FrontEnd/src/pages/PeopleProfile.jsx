@@ -3,12 +3,16 @@ import { Link, useParams } from "react-router-dom";
 import { ImSpoonKnife } from "react-icons/im";
 import { PiKnifeFill } from "react-icons/pi";
 import { IoFastFoodOutline } from "react-icons/io5";
+import { TiMessages } from "react-icons/ti";
 import { usePeople } from "../contexts/PeopleContext.jsx";
+import { useToggle } from "../contexts/ToggleContext";
 import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
 import PhotoCarousel from "../components/PhotoCarousel.jsx";
+import ChatModal from "../components/chat/ChatModal.jsx";
 
 function PeopleProfile() {
   const { getPerson } = usePeople();
+  const { isOpen, toggleModal } = useToggle();
   const { calculateAge } = useMiscellany();
   const params = useParams();
   const [person, setPerson] = useState(null);
@@ -85,17 +89,29 @@ function PeopleProfile() {
                 <Link className="bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset font-bold p-2 rounded-md">
                   <ImSpoonKnife />
                 </Link>
+
                 <Link className="bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset font-bold p-2 rounded-md">
                   <IoFastFoodOutline />
                 </Link>
+
                 <Link className="bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset font-bold p-2 rounded-md">
                   <PiKnifeFill />
+                </Link>
+
+                <Link
+                  id="openChat"
+                  onClick={toggleModal}
+                  className="bg-[#FF9500] hover:bg-[#FFCC00] focus:ring-white focus:outline-none focus:ring-2 focus:ring-inset font-bold p-2 rounded-md"
+                >
+                  <TiMessages id="openChat" onClick={toggleModal} />
                 </Link>
               </div>
             </div>
           </>
         ) : null}
       </div>
+
+      <ChatModal isOpen={isOpen.chat} toggleModal={toggleModal} />
     </>
   );
 }

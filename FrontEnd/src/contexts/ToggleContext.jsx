@@ -17,62 +17,59 @@ export const ToggleProvider = ({ children }) => {
     register: false,
     profile: false,
     uploadPhotos: false,
+    chat: false,
   });
 
   const toggleModal = (t) => {
     if (t) {
-      switch (t.target.textContent) {
-        case "Sign in":
+      switch (t.target.id) {
+        case "openSignIn":
           setIsOpen({
             login: true,
             register: false,
             profile: false,
             uploadPhotos: false,
+            chat: false,
           });
           break;
 
-        case "Sign In":
-          setIsOpen({
-            login: false,
-            register: false,
-            profile: false,
-            uploadPhotos: false,
-          });
-          break;
-
-        case "Sign In!":
-          setIsOpen({
-            login: true,
-            register: false,
-            profile: false,
-            uploadPhotos: false,
-          });
-          break;
-
-        case "Sign Up!":
+        case "openSignUp":
           setIsOpen({
             login: false,
             register: true,
             profile: false,
             uploadPhotos: false,
+            chat: false,
           });
           break;
 
-        case "Edit profile":
+        case "editProfile":
           setIsOpen({
             login: false,
             register: false,
             profile: true,
             uploadPhotos: false,
+            chat: false,
           });
           break;
 
-        case "Upload photos":
+        case "uploadPhotos":
           setIsOpen({
             login: false,
             register: false,
             profile: false,
             uploadPhotos: true,
+            chat: false,
+          });
+          break;
+
+        case "openChat":
+          setIsOpen({
+            login: false,
+            register: false,
+            profile: false,
+            uploadPhotos: false,
+            chat: true,
           });
           break;
 
@@ -82,6 +79,22 @@ export const ToggleProvider = ({ children }) => {
             register: false,
             profile: false,
             uploadPhotos: false,
+            chat: false,
+          });
+          break;
+
+        default:
+          break;
+      }
+
+      switch (t.target.text) {
+        case "Sign in":
+          setIsOpen({
+            login: true,
+            register: false,
+            profile: false,
+            uploadPhotos: false,
+            chat: false,
           });
           break;
 
@@ -94,6 +107,7 @@ export const ToggleProvider = ({ children }) => {
         register: false,
         profile: false,
         uploadPhotos: false,
+        chat: false,
       });
     }
   };

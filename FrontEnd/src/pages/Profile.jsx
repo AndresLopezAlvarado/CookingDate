@@ -117,6 +117,7 @@ const Profile = () => {
 
             <div className="text-center">
               <button
+                id="openEditProfile"
                 className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
                 onClick={toggleModal}
               >
@@ -140,6 +141,7 @@ const Profile = () => {
             </div>
 
             <button
+              id="openUploadPhotos"
               className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
               onClick={toggleModal}
             >

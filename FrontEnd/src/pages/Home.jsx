@@ -56,7 +56,7 @@ const Home = () => {
             <div className="w-5/6 flex flex-col items-center justify-center text-center">
               <p className="font-bold justify-center">
                 Do you want to find a cooking date?{" "}
-                <Link onClick={toggleModal} className="text-[#FFCC00]">
+                <Link id="openSignIn" onClick={toggleModal} className="text-[#FFCC00]">
                   Sign In!
                 </Link>
               </p>

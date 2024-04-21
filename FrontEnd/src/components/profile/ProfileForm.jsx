@@ -189,11 +189,12 @@ const ProfileForm = ({ onSubmit, toggleModal, user }) => {
 
               <div className="text-center">
                 <button
+                  id="closeEditProfile"
                   className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
                   type="submit"
                   disabled={isSubmitting}
                   onClick={toggleModal}
-                  >
+                >
                   {isSubmitting ? (
                     <AiOutlineLoading3Quarters className="animate-spin h-5 w-5" />
                   ) : (
