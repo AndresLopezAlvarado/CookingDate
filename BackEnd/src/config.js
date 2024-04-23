@@ -4,7 +4,8 @@ dotenv.config();
 
 export const PORT = process.env.PORT;
 
-export const MONGODB_URL = process.env.MONGODB_URL;
+export const MONGODB_URL = "mongodb://localhost:27017";
+// export const MONGODB_URL = process.env.MONGODB_URL;
 
 export const TOKEN_SECRET = process.env.TOKEN_SECRET;
 

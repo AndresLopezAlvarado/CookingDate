@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 
-const socket = io("/");
+const socket = io("/", { auth: { serverOffset: 0 } });
 
 const Chat = ({ toggleModal }) => {
   const [message, setMessage] = useState("");
@@ -15,8 +15,9 @@ const Chat = ({ toggleModal }) => {
     setMessage("");
   };
 
-  const receiveMessage = (message) => {
+  const receiveMessage = (message, serverOffset) => {
     setMessages((state) => [...state, message]);
+    socket.auth.serverOffset = serverOffset;
   };
 
   useEffect(() => {
