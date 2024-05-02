@@ -1,10 +1,10 @@
-// NotificacionesPanel.js
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useNotifications } from "../../contexts/NotificationsContext.jsx";
 
-const socket = io("/");
-// const socket = io("http://localhost:3001");
+var socket;
+const ENDPOINT = "http://localhost:3000";
+socket = io(ENDPOINT, { auth: { serverOffset: 0 } });
 
 const Notifications = ({ userId, toggleModal }) => {
   const { notifications, setNotifications, getNotifications } =

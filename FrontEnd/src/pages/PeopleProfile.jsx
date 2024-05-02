@@ -107,11 +107,15 @@ function PeopleProfile() {
                 </Link>
               </div>
             </div>
+
+            <ChatModal
+              isOpen={isOpen.chat}
+              toggleModal={toggleModal}
+              person={person}
+            />
           </>
         ) : null}
       </div>
-
-      <ChatModal isOpen={isOpen.chat} toggleModal={toggleModal} />
     </>
   );
 }

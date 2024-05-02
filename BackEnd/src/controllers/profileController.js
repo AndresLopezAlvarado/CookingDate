@@ -125,7 +125,6 @@ export const uploadPhotos = async (req, res) => {
 };
 
 export const deletePhoto = async (req, res) => {
-  console.log("Estoy en deletePhoto de profileController.js");
   try {
     const user = await User.findById(req.params.id);
     const delImage = await deleteImage(req.body.public_id);
@@ -142,7 +141,6 @@ export const deletePhoto = async (req, res) => {
       new: true,
     });
 
-    console.log(userUpdated);
     res.json(userUpdated);
   } catch (error) {
     console.log({

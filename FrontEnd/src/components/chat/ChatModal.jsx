@@ -1,10 +1,10 @@
 import Modal from "../Modal";
 import Chat from "./Chat";
 
-const ChatModal = ({ isOpen, toggleModal }) => {
+const ChatModal = ({ isOpen, toggleModal, person }) => {
   return (
     <Modal isOpen={isOpen} onClose={toggleModal}>
-      <Chat />
+      <Chat person={person}/>
     </Modal>
   );
 };
