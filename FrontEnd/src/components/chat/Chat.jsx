@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { ChatState } from "../../contexts/ChatContext";
 import { loadMessagesRequest, sendMessageRequest } from "../../api/messages";
 import Spinner from "../Spinner";
+import { useNotifications } from "../../contexts/NotificationsContext";
 
 var socket, selectedChatCompare;
 const ENDPOINT = "http://localhost:3000";
@@ -14,6 +15,7 @@ const Chat = ({ person }) => {
   const toast = useToast();
   const { user } = useAuth();
   const { selectedChat, loadChat, loadingChat } = ChatState();
+  const { notifications, setNotifications } = useNotifications();
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -66,9 +68,10 @@ const Chat = ({ person }) => {
       !selectedChatCompare ||
       selectedChatCompare._id !== newMessageReceived.chat._id
     ) {
-      // if (!notification.includes(newMessageReceived)) {
-      //   setNotification([newMessageReceived, ...notification]);
-      // }
+      console.log(notifications.includes(newMessageReceived));
+      if (!notifications.includes(newMessageReceived)) {
+        setNotifications([newMessageReceived, ...notifications]);
+      }
     } else {
       setLoading(true);
       setMessages([...messages, newMessageReceived]);
@@ -79,7 +82,9 @@ const Chat = ({ person }) => {
       "Estoy en receiveMessage": {
         newMessageReceived: newMessageReceived,
         serverOffset: serverOffset,
+        selectedChatCompare: selectedChatCompare,
         selectedChatCompare_id: selectedChatCompare._id,
+        newMessageReceivedChatId: newMessageReceived.chat._id,
         messages: messages,
       },
     });
@@ -164,6 +169,7 @@ const Chat = ({ person }) => {
     console.log({
       "Estoy en useEffect receive message": {
         messages: messages,
+        notifications: notifications,
       },
     });
 

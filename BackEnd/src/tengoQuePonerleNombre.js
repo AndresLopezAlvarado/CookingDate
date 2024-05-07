@@ -2,7 +2,7 @@ import { newMessage, allMessages } from "./controllers/socketController.js";
 import MessageModel from "./models/MessageModel.js";
 
 export const tengoQuePonerleNombre = async (socket) => {
-  console.log("Connected to Socket.io");
+  console.log("A user connected to Socket.io");
 
   // if (!socket.recovered) {
   //   try {
@@ -32,6 +32,11 @@ export const tengoQuePonerleNombre = async (socket) => {
     socket.emit("connected");
   });
 
+  socket.off("setup", () => {
+    console.log("User disconnected!!!");
+    socket.leave(userData._id);
+  });
+
   socket.on("join chat", (room) => {
     socket.join(room);
     console.log("User joined room: " + room);
@@ -57,8 +62,7 @@ export const tengoQuePonerleNombre = async (socket) => {
     });
   });
 
-  socket.off("setup", () => {
+  socket.on("disconnect", () => {
     console.log("User disconnected!");
-    socket.leave(userData._id);
   });
 };

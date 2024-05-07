@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useToggle } from "../contexts/ToggleContext";
 import LoginModal from "./login/LoginModal";
 import NotificationsModal from "./notifications/NotificationsModal";
+import { useNotifications } from "../contexts/NotificationsContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -14,6 +15,7 @@ function classNames(...classes) {
 const NavBar = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const { isOpen, toggleModal } = useToggle();
+  const { notifications, setNotifications } = useNotifications();
 
   const [navigation, setNavigation] = useState([
     { name: "Products", href: "#", current: false },
@@ -59,6 +61,14 @@ const NavBar = () => {
       { name: "Sign out", href: "/", current: false },
     ]);
   }, [user]);
+
+  useEffect(() => {
+    console.log({
+      "Estoy en useEffect de NavBar": {
+        notifications: notifications,
+      },
+    });
+  }, [notifications]);
 
   return (
     <>
