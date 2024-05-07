@@ -9,9 +9,9 @@ import {
 
 const router = Router();
 
-router.put("/profile/:id", authRequired, updateProfile);
-router.put("/profile/profilePicture/:id", authRequired, profilePicture);
-router.put("/profile/uploadPhotos/:id", authRequired, uploadPhotos);
-router.post("/profile/deletePhoto/:id", authRequired, deletePhoto);
+router.put("/:id", authRequired, updateProfile);
+router.put("/profilePicture/:id", authRequired, profilePicture);
+router.put("/uploadPhotos/:id", authRequired, uploadPhotos);
+router.post("/deletePhoto/:id", authRequired, deletePhoto);
 
 export default router;

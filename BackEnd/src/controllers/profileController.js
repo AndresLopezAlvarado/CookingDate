@@ -143,7 +143,7 @@ export const deletePhoto = async (req, res) => {
 
     res.json(userUpdated);
   } catch (error) {
-    console.log({
+    console.error({
       message: "Something went wrong on deletePhoto (BackEnd)",
       errorMessage: error.message,
     });

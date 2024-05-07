@@ -42,8 +42,6 @@ export const loadMessages = async (req, res) => {
       .populate("sender", "username profilePicture.url email")
       .populate("chat");
 
-    console.log(messages);
-
     res.json(messages);
   } catch (error) {
     res.status(400);

@@ -23,7 +23,7 @@ export const register = async (req, res) => {
     res.json(userSaved);
   } catch (error) {
     if (error.code === 11000) {
-      console.log({
+      console.error({
         message: `The email ${email} is already in use`,
         errorMessage: error.message,
         arrayErrors: [`The email ${email} is already in use`],
@@ -34,7 +34,7 @@ export const register = async (req, res) => {
         arrayErrors: [`The email ${email} is already in use`],
       });
     } else {
-      console.log({
+      console.error({
         message: "Something went wrong on register",
         errorMessage: error.message,
         // arrayErrors: error.errors.map((error) => error.message),
@@ -113,7 +113,7 @@ export const profile = async (req, res) => {
 
     return res.json({ userFound });
   } catch (error) {
-    console.log({
+    console.error({
       message: "Something went wrong on profile",
       errorMessage: error.response.data.message,
       arrayErrors: error.response.data.arrayErrors,
@@ -159,7 +159,7 @@ export const verifyToken = async (req, res) => {
 
       return res.json(userFound);
     } catch (error) {
-      console.log({
+      console.error({
         message: "Something went wrong on profile",
         // errorMessage: error.response.data.message,
         // arrayErrors: error.response.data.arrayErrors,

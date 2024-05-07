@@ -1,16 +1,15 @@
 import express from "express";
-import cookieParser from "cookie-parser";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import { connectDB } from "./db.js";
+import { FRONTEND_URL, PORT } from "./config.js";
 import authRoutes from "./routes/authRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import peopleRoutes from "./routes/peopleRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import messagesRoutes from "./routes/messagesRoutes.js";
 import notificationsRoutes from "./routes/notificationsRoutes.js";
-import { FRONTEND_URL } from "./config.js";
-import { connectDB } from "./db.js";
-import { PORT } from "./config.js";
 
 connectDB();
 
@@ -29,14 +28,12 @@ app.use(
 );
 
 app.use("/api", authRoutes);
-app.use("/api", profileRoutes);
-app.use("/api", peopleRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/people", peopleRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messagesRoutes);
-app.use("/api", notificationsRoutes);
+app.use("/api/notifications", notificationsRoutes);
 
-const server = app.listen(PORT, () =>
+export default app.listen(PORT, () =>
   console.log(`App listen to port ${PORT}`)
 );
-
-export default server;

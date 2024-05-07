@@ -4,7 +4,7 @@ import { getPeople, getPerson } from "../controllers/people.Controller.js";
 
 const router = Router();
 
-router.get("/people", authRequired, getPeople);
-router.get("/people/:id", authRequired, getPerson);
+router.get("/", authRequired, getPeople);
+router.get("/:id", authRequired, getPerson);
 
 export default router;

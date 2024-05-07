@@ -3,7 +3,7 @@ export const validateSchema = (schema) => (req, res, next) => {
     schema.parse(req.body);
     next();
   } catch (error) {
-    console.log({
+    console.error({
       message: "Something went wrong on validateSchema",
       errorMessage: error.message,
       arrayErrors: error.errors.map((error) => error.message),

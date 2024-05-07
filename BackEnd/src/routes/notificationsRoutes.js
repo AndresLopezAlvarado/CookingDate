@@ -4,6 +4,6 @@ import { getNotifications } from "../controllers/notificationsController.js";
 
 const router = Router();
 
-router.post("/notifications", authRequired, getNotifications);
+router.post("/", authRequired, getNotifications);
 
 export default router;
