@@ -1,26 +1,31 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useToast } from "@chakra-ui/react";
-import { useAuth } from "../../contexts/AuthContext";
-import { ChatState } from "../../contexts/ChatContext";
-import { loadMessagesRequest, sendMessageRequest } from "../../api/messages";
-import Spinner from "../Spinner";
-import { useNotifications } from "../../contexts/NotificationsContext";
+import { useAuth } from "../contexts/AuthContext";
+import { ChatState } from "../contexts/ChatContext";
+import { loadMessagesRequest, sendMessageRequest } from "../api/messages";
+import Spinner from "../components/Spinner";
+import { useNotifications } from "../contexts/NotificationsContext";
+import { usePeople } from "../contexts/PeopleContext";
+import { useParams } from "react-router-dom";
 
 var socket, selectedChatCompare;
 const ENDPOINT = "http://localhost:3000";
 socket = io(ENDPOINT, { auth: { serverOffset: 0 } });
 
-const Chat = ({ person }) => {
+const Chat = () => {
   const toast = useToast();
+  const params = useParams();
   const { user } = useAuth();
   const { selectedChat, loadChat, loadingChat } = ChatState();
   const { notifications, setNotifications } = useNotifications();
+  const { getPerson } = usePeople();
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
+  const [person, setPerson] = useState(null);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -128,6 +133,20 @@ const Chat = ({ person }) => {
     }
   };
 
+  async function loadPerson() {
+    try {
+      const dataPerson = await getPerson(params.id);
+      setPerson(dataPerson);
+      loadChat(user._id, dataPerson._id);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    loadPerson();
+  }, []);
+
   useEffect(() => {
     console.log({
       "Estoy en useEffect loadMessages": {
@@ -141,15 +160,17 @@ const Chat = ({ person }) => {
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
-  useEffect(() => {
-    console.log({
-      "Estoy en useEffect loadChat": {
-        personId: person._id,
-      },
-    });
+  // useEffect(() => {
+  //   if (person) {
+  //     console.log({
+  //       "Estoy en useEffect loadChat": {
+  //         personId: person ? person._id : "",
+  //       },
+  //     });
 
-    loadChat(user._id, person._id);
-  }, []);
+  //     loadChat(user._id, person ? person._id : "");
+  //   }
+  // }, []);
 
   useEffect(() => {
     socket.emit("setup", user);
@@ -177,8 +198,8 @@ const Chat = ({ person }) => {
   }, [messages]);
 
   return (
-    <div className="flex flex-col space-y-4">
-      <div className="w-full flex flex-col space-y-2">
+    <div className="min-h-screen mt-16 flex flex-col space-y-4">
+      <div className="w-full h-full flex flex-col space-y-2">
         {loadingChat ? (
           <Spinner />
         ) : loading ? (

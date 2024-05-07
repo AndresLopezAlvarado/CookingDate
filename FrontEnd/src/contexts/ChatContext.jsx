@@ -11,7 +11,7 @@ export const ChatState = () => {
 const ChatProvider = ({ children }) => {
   const toast = useToast();
 
-  const [loadingChat, setLoadingChat] = useState([]);
+  const [loadingChat, setLoadingChat] = useState(false);
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [notification, setNotification] = useState([]);
