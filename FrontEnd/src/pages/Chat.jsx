@@ -124,11 +124,13 @@ const Chat = () => {
       console.error(error);
     }
   }
-
+  
+  //load person
   useEffect(() => {
     loadPerson();
   }, []);
 
+  //load messages
   useEffect(() => {
     console.log({
       "Estoy en useEffect loadMessages": {
@@ -142,6 +144,7 @@ const Chat = () => {
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
+  //setup - connected
   useEffect(() => {
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
@@ -153,6 +156,7 @@ const Chat = () => {
     });
   }, []);
 
+  //receive message
   useEffect(() => {
     socket.on("receive message", receiveMessage);
 
