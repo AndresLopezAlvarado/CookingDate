@@ -27,8 +27,9 @@ export const tengoQuePonerleNombre = async (socket) => {
   //   // );
   // }
 
-  socket.on("setup", (userData) => {
-    socket.join(userData._id);
+  socket.on("setup", (user) => {
+    console.log("Socket connected");
+    socket.join(user._id);
     socket.emit("connected");
   });
 

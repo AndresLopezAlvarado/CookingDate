@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useToast } from "@chakra-ui/react";
+import io from "socket.io-client";
 import { loadChatRequest } from "../api/chat";
 
 const ChatContext = createContext();
@@ -8,6 +9,8 @@ export const ChatState = () => {
   return useContext(ChatContext);
 };
 
+const ENDPOINT = "http://localhost:3000";
+
 const ChatProvider = ({ children }) => {
   const toast = useToast();
 
@@ -15,6 +18,9 @@ const ChatProvider = ({ children }) => {
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [notification, setNotification] = useState([]);
+  const [socket, setSocket] = useState(
+    io(ENDPOINT, { auth: { serverOffset: 0 } })
+  );
 
   const loadChat = async (userId, personId) => {
     setLoadingChat(true);
@@ -45,6 +51,7 @@ const ChatProvider = ({ children }) => {
   return (
     <ChatContext.Provider
       value={{
+        socket,
         loadChat,
         loadingChat,
         setLoadingChat,

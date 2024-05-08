@@ -1,31 +1,26 @@
 import { useEffect, useState } from "react";
-import io from "socket.io-client";
+import { Link, useParams } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { useAuth } from "../contexts/AuthContext";
+import { usePeople } from "../contexts/PeopleContext";
 import { ChatState } from "../contexts/ChatContext";
+import { useNotifications } from "../contexts/NotificationsContext";
 import { loadMessagesRequest, sendMessageRequest } from "../api/messages";
 import Spinner from "../components/Spinner";
-import { useNotifications } from "../contexts/NotificationsContext";
-import { usePeople } from "../contexts/PeopleContext";
-import { useParams } from "react-router-dom";
 
-var socket, selectedChatCompare;
-const ENDPOINT = "http://localhost:3000";
-socket = io(ENDPOINT, { auth: { serverOffset: 0 } });
+var selectedChatCompare;
 
 const Chat = () => {
   const toast = useToast();
   const params = useParams();
   const { user } = useAuth();
-  const { selectedChat, loadChat, loadingChat } = ChatState();
-  const { notifications, setNotifications } = useNotifications();
   const { getPerson } = usePeople();
+  const { selectedChat, loadChat, loadingChat, socket } = ChatState();
+  const { notifications, setNotifications } = useNotifications();
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
-  const [person, setPerson] = useState(null);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -33,14 +28,11 @@ const Chat = () => {
     const newMessage = { body: message, from: user._id };
 
     try {
-      setLoading(true);
-
       const { data } = await sendMessageRequest(selectedChat._id, newMessage);
 
       setMessages([...messages, data]);
       socket.emit("new message", data);
       setMessage("");
-      setLoading(false);
 
       console.log({
         "Estoy en sendMessage": {
@@ -65,7 +57,6 @@ const Chat = () => {
   };
 
   const receiveMessage = (newMessageReceived, serverOffset) => {
-    setLoading(true);
     setMessages((state) => [...state, newMessageReceived]);
     socket.auth.serverOffset = serverOffset;
 
@@ -78,9 +69,7 @@ const Chat = () => {
         setNotifications([newMessageReceived, ...notifications]);
       }
     } else {
-      setLoading(true);
       setMessages([...messages, newMessageReceived]);
-      setLoading(false);
     }
 
     console.log({
@@ -93,13 +82,9 @@ const Chat = () => {
         messages: messages,
       },
     });
-
-    setLoading(false);
   };
 
-  const loadMessages = async () => {
-    setLoading(true);
-
+  async function loadMessages() {
     if (!selectedChat) {
       return;
     }
@@ -117,8 +102,6 @@ const Chat = () => {
           data: data,
         },
       });
-
-      setLoading(false);
     } catch (error) {
       console.log(error);
 
@@ -131,12 +114,11 @@ const Chat = () => {
         position: "bottom",
       });
     }
-  };
+  }
 
   async function loadPerson() {
     try {
       const dataPerson = await getPerson(params.id);
-      setPerson(dataPerson);
       loadChat(user._id, dataPerson._id);
     } catch (error) {
       console.error(error);
@@ -160,25 +142,12 @@ const Chat = () => {
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
-  // useEffect(() => {
-  //   if (person) {
-  //     console.log({
-  //       "Estoy en useEffect loadChat": {
-  //         personId: person ? person._id : "",
-  //       },
-  //     });
-
-  //     loadChat(user._id, person ? person._id : "");
-  //   }
-  // }, []);
-
   useEffect(() => {
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
 
     console.log({
       "Estoy en useEffect setup": {
-        ENDPOINT: ENDPOINT,
         user: user,
       },
     });
@@ -201,8 +170,6 @@ const Chat = () => {
     <div className="min-h-screen mt-16 flex flex-col space-y-4">
       <div className="w-full h-full flex flex-col space-y-2">
         {loadingChat ? (
-          <Spinner />
-        ) : loading ? (
           <Spinner />
         ) : (
           messages.map((message, index) => (
@@ -230,6 +197,17 @@ const Chat = () => {
       </div>
 
       <form className="flex space-x-2" onSubmit={sendMessage}>
+        <Link
+          className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
+          to="/people"
+          onClick={() => {
+            selectedChatCompare = null;
+            console.log(selectedChatCompare);
+          }}
+        >
+          Back
+        </Link>
+
         <input
           className="bg-[#FFCC00] text-[#FF3B30] placeholder-orange-400 w-full p-2 rounded-md"
           type="text"
@@ -238,7 +216,10 @@ const Chat = () => {
           onChange={(e) => setMessage(e.target.value)}
         />
 
-        <button className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md">
+        <button
+          type="submit"
+          className="bg-[#FF9500] hover:bg-[#FFCC00] font-bold p-2 rounded-md"
+        >
           Send
         </button>
       </form>
