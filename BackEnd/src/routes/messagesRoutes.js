@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
-  sendMessage,
   loadMessages,
+  sendMessage,
 } from "../controllers/messages.Controller.js";
 import { authRequired } from "../middlewares/validateToken.js";
 

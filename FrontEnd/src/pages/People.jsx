@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { VscEmptyWindow } from "react-icons/vsc";
+import { TiMessages } from "react-icons/ti";
 import PeopleGrid from "../components/users/PeopleGrid.jsx";
 import { usePeople } from "../contexts/PeopleContext.jsx";
 
@@ -31,6 +33,10 @@ const People = () => {
             Table
           </button>
         </div>
+
+        <Link to="/chats">
+          <TiMessages className="text-3xl" />
+        </Link>
       </div>
 
       <div className="w-full">

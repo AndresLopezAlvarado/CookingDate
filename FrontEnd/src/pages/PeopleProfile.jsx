@@ -10,17 +10,18 @@ import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
 import PhotoCarousel from "../components/PhotoCarousel.jsx";
 
 function PeopleProfile() {
-  const { getPerson } = usePeople();
+  const { getPerson, person } = usePeople();
   const { isOpen, toggleModal } = useToggle();
   const { calculateAge } = useMiscellany();
   const params = useParams();
-  const [person, setPerson] = useState(null);
+  // const [person, setPerson] = useState(null);
   const [age, setAge] = useState(null);
 
   async function loadPerson() {
     try {
-      const dataPerson = await getPerson(params.id);
-      setPerson(dataPerson);
+      await getPerson(params.id);
+      // const dataPerson = await getPerson(params.id);
+      // setPerson(dataPerson);
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +52,14 @@ function PeopleProfile() {
               <PhotoCarousel photos={person.photos} />
             ) : (
               <div className="h-full flex">
-                <img className="rounded-full" src="/noProfilePhoto.png" />
+                <img
+                  className="rounded-full"
+                  src={
+                    person.profilePicture
+                      ? person.profilePicture.url
+                      : "/noProfilePhoto.png"
+                  }
+                />
               </div>
             )}
           </div>

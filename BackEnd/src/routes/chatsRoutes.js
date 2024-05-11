@@ -1,7 +1,8 @@
 import { Router } from "express";
 import {
+  loadChats,
   loadChat,
-  fetchChats,
+  /////////////////
   createGroupChat,
   renameGroup,
   removeFromGroup,
@@ -11,8 +12,11 @@ import { authRequired } from "../middlewares/validateToken.js";
 
 const router = Router();
 
+router.get("/", authRequired, loadChats);
 router.post("/", authRequired, loadChat);
-router.get("/", authRequired, fetchChats);
+
+////////////////////////////////////////
+
 router.post("/group", authRequired, createGroupChat);
 router.put("/rename", authRequired, renameGroup);
 router.put("/groupRemove", authRequired, removeFromGroup);

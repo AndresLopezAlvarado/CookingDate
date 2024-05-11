@@ -12,7 +12,6 @@ export const connectDB = async () => {
       message: "Something went wrong on (connectDB) connect database",
       errorMessage: error.message,
       errorCode: error.code,
-      // errorErrors: error.errors.map((error) => error.message),
       errorErrors1: error.errors,
       error: error,
     });

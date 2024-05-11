@@ -14,6 +14,7 @@ export const usePeople = () => {
 
 export const PeopleProvider = ({ children }) => {
   const [people, setPeople] = useState(null);
+  const [person, setPerson] = useState(null);
 
   const getPeople = async () => {
     try {
@@ -26,10 +27,11 @@ export const PeopleProvider = ({ children }) => {
     }
   };
 
-  const getPerson = async (userId) => {
+  const getPerson = async (personId) => {
     try {
-      const res = await getPersonRequest(userId);
-      return res.data;
+      const res = await getPersonRequest(personId);
+      setPerson(res.data);
+      // return person.data;
     } catch (error) {
       console.error({
         message: "Something went wrong on getPerson",
@@ -42,6 +44,7 @@ export const PeopleProvider = ({ children }) => {
       value={{
         people,
         setPeople,
+        person,
         getPeople,
         getPerson,
       }}

@@ -63,11 +63,11 @@ const NavBar = () => {
   }, [user]);
 
   useEffect(() => {
-    console.log({
-      "Estoy en useEffect de NavBar": {
-        notifications: notifications,
-      },
-    });
+    // console.log({
+    //   "Estoy en useEffect de NavBar": {
+    //     notifications: notifications,
+    //   },
+    // });
   }, [notifications]);
 
   return (

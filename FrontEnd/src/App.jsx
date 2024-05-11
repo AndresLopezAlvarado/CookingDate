@@ -14,6 +14,7 @@ import PeopleProfile from "./pages/PeopleProfile.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatProvider from "./contexts/ChatContext.jsx";
 import Chat from "./pages/Chat.jsx";
+import Chats from "./pages/Chats.jsx";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                             element={<PeopleProfile />}
                           />
                           <Route path="/chat/:id" element={<Chat />} />
+                          <Route path="/chats" element={<Chats />} />
                         </Route>
                       </Routes>
                       <Footer />

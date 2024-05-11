@@ -1,7 +1,7 @@
 import axios from "./axios.js";
 
 export const loadMessagesRequest = async (chatId) =>
-  axios.get(`/message/${chatId}`);
+  axios.get(`/messages/${chatId}`);
 
 export const sendMessageRequest = async (chatId, content) =>
-  axios.post(`/message`, { chatId, content });
+  axios.post(`/messages`, { chatId, content });

@@ -7,7 +7,7 @@ import { FRONTEND_URL, PORT } from "./config.js";
 import authRoutes from "./routes/authRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import peopleRoutes from "./routes/peopleRoutes.js";
-import chatRoutes from "./routes/chatRoutes.js";
+import chatsRoutes from "./routes/chatsRoutes.js";
 import messagesRoutes from "./routes/messagesRoutes.js";
 import notificationsRoutes from "./routes/notificationsRoutes.js";
 
@@ -30,8 +30,8 @@ app.use(
 app.use("/api", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/people", peopleRoutes);
-app.use("/api/chat", chatRoutes);
-app.use("/api/message", messagesRoutes);
+app.use("/api/chats", chatsRoutes);
+app.use("/api/messages", messagesRoutes);
 app.use("/api/notifications", notificationsRoutes);
 
 export default app.listen(PORT, () =>
