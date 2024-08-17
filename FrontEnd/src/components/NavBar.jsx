@@ -4,7 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../contexts/AuthContext";
 import { useToggle } from "../contexts/ToggleContext";
-import LoginModal from "./login/LoginModal";
+import SignInModal from "./signIn/SignInModal";
 import NotificationsModal from "./notifications/NotificationsModal";
 import { useNotifications } from "../contexts/NotificationsContext";
 
@@ -358,7 +358,7 @@ const NavBar = () => {
         )}
       </Disclosure>
 
-      <LoginModal isOpen={isOpen.login} toggleModal={toggleModal} />
+      <SignInModal isOpen={isOpen.login} toggleModal={toggleModal} />
 
       {user ? (
         <NotificationsModal

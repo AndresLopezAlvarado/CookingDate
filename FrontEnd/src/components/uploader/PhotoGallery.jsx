@@ -45,7 +45,11 @@ const PhotoGallery = ({ toggleModal }) => {
     );
     setPhotoFiles(updatedPhotoFiles);
 
-    await deletePhoto(dataUser._id, photoToDelete);
+    try {
+      await deletePhoto(dataUser._id, photoToDelete);
+    } catch (error) {
+      throw new Error(error);
+    }
 
     setDataUser(user);
   };
@@ -81,7 +85,11 @@ const PhotoGallery = ({ toggleModal }) => {
       return file;
     });
 
-    await uploadPhotos(params.id, sortedFiles);
+    try {
+      await uploadPhotos(params.id, sortedFiles);
+    } catch (error) {
+      throw new Error(error);
+    }
 
     setDataUser(user);
 

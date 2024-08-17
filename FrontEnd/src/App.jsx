@@ -1,20 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext.jsx";
-import { MiscellanyProvider } from "./contexts/MiscellanyContext.jsx";
-import { ProfileProvider } from "./contexts/ProfileContext.jsx";
-import { PeopleProvider } from "./contexts/PeopleContext.jsx";
-import { ToggleProvider } from "./contexts/ToggleContext.jsx";
-import { NotificationsProvider } from "./contexts/NotificationsContext.jsx";
-import { ProtectedRoutes } from "./ProtectedRoutes.jsx";
-import NavBar from "./components/NavBar.jsx";
-import Home from "./pages/Home.jsx";
-import Profile from "./pages/Profile.jsx";
-import People from "./pages/People.jsx";
-import PeopleProfile from "./pages/PeopleProfile.jsx";
-import Footer from "./components/Footer.jsx";
-import ChatProvider from "./contexts/ChatContext.jsx";
-import Chat from "./pages/Chat.jsx";
-import Chats from "./pages/Chats.jsx";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProfileProvider } from "./contexts/ProfileContext";
+import { PeopleProvider } from "./contexts/PeopleContext";
+import { ChatProvider } from "./contexts/ChatContext";
+import { MiscellanyProvider } from "./contexts/MiscellanyContext";
+import { ToggleProvider } from "./contexts/ToggleContext";
+import { NotificationsProvider } from "./contexts/NotificationsContext";
+import { ProtectedRoutes } from "./ProtectedRoutes";
+import NavBar from "./components/NavBar";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import People from "./pages/People";
+import Person from "./pages/Person";
+import Footer from "./components/Footer";
+import Chat from "./pages/Chat";
+import Chats from "./pages/Chats";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
   return (
@@ -24,27 +25,34 @@ function App() {
           <PeopleProvider>
             <ChatProvider>
               <MiscellanyProvider>
-                <div className="bg-white text-black min-h-screen w-screen p-4 flex flex-col">
-                  <ToggleProvider>
-                    <NotificationsProvider>
-                      <NavBar />
-                      <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route element={<ProtectedRoutes />}>
-                          <Route path="/profile/:id" element={<Profile />} />
-                          <Route path="/people" element={<People />} />
-                          <Route
-                            path="/people/:id"
-                            element={<PeopleProfile />}
-                          />
-                          <Route path="/chat/:id" element={<Chat />} />
-                          <Route path="/chats" element={<Chats />} />
-                        </Route>
-                      </Routes>
-                      <Footer />
-                    </NotificationsProvider>
-                  </ToggleProvider>
-                </div>
+                <ToggleProvider>
+                  <NotificationsProvider>
+                    <ChakraProvider>
+                      <div className="bg-white text-black min-h-screen w-screen p-4 flex flex-col">
+                        <div className="bg-sky-500 flex-1 flex flex-col">
+                          <NavBar />
+                          <Routes>
+                            <Route element={<Home />} path="/" />
+                            <Route element={<ProtectedRoutes />}>
+                              <Route
+                                element={<Profile />}
+                                path="/profile/:id"
+                              />
+                              <Route element={<People />} path="/people" />
+                              <Route element={<Person />} path="/people/:id" />
+                              <Route element={<Chat />} path="/chat/:id" />
+                              <Route element={<Chats />} path="/chats" />
+                            </Route>
+                          </Routes>
+                        </div>
+
+                        <div>
+                          <Footer />
+                        </div>
+                      </div>
+                    </ChakraProvider>
+                  </NotificationsProvider>
+                </ToggleProvider>
               </MiscellanyProvider>
             </ChatProvider>
           </PeopleProvider>

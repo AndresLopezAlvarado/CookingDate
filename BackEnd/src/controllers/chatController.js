@@ -17,8 +17,20 @@ export const loadChats = async (req, res) => {
         res.status(200).send(results);
       });
   } catch (error) {
-    res.status(400);
-    throw new Error(error.message);
+    console.error({
+      message: "Something went wrong on load chats (loadChats)",
+      error: error,
+    });
+
+    res.status(500).json({
+      message: "Something went wrong on load chats (loadChats)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on load chats (loadChats)",
+      error: error,
+    });
   }
 };
 
@@ -27,7 +39,7 @@ export const loadChat = async (req, res) => {
   // console.log({ "Estoy en loadChat": { userId: userId, personId: personId } });
 
   if (!personId) {
-    console.log("personId param not sent with request");
+    console.log({ message: "personId param not sent with request (loadChat)" });
     return res.sendStatus(400);
   }
 
@@ -75,8 +87,20 @@ export const loadChat = async (req, res) => {
       res.status(200).send(fullChat);
     }
   } catch (error) {
-    res.status(400);
-    throw new Error(error.message);
+    console.error({
+      message: "Something went wrong on load chat (loadChat)",
+      error: error,
+    });
+
+    res.status(400).json({
+      message: "Something went wrong on load chat (loadChat)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on load chat (loadChat)",
+      error: error,
+    });
   }
 };
 

@@ -29,6 +29,8 @@ export const ProfileProvider = ({ children }) => {
       console.error({
         message: "Something went wrong on updateProfile",
       });
+
+      throw new Error(error);
     }
   };
 
@@ -40,6 +42,8 @@ export const ProfileProvider = ({ children }) => {
       console.error({
         message: "Something went wrong on profilePicture",
       });
+
+      throw new Error(error);
     }
   };
 
@@ -51,6 +55,8 @@ export const ProfileProvider = ({ children }) => {
       console.error({
         message: "Something went wrong on uploadPhotos",
       });
+
+      throw new Error(error);
     }
   };
 
@@ -62,6 +68,8 @@ export const ProfileProvider = ({ children }) => {
       console.error({
         message: "Something went wrong on deletePhoto",
       });
+      
+      throw new Error(error);
     }
   };
 

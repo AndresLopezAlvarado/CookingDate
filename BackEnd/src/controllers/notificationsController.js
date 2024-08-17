@@ -9,7 +9,19 @@ export const getNotifications = async (req, res) => {
 
     res.json(notifications);
   } catch (error) {
-    res.status(400);
-    throw new Error(error.message);
+    console.error({
+      message: "Something went wrong on get notifications (getNotifications)",
+      error: error,
+    });
+
+    res.status(500).json({
+      message: "Something went wrong on get notifications (getNotifications)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on get notifications (getNotifications)",
+      error: error,
+    });
   }
 };

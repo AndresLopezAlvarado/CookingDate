@@ -16,12 +16,18 @@ export const updateProfile = async (req, res) => {
     res.json(userUpdated);
   } catch (error) {
     console.error({
-      message: "Something went wrong on updateProfile (BackEnd)",
-      errorMessage: error.message,
+      message: "Something went wrong on update profile (updateProfile)",
+      error: error,
     });
+
     res.status(500).json({
-      message: "Something went wrong on updateProfile (BackEnd)",
-      errorMessage: error.message,
+      message: "Something went wrong on update profile (updateProfile)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on update profile (updateProfile)",
+      error: error,
     });
   }
 };
@@ -49,12 +55,18 @@ export const profilePicture = async (req, res) => {
     res.json(userUpdated);
   } catch (error) {
     console.error({
-      message: "Something went wrong on profilePicture (BackEnd)",
-      errorMessage: error.message,
+      message: "Something went wrong on profile picture (profilePicture)",
+      error: error,
     });
+
     res.status(500).json({
-      message: "Something went wrong on profilePicture (BackEnd)",
-      errorMessage: error.message,
+      message: "Something went wrong on profile picture (profilePicture)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on profile picture (profilePicture)",
+      error: error,
     });
   }
 };
@@ -114,12 +126,18 @@ export const uploadPhotos = async (req, res) => {
     res.json(userUpdated);
   } catch (error) {
     console.error({
-      message: "Something went wrong on uploadPhotos (BackEnd)",
-      errorMessage: error.message,
+      message: "Something went wrong on upload photos (uploadPhotos)",
+      error: error,
     });
+
     res.status(500).json({
-      message: "Something went wrong on uploadPhotos (BackEnd)",
-      errorMessage: error.message,
+      message: "Something went wrong on upload photos (uploadPhotos)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on upload photos (uploadPhotos)",
+      error: error,
     });
   }
 };
@@ -144,12 +162,47 @@ export const deletePhoto = async (req, res) => {
     res.json(userUpdated);
   } catch (error) {
     console.error({
-      message: "Something went wrong on deletePhoto (BackEnd)",
-      errorMessage: error.message,
+      message: "Something went wrong on delete photo (deletePhoto)",
+      error: error,
     });
+
     res.status(500).json({
-      message: "Something went wrong on deletePhoto (BackEnd)",
-      errorMessage: error.message,
+      message: "Something went wrong on delete photo (deletePhoto)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on delete photo (deletePhoto)",
+      error: error,
+    });
+  }
+};
+
+export const profile = async (req, res) => {
+  try {
+    const userFound = await User.findById(req.body.id);
+
+    if (!userFound) {
+      return res.status(400).json({
+        message: "User no found (profile)",
+      });
+    }
+
+    return res.json({ userFound });
+  } catch (error) {
+    console.error({
+      message: "Something went wrong on profile (profile)",
+      error: error,
+    });
+
+    res.status(500).json({
+      message: "Something went wrong on profile (profile)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on profile (profile)",
+      error: error,
     });
   }
 };

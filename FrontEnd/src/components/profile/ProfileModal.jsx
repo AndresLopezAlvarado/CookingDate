@@ -11,7 +11,13 @@ const ProfileModal = ({ isOpen, toggleModal, user }) => {
 
   const handleSubmit = async (data) => {
     setLoading(!loading);
-    await updateProfile(user._id, data);
+
+    try {
+      await updateProfile(user._id, data);
+    } catch (error) {
+      throw new Error(error);
+    }
+    
     toggleModal();
     navigate(`/profile/${user._id}`);
   };
@@ -19,7 +25,11 @@ const ProfileModal = ({ isOpen, toggleModal, user }) => {
   return (
     <>
       <Modal isOpen={isOpen} onClose={toggleModal}>
-        <ProfileForm onSubmit={handleSubmit} toggleModal={toggleModal} user={user} />
+        <ProfileForm
+          onSubmit={handleSubmit}
+          toggleModal={toggleModal}
+          user={user}
+        />
       </Modal>
     </>
   );

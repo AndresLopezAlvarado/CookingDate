@@ -5,10 +5,12 @@ import {
   profilePicture,
   uploadPhotos,
   deletePhoto,
+  profile,
 } from "../controllers/profileController.js";
 
 const router = Router();
 
+router.get("/", authRequired, profile);
 router.put("/:id", authRequired, updateProfile);
 router.put("/profilePicture/:id", authRequired, profilePicture);
 router.put("/uploadPhotos/:id", authRequired, uploadPhotos);

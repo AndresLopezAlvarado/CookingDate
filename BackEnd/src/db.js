@@ -6,13 +6,17 @@ export const connectDB = async () => {
     const connection = await mongoose.connect(MONGODB_URL);
 
     if (connection)
-      console.log(`Database (${connection.connection.name}) connected`);
+      console.log(`Connected to (${connection.connection.name}) database`);
   } catch (error) {
     console.error({
-      message: "Something went wrong on (connectDB) connect database",
-      errorMessage: error.message,
-      errorCode: error.code,
-      errorErrors1: error.errors,
+      message:
+        "Something went wrong on the connection (connectDB) to the database.",
+      error: error,
+    });
+
+    throw new Error({
+      message:
+        "Something went wrong on the connection (connectDB) to the database.",
       error: error,
     });
   }

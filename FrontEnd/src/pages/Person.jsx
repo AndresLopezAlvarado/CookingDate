@@ -5,11 +5,11 @@ import { PiKnifeFill } from "react-icons/pi";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { TiMessages } from "react-icons/ti";
 import { usePeople } from "../contexts/PeopleContext.jsx";
-import { useToggle } from "../contexts/ToggleContext";
+import { useToggle } from "../contexts/ToggleContext.jsx";
 import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
 import PhotoCarousel from "../components/PhotoCarousel.jsx";
 
-function PeopleProfile() {
+function Person() {
   const { getPerson, person } = usePeople();
   const { isOpen, toggleModal } = useToggle();
   const { calculateAge } = useMiscellany();
@@ -23,7 +23,7 @@ function PeopleProfile() {
       // const dataPerson = await getPerson(params.id);
       // setPerson(dataPerson);
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 
@@ -34,7 +34,7 @@ function PeopleProfile() {
         setAge(agePerson);
       }
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 
@@ -118,4 +118,4 @@ function PeopleProfile() {
   );
 }
 
-export default PeopleProfile;
+export default Person;

@@ -8,7 +8,7 @@ async function fetchCountries() {
     return data;
   } catch (error) {
     console.error("Error al obtener los datos:", error);
-    throw error;
+    throw new Error(error);
   }
 }
 

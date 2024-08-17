@@ -2,13 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
 import { FaFileImage } from "react-icons/fa";
-import { useAuth } from "../contexts/AuthContext.jsx";
-import { useProfile } from "../contexts/ProfileContext.jsx";
-import { useMiscellany } from "../contexts/MiscellanyContext.jsx";
-import { useToggle } from "../contexts/ToggleContext.jsx";
-import ProfileModal from "../components/profile/ProfileModal.jsx";
-import UploadPhotosModal from "../components/uploader/UploadPhotosModal.jsx";
-import Spinner from "../components/Spinner.jsx";
+import { useAuth } from "../contexts/AuthContext";
+import { useProfile } from "../contexts/ProfileContext";
+import { useMiscellany } from "../contexts/MiscellanyContext";
+import { useToggle } from "../contexts/ToggleContext";
+import ProfileModal from "../components/profile/ProfileModal";
+import UploadPhotosModal from "../components/uploader/UploadPhotosModal";
+import Spinner from "../components/Spinner";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -36,7 +36,7 @@ const Profile = () => {
         }
       }
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 

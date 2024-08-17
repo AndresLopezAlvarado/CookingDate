@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useToggle } from "../contexts/ToggleContext";
-import LoginModal from "../components/login/LoginModal.jsx";
-import RegisterModal from "../components/register/RegisterModal.jsx";
-import CommentsCarousel from "../components/CommentsCarousel.jsx";
+import SignInModal from "../components/signIn/SignInModal";
+import SignUpModal from "../components/signUp/SignUpModal";
+import CommentsCarousel from "../components/CommentsCarousel";
 import fetchData from "../constants/comments.js";
 
 const Home = () => {
@@ -19,7 +19,7 @@ const Home = () => {
         fetchComments = fetchComments.slice(0, 10);
         setComments(fetchComments);
       } catch (error) {
-        console.error("Error en la llamada:", error);
+        throw new Error("Error en la llamada:", error);
       }
     }
 
@@ -56,7 +56,11 @@ const Home = () => {
             <div className="w-5/6 flex flex-col items-center justify-center text-center">
               <p className="font-bold justify-center">
                 Do you want to find a cooking date?{" "}
-                <Link id="openSignIn" onClick={toggleModal} className="text-[#FFCC00]">
+                <Link
+                  id="openSignIn"
+                  onClick={toggleModal}
+                  className="text-[#FFCC00]"
+                >
                   Sign In!
                 </Link>
               </p>
@@ -77,9 +81,9 @@ const Home = () => {
             ) : null}
           </div>
 
-          <LoginModal isOpen={isOpen.login} toggleModal={toggleModal} />
+          <SignInModal isOpen={isOpen.login} toggleModal={toggleModal} />
 
-          <RegisterModal isOpen={isOpen.register} toggleModal={toggleModal} />
+          <SignUpModal isOpen={isOpen.register} toggleModal={toggleModal} />
         </>
       )}
     </>

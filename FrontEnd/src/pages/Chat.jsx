@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useToast, Avatar, Tooltip } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { CiMenuKebab } from "react-icons/ci";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useAuth } from "../contexts/AuthContext";
@@ -8,12 +8,7 @@ import { usePeople } from "../contexts/PeopleContext";
 import { useChat } from "../contexts/ChatContext";
 import { useNotifications } from "../contexts/NotificationsContext";
 import { loadMessagesRequest, sendMessageRequest } from "../api/messages";
-import {
-  isLastMessage,
-  isSameSender,
-  isSameSenderMargin,
-  isSameUser,
-} from "./chatLogics";
+import MessagesBox from "../components/MessagesBox";
 
 var selectedChatCompare;
 
@@ -27,6 +22,7 @@ const Chat = () => {
 
   const [newMessage, setNewMessage] = useState({ from: user, body: "" });
   const [messages, setMessages] = useState([]);
+  const [socketConnected, setSocketConnected] = useState(false);
 
   async function loadMessages() {
     if (!selectedChat) {
@@ -47,8 +43,6 @@ const Chat = () => {
         },
       });
     } catch (error) {
-      console.log(error);
-
       toast({
         title: "Error ocurred!",
         description: "Failed to load the messages",
@@ -57,6 +51,8 @@ const Chat = () => {
         isClosable: true,
         position: "bottom",
       });
+
+      throw new Error(error);
     }
   }
 
@@ -75,8 +71,6 @@ const Chat = () => {
       setMessages([...messages, data]);
       socket.emit("new message", data);
     } catch (error) {
-      console.error(error);
-
       toast({
         title: "Error ocurred!",
         description: "Failed to send the message",
@@ -85,6 +79,8 @@ const Chat = () => {
         isClosable: true,
         position: "bottom",
       });
+
+      throw new Error(error);
     }
   };
 
@@ -96,7 +92,9 @@ const Chat = () => {
       !selectedChatCompare ||
       selectedChatCompare._id !== newMessageReceived.chat._id
     ) {
-      console.log(notifications?.includes(newMessageReceived));
+      var x = notifications.includes(newMessageReceived);
+      console.log(x);
+
       if (!notifications.includes(newMessageReceived)) {
         setNotifications([newMessageReceived, ...notifications]);
       }
@@ -109,7 +107,7 @@ const Chat = () => {
         newMessageReceived: newMessageReceived,
         serverOffset: serverOffset,
         selectedChatCompare: selectedChatCompare,
-        selectedChatCompare_id: selectedChatCompare._id,
+        // selectedChatCompare_id: selectedChatCompare._id,
         newMessageReceivedChatId: newMessageReceived.chat._id,
         messages: messages,
       },
@@ -124,6 +122,8 @@ const Chat = () => {
     socket.emit("setup", user);
 
     socket.on("connected", () => {
+      setSocketConnected(true);
+
       if (socket.recovered) {
         // any event missed during the disconnection period will be received now
         console.log({
@@ -174,7 +174,10 @@ const Chat = () => {
   return (
     <div className="mt-16 w-full min-h-screen flex flex-col">
       <div className="flex justify-between items-center text-center">
-        <Link to={`/people/${params.id}`}>
+        <Link
+          to={`/people/${params.id}`}
+          onClick={(selectedChatCompare = null)}
+        >
           <IoMdArrowRoundBack className="text-3xl" />
         </Link>
 
@@ -197,46 +200,7 @@ const Chat = () => {
         <CiMenuKebab className="text-3xl" />
       </div>
 
-      <div className="flex-grow">
-        {messages &&
-          messages.map((message, index) => (
-            <div
-              className={`flex ${
-                isSameUser(messages, message, index) ? "mt-1" : "mt-4"
-              } space-x-1 ${
-                message.sender._id === user._id
-                  ? "justify-end"
-                  : "justify-start"
-              } items-center ${
-                isSameSenderMargin(messages, message, index) ? "ml-11" : "ml-0"
-              }`}
-              key={message._id}
-            >
-              {(isSameSender(messages, message, index, user._id) ||
-                isLastMessage(messages, index, user._id)) && (
-                <Avatar
-                  className="w-10 h-10"
-                  src={
-                    message.sender.profilePicture
-                      ? message.sender.profilePicture.url
-                      : "/noProfilePhoto.png"
-                  }
-                  borderRadius={"100%"}
-                />
-              )}
-
-              <span
-                className={`${
-                  message.sender._id === user._id
-                    ? "bg-[#FF9500] text-white rounded-tr-none"
-                    : "bg-[#FF3B30] text-white rounded-tl-none"
-                } px-4 py-2 rounded-md`}
-              >
-                {message.content}
-              </span>
-            </div>
-          ))}
-      </div>
+      <MessagesBox user={user} messages={messages} />
 
       <form className="flex space-x-2" onSubmit={sendMessage}>
         <input

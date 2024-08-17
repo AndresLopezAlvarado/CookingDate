@@ -11,7 +11,7 @@ export const useChat = () => {
 
 const ENDPOINT = "http://localhost:3000";
 
-const ChatProvider = ({ children }) => {
+export const ChatProvider = ({ children }) => {
   const toast = useToast();
 
   const [loadingChat, setLoadingChat] = useState(false);
@@ -50,8 +50,6 @@ const ChatProvider = ({ children }) => {
       setSelectedChat(data);
       setLoadingChat(false);
     } catch (error) {
-      console.error(error);
-
       toast({
         title: "Error fecthing the chat!",
         description: error.message,
@@ -60,6 +58,8 @@ const ChatProvider = ({ children }) => {
         isClosable: true,
         position: "bottom-left",
       });
+
+      throw new Error(error);
     }
   };
 
@@ -75,8 +75,6 @@ const ChatProvider = ({ children }) => {
 
       setChats(data);
     } catch (error) {
-      console.error(error);
-
       toast({
         title: "Error fecthing the chats!",
         description: error.message,
@@ -85,6 +83,8 @@ const ChatProvider = ({ children }) => {
         isClosable: true,
         position: "bottom-left",
       });
+
+      throw new Error(error);
     }
   };
 
@@ -109,4 +109,4 @@ const ChatProvider = ({ children }) => {
   );
 };
 
-export default ChatProvider;
+export default ChatContext;

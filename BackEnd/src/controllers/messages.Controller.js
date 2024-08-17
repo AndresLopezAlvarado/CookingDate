@@ -8,7 +8,7 @@ export const sendMessage = async (req, res) => {
   // console.log({ "Estoy en sendMessage": { chatId: chatId, content: content } });
 
   if (!chatId || !content) {
-    console.log("Invalid data passed into request");
+    console.log({ message: "Invalid data passed into request (sendMessage)" });
     return res.sendStatus(400);
   }
 
@@ -42,8 +42,20 @@ export const sendMessage = async (req, res) => {
 
     res.json(message);
   } catch (error) {
-    res.status(400);
-    throw new Error(error.message);
+    console.error({
+      message: "Something went wrong on send message (sendMessage)",
+      error: error,
+    });
+
+    res.status(500).json({
+      message: "Something went wrong on send message (sendMessage)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on send message (sendMessage)",
+      error: error,
+    });
   }
 };
 
@@ -55,7 +67,19 @@ export const loadMessages = async (req, res) => {
 
     res.json(messages);
   } catch (error) {
-    res.status(400);
-    throw new Error(error.message);
+    console.error({
+      message: "Something went wrong on load messages (loadMessages)",
+      error: error,
+    });
+
+    res.status(500).json({
+      message: "Something went wrong on load messages (loadMessages)",
+      error: error,
+    });
+
+    throw new Error({
+      message: "Something went wrong on load messages (loadMessages)",
+      error: error,
+    });
   }
 };

@@ -24,6 +24,8 @@ export const PeopleProvider = ({ children }) => {
       console.error({
         message: "Something went wrong on getPeople",
       });
+
+      throw new Error(error);
     }
   };
 
@@ -36,6 +38,8 @@ export const PeopleProvider = ({ children }) => {
       console.error({
         message: "Something went wrong on getPerson",
       });
+      
+      throw new Error(error);
     }
   };
 

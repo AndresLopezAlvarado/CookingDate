@@ -15,7 +15,7 @@ export const useNotifications = () => {
 };
 
 export const NotificationsProvider = ({ children }) => {
-  const [notifications, setNotifications] = useState(null);
+  const [notifications, setNotifications] = useState([]);
 
   const getNotifications = async (userId) => {
     try {
@@ -27,6 +27,8 @@ export const NotificationsProvider = ({ children }) => {
         // errorMessage: error.response.data.message,
         // arrayErrors: error.response.data.arrayErrors,
       });
+      
+      throw new Error(error);
     }
   };
 

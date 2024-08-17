@@ -1,9 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import jsCookie from "js-cookie";
 import {
-  loginRequest,
-  logoutRequest,
-  registerRequest,
+  signUpRequest,
+  signInRequest,
   verifyTokenRequest,
 } from "../api/auth.js";
 
@@ -18,41 +17,22 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [errors, setErrors] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const signUp = async (dataEntered) => {
-    try {
-      const newUser = await registerRequest(dataEntered);
-      setUser(newUser.data);
-      setIsAuthenticated(true);
-    } catch (error) {
-      // setErrors(error.response.data);
-      setErrors(error.response.data.arrayErrors);
-      console.error({
-        message: "Something went wrong on signUp",
-        errorMessage: error.response.data.message,
-        arrayErrors: error.response.data.arrayErrors,
-      });
-    }
+    const newUser = await signUpRequest(dataEntered);
+
+    setUser(newUser.data);
+    setIsAuthenticated(true);
   };
 
   const signIn = async (dataEntered) => {
-    try {
-      const authenticatedUser = await loginRequest(dataEntered);
-      setUser(authenticatedUser.data);
-      setIsAuthenticated(true);
-    } catch (error) {
-      // setErrors(error.response.data);
-      // setErrors(error.response.data.arrayErrors);
-      console.error({
-        message: "Something went wrong on signIn",
-        // errorMessage: error.response.data.message,
-        // arrayErrors: error.response.data.arrayErrors,
-      });
-    }
+    const authenticatedUser = await signInRequest(dataEntered);
+
+    setUser(authenticatedUser.data);
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
@@ -61,62 +41,67 @@ export const AuthProvider = ({ children }) => {
       secure: true,
       Partitioned: true,
     });
-    setIsAuthenticated(false);
+
     setUser(null);
+    setIsAuthenticated(false);
   };
 
-  // const logout = () => {
-  //   logoutRequest();
-  // };
+  async function checkLogin() {
+    setLoading(true);
 
-  useEffect(() => {
-    async function checkLogin() {
-      const cookies = jsCookie.get();
-      if (!cookies.access_token) {
-        setLoading(false);
+    const cookies = jsCookie.get();
+
+    if (!cookies.access_token) {
+      setUser(null);
+      setIsAuthenticated(false);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await verifyTokenRequest(cookies.access_token);
+
+      if (!res.data) {
+        setUser(null);
         setIsAuthenticated(false);
+        setLoading(false);
         return;
       }
 
-      try {
-        const res = await verifyTokenRequest(cookies.access_token);
-        if (!res.data) return setIsAuthenticated(false);
-        setIsAuthenticated(true);
-        setUser(res.data);
-        setLoading(false);
-      } catch (error) {
-        setIsAuthenticated(false);
-        setLoading(false);
-        console.error({
-          message: "Something went wrong on checkLogin",
-          // errorMessage: error.message,
-          // errorCode: error.code,
-          // error: error,
-        });
-      }
+      setUser(res.data);
+      setIsAuthenticated(true);
+      setLoading(false);
+    } catch (error) {
+      setUser(null);
+      setIsAuthenticated(false);
+      setLoading(false);
+
+      console.error({
+        message: "Something went wrong on checkLogin",
+        error: error,
+      });
+
+      throw new Error({
+        message: "Something went wrong on checkLogin",
+        error: error,
+      });
     }
-    checkLogin();
-  }, []);
+  }
 
   useEffect(() => {
-    if (errors.length > 0) {
-      const timer = setTimeout(() => setErrors([]), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [errors]);
+    checkLogin();
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        setUser,
         signUp,
         signIn,
         logout,
-        isAuthenticated,
         loading,
-        // setLoading,
-        errors,
+        user,
+        // setUser,
+        isAuthenticated,
       }}
     >
       {children}

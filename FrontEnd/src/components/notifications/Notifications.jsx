@@ -11,7 +11,11 @@ const Notifications = ({ userId, toggleModal }) => {
     useNotifications();
 
   async function loadNotifications() {
-    await getNotifications(userId);
+    try {
+      await getNotifications(userId);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   useEffect(() => {
